@@ -1,0 +1,6 @@
+@if (control) {
+  <label>{{ formField.label }}</label>
+  <input [type]="(props && props['type']) ? props!['type'] : 'text'" [formControl]="control"
+         class="border-slate-700 border-2 p-2 block rounded-lg focus-visible:outline-indigo-600 disabled:bg-gray-500/50">
+  <ef-errors [control]="control" [formField]="formField"/>
+}
