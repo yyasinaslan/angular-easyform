@@ -1,0 +1,5 @@
+@if (arrayTemplate) {
+  @for (control of arrayControls; track control) {
+    <ng-container [ngTemplateOutlet]="arrayTemplate" [ngTemplateOutletContext]="{$implicit:'', index: $index}"/>
+  }
+}

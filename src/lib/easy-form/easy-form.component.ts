@@ -45,58 +45,13 @@ export class EasyFormComponent implements AfterContentInit {
     if (!this.formConfig) {
       this.loadDefaultConfig();
     }
-
-
   }
 
   ngAfterContentInit(): void {
-    this.render();
-    this.fields.changes.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(fields => {
-      this.render();
-    });
+
   }
 
-  render() {
-    this.fields.forEach(field => {
-      const viewContainerRef = field.viewContainerRef;
-      // Only create component if it doesn't exist
-      if (viewContainerRef.get(0)) {
-        return;
-      }
-
-      const name = field.name;
-      const schema = this.form.getSchema(name);
-      if (!schema) {
-        throw new Error(`Schema not found for ${name}`);
-      }
-      let component = typeof schema.controlType === 'string' ? this.form.getComponent(schema.controlType) : schema.controlType;
-      if (!component) {
-        // Get component from formConfig
-        component = this.getComponent(schema.controlType as string);
-      }
-
-      if (!component) {
-        throw new Error(`Component configuration not found for ${schema.controlType}`);
-      }
-
-      const componentRef = viewContainerRef.createComponent<EasyFormControl>(component);
-
-      const formControl = this.form.getControl(name);
-      if (formControl) {
-        componentRef.instance.control = formControl;
-        field.control = formControl;
-      }
-      if (schema.props) {
-        componentRef.instance.props = schema.props;
-      }
-
-      componentRef.instance.formField = schema;
-
-      componentRef.changeDetectorRef.detectChanges();
-    });
-  }
-
-  private renderFormGroup(){
+  private renderFormGroup() {
 
   }
 

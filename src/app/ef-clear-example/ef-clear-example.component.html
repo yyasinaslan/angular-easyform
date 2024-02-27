@@ -1,0 +1,51 @@
+<div class="container mx-auto px-3">
+  <h1 class="text-2xl mb-10">Easy Form</h1>
+
+  <easy-form [form]="form" (submit)="handleSubmit($event)" #easyFormComponent>
+
+    <ng-container easyFormField path="name"/>
+    <ng-container easyFormField path="email"/>
+    <ng-container easyFormField path="age"/>
+
+    <!-- Group access via path dot notation -->
+    <ng-container easyFormField path="address.title"/>
+    <ng-container easyFormField path="address.street"/>
+
+
+    <button type="button" class="p-3 bg-green-300 rounded m-3" (click)="form.addToArray('phones', '')">Add new</button>
+    <ef-form-array path="phones">
+      <ng-template #arrayTemplate let-group let-index="index">
+        <div class="flex gap-2">
+          <ng-container easyFormField [path]="['phones', index]"/>
+          <button type="button" class="p-3 bg-red-300 rounded m-3" (click)="form.removeFromArray('phones', index)">
+            Remove
+          </button>
+        </div>
+      </ng-template>
+    </ef-form-array>
+
+    <button type="button" class="p-3 bg-green-300 rounded m-3"
+            (click)="form.addToArray('products', {name: 'Example product', price: 3434})">Add new
+    </button>
+    <ef-form-array path="products">
+      <ng-template #arrayTemplate let-group let-index="index">
+        <div class="flex gap-2">
+          <ng-container easyFormField [path]="['products', index, 'name']"/>
+          <ng-container easyFormField [path]="['products', index, 'price']"/>
+          <button type="button" class="p-3 bg-red-300 rounded m-3" (click)="form.removeFromArray('products', index)">
+            Remove
+          </button>
+        </div>
+      </ng-template>
+    </ef-form-array>
+
+    <button type="submit" class="bg-slate-400 px-3 py-2 rounded-xl">Submit</button>
+
+  </easy-form>
+
+  <div class="grid grid-cols-2">
+    <pre class="text-xs">Value,<br> {{ form.formGroup.value | json }}</pre>
+    <pre class="text-xs">Schema,<br> {{ form.getOptions() | json }}</pre>
+  </div>
+
+</div>

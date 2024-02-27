@@ -2,10 +2,9 @@ import {Validation} from "./validation";
 import {BasicControlTypes} from "./basic-control-types";
 import {ComponentType} from "./component-type";
 import {EasyFormControl} from "../easy-form-control";
-import {FormSchema} from "./form-schema";
 import {AdvancedControlTypes} from "./advanced-control-types";
 
-type FormFieldBase = {
+export type FormFieldBase = {
   // Field label
   label?: string;
 
@@ -27,22 +26,22 @@ export type FormFieldGeneric = {
   controlType: string | BasicControlTypes | ComponentType<EasyFormControl>;
 }
 
+export type FormFieldControl = FormFieldBase & FormFieldGeneric;
+
 export type FormFieldGroup = {
   controlType: AdvancedControlTypes.Group | 'group';
-  fields: FormSchema;
+  fields: Record<string, FormFieldControl>;
 }
-export type FormFieldArrray = {
+export type FormFieldArray = {
   controlType: AdvancedControlTypes.Array | 'array';
-  fields: FormSchema;
+  fields: Record<string, FormFieldControl>;
 }
 export type FormFieldArraySimple = {
   controlType: AdvancedControlTypes.ArraySimple | 'arraySimple'
-  field: FormFieldGeneric;
+  field: FormFieldControl;
+  initialValue?: any[];
 }
 
 export type FormField =
   FormFieldBase &
-  (FormFieldGeneric
-    | FormFieldGroup
-    | FormFieldArrray
-    | FormFieldArraySimple)
+  (FormFieldGeneric | FormFieldGroup | FormFieldArray | FormFieldArraySimple)
