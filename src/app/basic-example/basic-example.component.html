@@ -1,0 +1,37 @@
+<easy-form [form]="form" (submit)="handleSubmit($event)">
+
+  <div class="container mx-auto max-w-96">
+    <h1 class="text-2xl mb-5">Add Employee</h1>
+
+    <div class="mb-5">
+      <ng-container easyFormField path="name"/>
+    </div>
+    <div class="mb-5">
+      <ng-container easyFormField path="email"/>
+    </div>
+    <div class="mb-5">
+      <ng-container easyFormField path="phone"/>
+    </div>
+    <div class="mb-5 p-3 border border-dashed rounded-2xl">
+      <h2 class="text-lg mb-5">Address</h2>
+      <div class="mb-5">
+        <ng-container easyFormField path="address.street"/>
+      </div>
+      <div class="mb-5">
+        <ng-container easyFormField path="address.city"/>
+      </div>
+      <div class="mb-5">
+        <ng-container easyFormField path="address.state"/>
+      </div>
+      <div>
+        <ng-container easyFormField path="address.zip"/>
+      </div>
+    </div>
+
+    <div>
+      <button type="submit" class="px-3 py-2 rounded-lg bg-green-600 text-white">Save</button>
+    </div>
+  </div>
+
+
+</easy-form>

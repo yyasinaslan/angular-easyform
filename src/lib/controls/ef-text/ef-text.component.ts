@@ -1,4 +1,4 @@
-import {Component, Input, OnDestroy} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {EasyFormControl} from "../../easy-form-control";
 import {FormControl, ReactiveFormsModule} from "@angular/forms";
 import {FormField} from "../../interfaces/form-field";
@@ -14,7 +14,7 @@ import {FormErrorsComponent} from "../../components/form-errors/form-errors.comp
   templateUrl: './ef-text.component.html',
   styleUrl: './ef-text.component.scss'
 })
-export class EfTextComponent implements EasyFormControl, OnDestroy {
+export class EfTextComponent implements EasyFormControl {
 
   name = '';
 
@@ -22,9 +22,5 @@ export class EfTextComponent implements EasyFormControl, OnDestroy {
   formField!: FormField;
 
   @Input() props?: Record<string, any>;
-
-  ngOnDestroy() {
-    console.log('destroyed')
-  }
 
 }

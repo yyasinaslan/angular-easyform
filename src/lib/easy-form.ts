@@ -8,15 +8,20 @@ import {BasicControlTypes} from "./interfaces/basic-control-types";
 import {ComponentType} from "./interfaces/component-type";
 import {EasyFormControl} from "./easy-form-control";
 import {EfSelectComponent} from "./controls/ef-select/ef-select.component";
-import {FormFieldArray, FormFieldArraySimple, FormFieldControl, FormFieldGroup} from "./interfaces/form-field";
-import {FormFieldDirective} from "./directives/form-field.directive";
+import {
+  FormField,
+  FormFieldArray,
+  FormFieldArraySimple,
+  FormFieldControl,
+  FormFieldGroup
+} from "./interfaces/form-field";
 import {AdvancedControlTypes} from "./interfaces/advanced-control-types";
 
-export interface EasyFormOptions {
+export interface EasyFormOptions<T = Record<string, any>> {
   showErrors?: 'submitted' | 'touched' | 'dirty' | 'always' | 'never';
 
   // Form fields
-  schema: FormSchema;
+  schema: FormSchema<T>;
 
   // Form based validations
   validations?: Array<Validation>;
@@ -28,7 +33,7 @@ export interface EasyFormOptions {
   components?: Record<string, ComponentType<EasyFormControl>>
 }
 
-export class EasyForm {
+export class EasyForm<T = Record<string, any>> {
 
   public formGroup: FormGroup;
   // default options
@@ -41,29 +46,33 @@ export class EasyForm {
     }
   };
 
-  constructor(options: EasyFormOptions) {
+  constructor(options: EasyFormOptions<T>) {
     this.options = {...this.options, ...options};
     this.formGroup = this.createFormGroup(this.options.schema);
   }
 
-  private createFormGroup(schema: FormSchema, initialValue?: any): FormGroup {
+  private createFormGroup(schema: FormSchema, initialValue?: any, validations?: FormField['validations']): FormGroup {
     const group = new FormGroup({});
 
     for (const key in schema) {
       const field = schema[key];
       if (field.controlType == 'group') {
-        const g = this.createFormGroup((field as FormFieldGroup).fields, field.initialValue);
+        const g = this.createFormGroup((field as FormFieldGroup).fields, field.initialValue, field.validations);
         group.addControl(key, g);
       } else if (field.controlType == 'array') {
-        const a = this.createFormArray((field as FormFieldArray).fields, field.initialValue);
+        const a = this.createFormArray((field as FormFieldArray).fields, field.initialValue, field.validations);
         group.addControl(key, a);
       } else if (field.controlType == 'arraySimple') {
-        const a = this.createSimpleFormArray((field as FormFieldArraySimple), field.initialValue);
+        const a = this.createSimpleFormArray((field as FormFieldArraySimple), field.initialValue, field.validations);
         group.addControl(key, a);
       } else {
         const control = new FormControl(field.initialValue, field.validations ? this.createValidations(field.validations) : []);
         group.addControl(key, control);
       }
+    }
+
+    if (validations) {
+      group.addValidators(this.createValidations(validations));
     }
 
     if (initialValue) {
@@ -74,7 +83,7 @@ export class EasyForm {
   }
 
 
-  private createFormArray(schema: FormSchema, initialValue?: any): FormArray {
+  private createFormArray(schema: FormSchema, initialValue?: any, validations?: FormField['validations']): FormArray {
     const array = new FormArray<any>([]);
 
     if (initialValue) {
@@ -85,10 +94,14 @@ export class EasyForm {
       });
     }
 
+    if (validations) {
+      array.addValidators(this.createValidations(validations));
+    }
+
     return array;
   }
 
-  private createSimpleFormArray(schema: FormFieldArraySimple, initialValue?: any): FormArray {
+  private createSimpleFormArray(schema: FormFieldArraySimple, initialValue?: any, validations?: FormField['validations']): FormArray {
     const array = new FormArray<any>([]);
 
     if (initialValue) {
@@ -96,6 +109,10 @@ export class EasyForm {
         const control = new FormControl(item, schema.field.validations ? this.createValidations(schema.field.validations) : []);
         array.push(control);
       });
+    }
+
+    if (validations) {
+      array.addValidators(this.createValidations(validations));
     }
 
     return array;
@@ -177,12 +194,7 @@ export class EasyForm {
     return c;
   }
 
-  getControl(field: FormFieldDirective) {
-    let path = field.path ?? '';
-    // if (field.groupName) {
-    //   path = `${field.groupName}.${field.path}`;
-    // }
-
+  getControl(path: string | Array<string | number>) {
     return this.formGroup.get(path) as FormControl;
   }
 
@@ -219,5 +231,15 @@ export class EasyForm {
     if (arr) {
       arr.removeAt(index)
     }
+  }
+
+  public static text(...args: any[]) {
+    return {} as any;
+  }
+  public static group(...args: any[]) {
+    return {} as any;
+  }
+  public static array(...args: any[]) {
+    return {} as any;
   }
 }

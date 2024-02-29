@@ -3,6 +3,6 @@ import {FormField} from "./form-field";
 /**
  * Define the shape of a form
  */
-export interface FormSchema {
-  [key: string]: FormField;
-}
+export type FormSchema<T = Record<string, any>> = {
+  [key in keyof T]: FormField;
+};

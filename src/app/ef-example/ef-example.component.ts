@@ -1,6 +1,6 @@
 import {Component, effect, signal} from '@angular/core';
 import {EasyFormComponent} from "../../lib/easy-form/easy-form.component";
-import {FormArrayDirective} from "../../lib/directives/form-array.directive";
+import {FormArrayTemplateDirective} from "../../lib/directives/form-array-template.directive";
 import {FormFieldDirective} from "../../lib/directives/form-field.directive";
 import {JsonPipe} from "@angular/common";
 import {EasyForm} from "../../lib/easy-form";
@@ -13,7 +13,7 @@ import {AdvancedControlTypes} from "../../lib/interfaces/advanced-control-types"
   standalone: true,
   imports: [
     EasyFormComponent,
-    FormArrayDirective,
+    FormArrayTemplateDirective,
     FormFieldDirective,
     JsonPipe
   ],

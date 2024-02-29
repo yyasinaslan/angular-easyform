@@ -11,7 +11,7 @@ import {FormFieldDirective} from "../lib/directives/form-field.directive";
 import {JsonPipe} from "@angular/common";
 import {TextWithActionComponent} from "./text-with-action/text-with-action.component";
 import {AdvancedControlTypes} from "../lib/interfaces/advanced-control-types";
-import {FormArrayDirective} from "../lib/directives/form-array.directive";
+import {FormArrayTemplateDirective} from "../lib/directives/form-array-template.directive";
 
 function t(template: TemplateStringsArray, ...args: any[]) {
   console.log(template, args);
@@ -21,7 +21,7 @@ function t(template: TemplateStringsArray, ...args: any[]) {
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, EasyFormComponent, FormFieldComponent, FormLabelDirective, FormControlDirective, FormErrorsComponent, FormFieldDirective, JsonPipe, FormArrayDirective],
+  imports: [RouterOutlet, EasyFormComponent, FormFieldComponent, FormLabelDirective, FormControlDirective, FormErrorsComponent, FormFieldDirective, JsonPipe, FormArrayTemplateDirective],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })

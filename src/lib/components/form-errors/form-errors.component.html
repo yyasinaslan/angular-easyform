@@ -1,3 +1,7 @@
+<ng-template #defaultErrorMessage let-message>
+  <div class="text-red-600 text-sm">{{ message }}</div>
+</ng-template>
+
 @if (control && formField && formField.validations) {
   @for (validation of (formField.validations | keyvalue); track validation.key) {
     @if (control.hasError(validation.key)) {
@@ -6,7 +10,3 @@
     }
   }
 }
-
-<ng-template #defaultErrorMessage let-message>
-  <div class="text-red-600 text-sm">{{ message }}</div>
-</ng-template>
