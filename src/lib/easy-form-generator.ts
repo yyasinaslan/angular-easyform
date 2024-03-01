@@ -1,4 +1,11 @@
-import {FormFieldArray, FormFieldArraySimple, FormFieldBase, FormFieldGroup} from "./interfaces/form-field";
+import {
+  FormField,
+  FormFieldArray,
+  FormFieldArraySimple,
+  FormFieldBase,
+  FormFieldControl,
+  FormFieldGroup
+} from "./interfaces/form-field";
 import {ValidatorFn, Validators} from "@angular/forms";
 import {Validation} from "./interfaces/validation";
 import {BasicControlTypes} from "./interfaces/basic-control-types";
@@ -28,7 +35,7 @@ class ValidationChain implements FormFieldBase {
 
   initialValue?: any;
 
-  constructor(options: FormFieldBase & { controlType: string | BasicControlTypes | AdvancedControlTypes }) {
+  constructor(options: FormField) {
     Object.assign(this, options);
   }
 
@@ -136,17 +143,27 @@ export abstract class EasyFormGenerator {
     return vc;
   }
 
-  public static Group(fields: FormFieldGroup['fields']) {
-    return {} as any;
+  public static Group(schema: FormFieldGroup['fields'], options?: GeneratorBaseOptions) {
+    return new ValidationChain({
+      ...options,
+      controlType: AdvancedControlTypes.Group,
+      fields: schema as Record<string, FormFieldControl>
+    });
   }
 
-  public static Array(schema: FormFieldArray['fields'] | FormFieldArraySimple['field']) {
-    console.log('schema', schema)
-    if (schema.controlType) {
-      console.log('simple array')
-    } else {
-      console.log('complex array')
+  public static Array(schema: FormFieldArray['fields'] | FormFieldArraySimple['field'], options?: GeneratorBaseOptions) {
+    const simpleArray = !!schema.controlType;
+    if (simpleArray) {
+      return new ValidationChain({
+        ...options,
+        controlType: AdvancedControlTypes.ArraySimple,
+        field: schema as FormFieldControl
+      });
     }
-    return {} as any;
+    return new ValidationChain({
+      ...options,
+      controlType: AdvancedControlTypes.Array,
+      fields: schema as Record<string, FormFieldControl>
+    });
   }
 }

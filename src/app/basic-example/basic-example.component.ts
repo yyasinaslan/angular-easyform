@@ -7,6 +7,7 @@ import {FormFieldDirective} from "../../lib/directives/form-field.directive";
 import {EfFormArrayComponent} from "../../lib/components/ef-form-array/ef-form-array.component";
 import {FormArrayTemplateDirective} from "../../lib/directives/form-array-template.directive";
 import {FormErrorsComponent} from "../../lib/components/form-errors/form-errors.component";
+import {JsonPipe} from "@angular/common";
 
 interface EmployeeModel {
   name: string;
@@ -23,7 +24,8 @@ interface EmployeeModel {
     FormFieldDirective,
     EfFormArrayComponent,
     FormArrayTemplateDirective,
-    FormErrorsComponent
+    FormErrorsComponent,
+    JsonPipe
   ],
   templateUrl: './basic-example.component.html',
   styleUrl: './basic-example.component.scss'

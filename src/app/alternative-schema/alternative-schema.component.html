@@ -1,15 +1,70 @@
 <easy-form [form]="form">
 
-  <div class="flex gap-1 flex-wrap">
-    <ng-container easyFormField path="name"/>
-    <button type="button">Action</button>
-  </div>
-  <div class="flex gap-1 flex-wrap">
-    <ng-container easyFormField path="email"/>
-    <button type="button">Action</button>
-  </div>
+  <div class="container mx-auto max-w-2xl space-y-5">
+    <div class="border border-dashed p-3 rounded-lg space-y-3">
+      <h1 class="text-lg">Individual form fields</h1>
+      <ng-container easyFormField path="name"/>
+      <ng-container easyFormField path="email"/>
+    </div>
 
-  <button type="submit">Submit</button>
+    <div class="border border-dashed p-3 rounded-lg space-y-3">
+      <h1 class="text-lg">Notification Settings (Group)</h1>
+      <div class="grid grid-cols-2 gap-3">
+        <ng-container easyFormField path="notificationSettings.email"/>
+        <ng-container easyFormField path="notificationSettings.sms"/>
+      </div>
+    </div>
 
+    <div class="border border-dashed p-3 rounded-lg space-y-3">
+      <div class="flex gap-2 justify-between items-center">
+        <h1 class="text-lg">Skills (array with single field)</h1>
+        <button type="button" (click)="form.addToArray('skills', '')">Add</button>
+      </div>
+      <ef-errors path="skills"/>
+      <ef-form-array path="skills" class="block space-y-4">
+        <ng-template formArrayTemplate let-index="index">
+          <div class="flex justify-between items-center gap-2">
+            <div class="flex-auto">
+              <ng-container easyFormField [path]="['skills', index]"/>
+            </div>
+            <button type="button"
+                    class="bg-red-600 text-white hover:bg-red-700 aspect-square rounded-full p-0 w-10 h-10 flex items-center justify-center border-0"
+                    (click)="form.removeFromArray('skills',index)">X
+            </button>
+          </div>
+        </ng-template>
+      </ef-form-array>
+    </div>
+
+    <div class="border border-dashed p-3 rounded-lg space-y-3">
+      <div class="flex gap-2 justify-between items-center">
+        <h1 class="text-lg">Addresses (array with group)</h1>
+        <button type="button" (click)="form.addToArray('addresses', {})">Add</button>
+      </div>
+      <ef-form-array path="addresses" class="block space-y-4">
+        <ng-template formArrayTemplate let-index="index">
+          <div class="flex items-center gap-2">
+            <ng-container easyFormField [path]="['addresses', index, 'title']"/>
+            <ng-container easyFormField [path]="['addresses', index, 'street']"/>
+            <ng-container easyFormField [path]="['addresses', index, 'city']"/>
+            <ng-container easyFormField [path]="['addresses', index, 'zip']"/>
+            <button type="button"
+                    class="bg-red-600 text-white hover:bg-red-700 aspect-square rounded-full p-0 w-10 h-10 flex items-center justify-center border-0"
+                    (click)="form.removeFromArray('addresses',index)">X
+            </button>
+          </div>
+        </ng-template>
+      </ef-form-array>
+    </div>
+
+
+
+
+    <button type="submit">Submit</button>
+
+  </div>
 </easy-form>
 
+<pre>
+  {{ form.options.schema | json }}
+</pre>
