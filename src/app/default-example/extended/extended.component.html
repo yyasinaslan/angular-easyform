@@ -1,5 +1,16 @@
-<form [formGroup]="form">
+<div class="p-3 show-errors-submitted">
+  <h1 class="text-2xl mb-4">Extended Angular Reactive Form</h1>
+  <form [formGroup]="form">
+    <app-extended-text-control label="Name" [control]="form.get('name')!">
+      <app-generic-error [control]="form.get('name')!" error="required">Name is required</app-generic-error>
+      <app-generic-error [control]="form.get('name')!" error="minlength">Minimum length should be 3</app-generic-error>
+    </app-extended-text-control>
 
+    <app-extended-text-control label="Email" [control]="form.get('email')!">
+      <app-generic-error [control]="form.get('email')!" error="required">Email is required</app-generic-error>
+      <app-generic-error [control]="form.get('email')!" error="email">Invalid email</app-generic-error>
+    </app-extended-text-control>
 
-
-</form>
+    <button type="submit">Submit</button>
+  </form>
+</div>

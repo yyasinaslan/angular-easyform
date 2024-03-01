@@ -1,7 +1,8 @@
-import {Component, ContentChild, Input, TemplateRef} from '@angular/core';
-import {FormField} from "../../interfaces/form-field";
-import {FormControl} from "@angular/forms";
+import {Component, ContentChild, inject, Input, TemplateRef} from '@angular/core';
 import {JsonPipe, KeyValuePipe, NgTemplateOutlet} from "@angular/common";
+import {EasyFormComponent} from "../../easy-form/easy-form.component";
+import {FormControl} from "@angular/forms";
+import {FormField} from "../../interfaces/form-field";
 
 @Component({
   selector: 'ef-errors',
@@ -15,8 +16,23 @@ import {JsonPipe, KeyValuePipe, NgTemplateOutlet} from "@angular/common";
   styleUrl: './form-errors.component.scss'
 })
 export class FormErrorsComponent {
-  @ContentChild('messageTemplate', {read: TemplateRef}) messageTemplate?: TemplateRef<{$implicit: string}>;
+  @ContentChild('messageTemplate', {read: TemplateRef}) messageTemplate?: TemplateRef<{ $implicit: string }>;
 
-  @Input({required: true}) control!: FormControl;
-  @Input({required: true}) formField!: FormField;
+  easyFormComponent = inject(EasyFormComponent);
+  @Input() path?: string | (number | string)[];
+
+  get _control() {
+    if (this.control) return this.control;
+    if (!this.path) throw new Error('Path is required');
+    return this.easyFormComponent.form.getControl(this.path);
+  }
+
+  get _formField() {
+    if (this.formField) return this.formField;
+    if (!this.path) throw new Error('Path is required');
+    return this.easyFormComponent.form.getSchema(this.path);
+  }
+
+  @Input() control?: FormControl;
+  @Input() formField?: FormField;
 }

@@ -1,1 +1,10 @@
-<router-outlet/>
+<div class="px-3 flex gap-2 bg-white border-b shadow sticky top-0 z-20">
+  @for (route of routes; track route.path) {
+    <a [routerLink]="route.path" routerLinkActive="!text-blue-600 font-bold border-b-2 border-blue-600"
+       [routerLinkActiveOptions]="{exact: route.pathMatch == 'full'}"
+       class="text-sm p-3 hover:text-blue-500">{{ route.path == '' ? 'HOME' : route.path?.toUpperCase() }}</a>
+  }
+</div>
+<div class="py-3">
+  <router-outlet/>
+</div>

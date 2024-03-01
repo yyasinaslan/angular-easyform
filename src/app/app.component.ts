@@ -1,5 +1,5 @@
 import {Component, effect, signal} from '@angular/core';
-import {RouterOutlet} from '@angular/router';
+import {RouterLink, RouterLinkActive, RouterOutlet} from '@angular/router';
 import {EasyFormComponent} from "../lib/easy-form/easy-form.component";
 import {FormFieldComponent} from "../lib/components/form-field/form-field.component";
 import {FormLabelDirective} from "../lib/directives/form-label.directive";
@@ -12,6 +12,7 @@ import {JsonPipe} from "@angular/common";
 import {TextWithActionComponent} from "./text-with-action/text-with-action.component";
 import {AdvancedControlTypes} from "../lib/interfaces/advanced-control-types";
 import {FormArrayTemplateDirective} from "../lib/directives/form-array-template.directive";
+import {routes} from "./app.routes";
 
 function t(template: TemplateStringsArray, ...args: any[]) {
   console.log(template, args);
@@ -21,11 +22,12 @@ function t(template: TemplateStringsArray, ...args: any[]) {
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, EasyFormComponent, FormFieldComponent, FormLabelDirective, FormControlDirective, FormErrorsComponent, FormFieldDirective, JsonPipe, FormArrayTemplateDirective],
+  imports: [RouterOutlet, EasyFormComponent, FormFieldComponent, FormLabelDirective, FormControlDirective, FormErrorsComponent, FormFieldDirective, JsonPipe, FormArrayTemplateDirective, RouterLink, RouterLinkActive],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
 export class AppComponent {
   title = 'dynamic-form-2';
 
+  protected readonly routes = routes;
 }

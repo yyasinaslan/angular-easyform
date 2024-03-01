@@ -4,6 +4,9 @@ import {FormGroup, Validators} from "@angular/forms";
 import {AdvancedControlTypes} from "../../lib/interfaces/advanced-control-types";
 import {EasyFormComponent} from "../../lib/easy-form/easy-form.component";
 import {FormFieldDirective} from "../../lib/directives/form-field.directive";
+import {EfFormArrayComponent} from "../../lib/components/ef-form-array/ef-form-array.component";
+import {FormArrayTemplateDirective} from "../../lib/directives/form-array-template.directive";
+import {FormErrorsComponent} from "../../lib/components/form-errors/form-errors.component";
 
 interface EmployeeModel {
   name: string;
@@ -17,7 +20,10 @@ interface EmployeeModel {
   standalone: true,
   imports: [
     EasyFormComponent,
-    FormFieldDirective
+    FormFieldDirective,
+    EfFormArrayComponent,
+    FormArrayTemplateDirective,
+    FormErrorsComponent
   ],
   templateUrl: './basic-example.component.html',
   styleUrl: './basic-example.component.scss'
@@ -80,6 +86,20 @@ export class BasicExampleComponent {
             validations: {
               required: {validator: Validators.required, message: 'Zip is required'}
             }
+          }
+        }
+      },
+      skills: {
+        controlType: AdvancedControlTypes.ArraySimple,
+        label: 'Skills',
+        validations: {
+          required: {validator: Validators.required, message: 'Skills are required'},
+          minlength: {validator: Validators.minLength(3), message: 'Skills must be at least 3'}
+        },
+        field: {
+          controlType: 'text',
+          validations: {
+            required: {validator: Validators.required, message: 'Skill is required'}
           }
         }
       }

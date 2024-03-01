@@ -1,11 +1,17 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {FormArray, FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
+import {ExtendedTextControlComponent} from "./extended-text-control/extended-text-control.component";
+import {GenericErrorComponent} from "./generic-error/generic-error.component";
+import {NgClass} from "@angular/common";
 
 @Component({
   selector: 'app-extended',
   standalone: true,
   imports: [
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ExtendedTextControlComponent,
+    GenericErrorComponent,
+    NgClass
   ],
   templateUrl: './extended.component.html',
   styleUrl: './extended.component.scss'
@@ -23,7 +29,6 @@ export class ExtendedComponent {
       new FormControl<string | null>(''),
     ])
   })
-
 
   handleSubmit(event: any) {
     console.log('handleSubmit', event)

@@ -16,6 +16,7 @@ import {
   FormFieldGroup
 } from "./interfaces/form-field";
 import {AdvancedControlTypes} from "./interfaces/advanced-control-types";
+import {EasyFormGenerator} from "./easy-form-generator";
 
 export interface EasyFormOptions<T = Record<string, any>> {
   showErrors?: 'submitted' | 'touched' | 'dirty' | 'always' | 'never';
@@ -24,7 +25,7 @@ export interface EasyFormOptions<T = Record<string, any>> {
   schema: FormSchema<T>;
 
   // Form based validations
-  validations?: Array<Validation>;
+  validations?: Record<string, Validation>;
 
   // Disabled state of the form
   disabled?: boolean | Signal<boolean> | Observable<boolean>;
@@ -33,7 +34,7 @@ export interface EasyFormOptions<T = Record<string, any>> {
   components?: Record<string, ComponentType<EasyFormControl>>
 }
 
-export class EasyForm<T = Record<string, any>> {
+export class EasyForm<T = Record<string, any>> extends EasyFormGenerator {
 
   public formGroup: FormGroup;
   // default options
@@ -47,6 +48,7 @@ export class EasyForm<T = Record<string, any>> {
   };
 
   constructor(options: EasyFormOptions<T>) {
+    super();
     this.options = {...this.options, ...options};
     this.formGroup = this.createFormGroup(this.options.schema);
   }
@@ -231,15 +233,5 @@ export class EasyForm<T = Record<string, any>> {
     if (arr) {
       arr.removeAt(index)
     }
-  }
-
-  public static text(...args: any[]) {
-    return {} as any;
-  }
-  public static group(...args: any[]) {
-    return {} as any;
-  }
-  public static array(...args: any[]) {
-    return {} as any;
   }
 }
