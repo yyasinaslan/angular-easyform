@@ -1,11 +1,13 @@
 import {Component, signal} from '@angular/core';
-import {EasyForm} from "../../lib/easy-form";
-import {EasyFormComponent} from "../../lib/easy-form/easy-form.component";
-import {FormFieldDirective} from "../../lib/directives/form-field.directive";
 import {JsonPipe} from "@angular/common";
-import {EfFormArrayComponent} from "../../lib/components/ef-form-array/ef-form-array.component";
-import {FormArrayTemplateDirective} from "../../lib/directives/form-array-template.directive";
-import {FormErrorsComponent} from "../../lib/components/form-errors/form-errors.component";
+import {
+  EasyForm,
+  EasyFormComponent,
+  EfFormArrayComponent,
+  FormArrayTemplateDirective,
+  FormErrorsComponent,
+  FormFieldDirective
+} from "easy-form";
 
 @Component({
   selector: 'app-alternative-schema',
@@ -23,31 +25,36 @@ import {FormErrorsComponent} from "../../lib/components/form-errors/form-errors.
 })
 export class AlternativeSchemaComponent {
 
+  inputType = signal('text');
   nameRequiredErrorLang = signal('Name is required');
 
-  form = new EasyForm({
-    schema: {
-      name: EasyForm.Text('Name').required('Name is required').minLength(3, 'Name must be at least 3 characters'),
-      email: EasyForm.Email('Email').required('Email is required').email('Email is not valid'),
-      skills: EasyForm.Array(EasyForm.Text().required('Skill is required'))
-        .required('Skills are required')
-        .minLength(3, 'At least 3 skills are required'),
-      addresses: EasyForm.Array({
-        title: EasyForm.Text('Title').required('Title is required'),
-        street: EasyForm.Text('Street').required('Street is required'),
-        city: EasyForm.Text('City').required('City is required'),
-        zip: EasyForm.Number('Zip').required('Zip is required')
-      }, {
-        initialValue: [{title: 'Home', street: '1234 Main St', city: 'Springfield', zip: 12345}]
-      }),
-      notificationSettings: EasyForm.Group({
-        email: EasyForm.Text('Email', {initialValue: 'yes'}),
-        sms: EasyForm.Text('Sms', {initialValue: 'no'})
-      })
-    }
+  form = EasyForm.create({
+    agreement: EasyForm.checkbox('Agreement').required('Agreement is required'),
+    // name: EasyForm.text('Name')
+    //   .required(this.nameRequiredErrorLang)
+    //   .minLength(3, 'Name must be at least 3 characters'),
+    // email: EasyForm.email('Email').required('Email is required').email('Email is not valid'),
+    // // phone: EasyForm.number('Phone'),
+    userType: EasyForm.select([
+      {label: 'Admin', value: 'admin'},
+      {label: 'User', value: 'user'}
+    ], 'User Type').required('User Type is required'),
+    // skills: EasyForm.array(EasyForm.text().required('Skill is required'))
+    //   .required('Skills are required')
+    //   .minLength(3, 'At least 3 skills are required'),
+    // addresses: EasyForm.array({
+    //   title: EasyForm.text('Title').required('Title is required'),
+    //   street: EasyForm.text('Street').required('Street is required'),
+    //   city: EasyForm.text('City').required('City is required'),
+    //   zip: EasyForm.number('Zip').required('Zip is required')
+    // }, {
+    //   initialValue: [{title: 'Home', street: '1234 Main St', city: 'Springfield', zip: 12345}]
+    // }),
+    // notificationSettings: EasyForm.group({
+    //   email: EasyForm.text('Email', {initialValue: 'yes'}),
+    //   sms: EasyForm.text('Sms', {initialValue: 'no'})
+    // })
+  }, {
+    showErrors: 'submitted'
   });
-
-  constructor() {
-    console.log('form', this.form);
-  }
 }

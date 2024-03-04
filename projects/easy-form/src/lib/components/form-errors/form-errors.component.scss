@@ -1,0 +1,19 @@
+@use "variables" as v;
+
+:host {
+  --ef-form-errors-font-size: 0.8em;
+  display: none;
+}
+
+:host-context(
+.show-errors-submitted .ng-submitted,
+.show-errors-always,
+.show-errors-touched .ng-touched,
+.show-errors-dirty .ng-dirty) {
+  display: block;
+}
+
+.ef-errors {
+  color: rgb(v.$invalid-color);
+  font-size: v.$errors-font-size;
+}

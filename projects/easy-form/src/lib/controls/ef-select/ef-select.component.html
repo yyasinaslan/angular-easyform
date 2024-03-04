@@ -1,0 +1,8 @@
+@if (control) {
+  <label class="ef-form-label" [for]="id">{{ formField.label | observableString }}</label>
+  <select [id]="id" [formControl]="control"
+          class="ef-input-select">
+
+  </select>
+  <ef-errors [control]="control" [formField]="formField"/>
+}

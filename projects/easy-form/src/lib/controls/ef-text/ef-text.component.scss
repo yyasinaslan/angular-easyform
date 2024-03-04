@@ -1,0 +1,36 @@
+@use "variables";
+
+:host {
+  display: block;
+}
+
+:host-context(.show-errors-submitted .ng-submitted,
+.show-errors-always,
+.show-errors-touched .ng-touched,
+.show-errors-dirty .ng-dirty) {
+  .ef-input-text.ng-invalid {
+    border-color: rgb(variables.$invalid-color);
+
+    &:focus {
+      outline-color: rgba(variables.$input-border-color, 0.5);
+    }
+  }
+}
+
+.ef-form-label {
+  display: block;
+}
+
+.ef-input-text {
+  width: 100%;
+  padding: variables.$input-padding;
+  border: 1px solid rgb(variables.$input-border-color);
+  border-radius: variables.$input-border-radius;
+  outline: 3px solid transparent;
+  outline-offset: 2px;
+  transition: outline 0.2s ease-in-out;
+
+  &:focus {
+    outline-color: rgba(variables.$input-border-color, 0.5);
+  }
+}

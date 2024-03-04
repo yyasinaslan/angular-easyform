@@ -1,6 +1,0 @@
-@if (control) {
-  <label class="mb-1 block ms-3">{{ formField.label }}</label>
-  <input [type]="(props && props['type']) ? props!['type'] : 'text'" [formControl]="control"
-         class="border p-2 ps-3 block rounded-lg focus-visible:outline-green-600 disabled:bg-slate-100 w-full">
-  <ef-errors class="block mt-2 px-3" [control]="control" [formField]="formField"/>
-}

@@ -1,0 +1,14 @@
+<ng-template #defaultErrorMessage let-message>
+  @if (message) {
+    <div class="ef-errors">{{ message | observableString }}</div>
+  }
+</ng-template>
+
+@if (_control && _formField && _formField.validations) {
+  @for (validation of (_formField.validations | keyvalue); track validation.key) {
+    @if (_control.hasError(validation.key)) {
+      <ng-container [ngTemplateOutlet]="messageTemplate ?? defaultErrorMessage"
+                    [ngTemplateOutletContext]="{$implicit: validation.value.message}"/>
+    }
+  }
+}

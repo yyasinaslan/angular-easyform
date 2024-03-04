@@ -1,0 +1,5 @@
+@if (control) {
+  <label [for]="id">{{ formField.label | observableString }}</label>
+  <input type="checkbox" [formControl]="control" [id]="id">
+  <ef-errors [control]="control" [formField]="formField"/>
+}
