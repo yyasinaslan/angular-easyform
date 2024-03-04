@@ -2,7 +2,11 @@
   <label class="ef-form-label" [for]="id">{{ formField.label | observableString }}</label>
   <select [id]="id" [formControl]="control"
           class="ef-input-select">
-
+    @if (props && props['items']) {
+      @for (item of props['items']; track item.value) {
+        <option [value]="item.value">{{ item.label | observableString }}</option>
+      }
+    }
   </select>
   <ef-errors [control]="control" [formField]="formField"/>
 }

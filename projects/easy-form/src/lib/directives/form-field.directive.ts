@@ -2,9 +2,7 @@ import {
   AfterContentInit,
   ComponentRef,
   Directive,
-  EnvironmentInjector,
   inject,
-  Injector,
   Input,
   OnChanges,
   SimpleChanges,
@@ -28,10 +26,8 @@ export class FormFieldDirective implements OnChanges, AfterContentInit {
   @Input() path?: string | Array<string | number>;
   @Input() disabled = false;
   @Input() props?: Record<string, any>;
-
-  private componentRef?: ComponentRef<EasyFormControl>;
   public instance?: EasyFormControl;
-
+  private componentRef?: ComponentRef<EasyFormControl>;
   private _renderTimeout: any;
 
   constructor() {
@@ -60,10 +56,15 @@ export class FormFieldDirective implements OnChanges, AfterContentInit {
   }
 
   render() {
-    clearTimeout(this._renderTimeout);
-    this._renderTimeout = setTimeout(() => {
-      this._render();
-    }, 10);
+    this._render();
+    // clearTimeout(this._renderTimeout);
+    // this._renderTimeout = setTimeout(() => {
+    //   this._render();
+    // }, 10);
+  }
+
+  ngAfterContentInit(): void {
+    this.render();
   }
 
   private _render() {
@@ -88,9 +89,7 @@ export class FormFieldDirective implements OnChanges, AfterContentInit {
     // console.log('component', component)
 
     try {
-      const componentRef = this.viewContainerRef.createComponent<EasyFormControl>(component, {
-
-      });
+      const componentRef = this.viewContainerRef.createComponent<EasyFormControl>(component, {});
       this.componentRef = componentRef;
       this.instance = componentRef.instance;
 
@@ -110,9 +109,5 @@ export class FormFieldDirective implements OnChanges, AfterContentInit {
     } catch (e) {
       console.error(e);
     }
-  }
-
-  ngAfterContentInit(): void {
-    this.render();
   }
 }

@@ -12,7 +12,15 @@
     border-color: rgb(variables.$invalid-color);
 
     &:focus {
-      outline-color: rgba(variables.$input-border-color, 0.5);
+      outline-color: rgba(variables.$invalid-color, 0.5);
+    }
+  }
+
+  .ef-input-text.ng-valid {
+    border-color: rgb(variables.$valid-color);
+
+    &:focus {
+      outline-color: rgba(variables.$valid-color, 0.5);
     }
   }
 }

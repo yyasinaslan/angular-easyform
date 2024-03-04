@@ -23,7 +23,7 @@ export type FormFieldBase = {
   hint?: string;
 
   // Additional props
-  props?: Record<string, any>;
+  props?: Record<string, HTMLInputElement['attributes']>;
 }
 
 export type FormFieldGeneric = {

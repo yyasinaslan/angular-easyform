@@ -1,3 +1,3 @@
-<form [formGroup]="form.formGroup" (ngSubmit)="submit.emit(form.formGroup)">
+<form [formGroup]="form.formGroup" (ngSubmit)="handleSubmit($event)">
   <ng-content/>
 </form>

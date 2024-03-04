@@ -15,4 +15,9 @@
   input[type=text] {
     @apply border p-2 ps-3 block rounded-lg focus-visible:outline-green-600 disabled:bg-slate-100 w-full;
   }
+
+  .badge {
+    @apply px-2 py-1 text-xs rounded bg-purple-700 text-white;
+  }
 }
+

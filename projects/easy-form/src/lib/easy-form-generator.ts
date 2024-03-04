@@ -1,17 +1,16 @@
 import {
-  FormField,
   FormFieldArray,
   FormFieldArraySimple,
   FormFieldBase,
   FormFieldControl,
   FormFieldGroup
 } from "./interfaces/form-field";
-import {ValidatorFn, Validators} from "@angular/forms";
-import {Validation} from "./interfaces/validation";
+import {ValidatorFn} from "@angular/forms";
 import {BasicControlTypes} from "./interfaces/basic-control-types";
 import {AdvancedControlTypes} from "./interfaces/advanced-control-types";
 import {ObservableString} from "./pipes/observable-string";
 import {SelectItems} from "easy-form";
+import {ValidationChain} from "./validation-chain";
 
 interface EfDefaultValidations {
   required: (message: string) => FormFieldWithValidation;
@@ -26,102 +25,6 @@ interface EfDefaultValidations {
 }
 
 type FormFieldWithValidation = FormFieldBase & EfDefaultValidations;
-
-class ValidationChain implements FormFieldBase {
-
-  controlType: string | BasicControlTypes | AdvancedControlTypes = '';
-
-  validations: Record<string, Validation> = {};
-
-  props?: Record<string, any>;
-
-  initialValue?: any;
-
-  constructor(options: FormField) {
-    Object.assign(this, options);
-  }
-
-  required(message: ObservableString) {
-    if (this.validations && this.validations["required"]) return this
-
-    if (!this.validations) this.validations = {};
-
-    this.validations["required"] = {validator: Validators.required, message};
-
-    return this;
-  }
-
-  minLength(minLength: number, message: ObservableString) {
-    if (this.validations && this.validations["minlength"]) return this;
-
-    if (!this.validations) this.validations = {};
-
-    this.validations["minlength"] = {validator: Validators.minLength(minLength), message};
-
-    return this;
-  }
-
-  maxLength(maxLength: number, message: ObservableString) {
-    if (this.validations && this.validations["maxlength"]) return this;
-
-    if (!this.validations) this.validations = {};
-
-    this.validations["maxlength"] = {validator: Validators.maxLength(maxLength), message};
-
-    return this;
-  }
-
-  email(message: ObservableString) {
-    if (this.validations && this.validations["email"]) return this;
-
-    if (!this.validations) this.validations = {};
-
-    this.validations["email"] = {validator: Validators.email, message};
-
-    return this;
-  }
-
-  pattern(pattern: string | RegExp, message: ObservableString) {
-    if (this.validations && this.validations["pattern"]) return this;
-
-    if (!this.validations) this.validations = {};
-
-    this.validations["pattern"] = {validator: Validators.pattern(pattern), message};
-
-    return this;
-  }
-
-  min(min: number, message: ObservableString) {
-    if (this.validations && this.validations["min"]) return this;
-
-    if (!this.validations) this.validations = {};
-
-    this.validations["min"] = {validator: Validators.min(min), message};
-
-    return this;
-  }
-
-  max(max: number, message: ObservableString) {
-    if (this.validations && this.validations["max"]) return this;
-
-    if (!this.validations) this.validations = {};
-
-    this.validations["max"] = {validator: Validators.max(max), message};
-
-    return this;
-  }
-
-  custom(key: string, validator: ValidatorFn, message: ObservableString) {
-    if (this.validations && this.validations[key]) return this;
-
-    if (!this.validations) this.validations = {};
-
-    this.validations[key] = {validator, message};
-
-    return this;
-  }
-
-}
 
 type GeneratorBaseOptions = Omit<FormFieldBase, "label" | "validations">;
 

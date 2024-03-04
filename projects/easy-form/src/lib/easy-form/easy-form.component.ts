@@ -2,7 +2,7 @@ import {
   AfterContentInit,
   Component,
   ContentChildren,
-  DestroyRef,
+  ElementRef,
   EventEmitter,
   inject,
   Input,
@@ -30,15 +30,16 @@ import {EfSelectComponent} from "../controls/ef-select/ef-select.component";
   }
 })
 export class EasyFormComponent implements AfterContentInit {
-  destroyRef = inject(DestroyRef)
-
   @ContentChildren(FormFieldDirective, {descendants: true}) fields!: QueryList<FormFieldDirective>;
 
+  elementRef = inject<ElementRef<HTMLDivElement>>(ElementRef);
   formConfig = inject(EASY_FORM_CONFIG, {optional: true});
 
   @Input({required: true}) form!: EasyForm;
+  @Input() focusFirstError = true;
 
   @Output() submit = new EventEmitter<FormGroup>();
+  protected readonly onsubmit = onsubmit;
 
   constructor() {
     if (!this.formConfig) {
@@ -48,6 +49,29 @@ export class EasyFormComponent implements AfterContentInit {
 
   ngAfterContentInit(): void {
 
+  }
+
+  getComponent(type: string) {
+    return this.formConfig?.controls.find(control => control.name === type)?.component;
+  }
+
+  handleSubmit($event: any) {
+    if (this.form.invalid && this.focusFirstError && this.elementRef) {
+      const firstError = this.elementRef.nativeElement.querySelector('.ng-invalid:not(form), ef-errors:has(*)');
+      console.log('firstError', firstError)
+      if (firstError) {
+        setTimeout(() => {
+          if (firstError.tagName == 'EF-SELECT') {
+            firstError.scrollIntoView({behavior: 'smooth', block: 'center'})
+          } else {
+            (firstError as HTMLElement).scrollIntoView({behavior: 'smooth', block: 'center'});
+            (firstError as HTMLElement).focus()
+          }
+        }, 100)
+      }
+    }
+    console.log($event)
+    this.submit.emit(this.form.formGroup)
   }
 
   private renderFormGroup() {
@@ -64,10 +88,4 @@ export class EasyFormComponent implements AfterContentInit {
       ]
     }
   }
-
-  getComponent(type: string) {
-    return this.formConfig?.controls.find(control => control.name === type)?.component;
-  }
-
-  protected readonly onsubmit = onsubmit;
 }
