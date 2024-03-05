@@ -1,4 +1,4 @@
-@use "variables";
+@use "variables" as v;
 
 :host {
   display: block;
@@ -10,15 +10,16 @@
 
 .ef-input-select {
   width: 100%;
-  padding: variables.$input-padding;
-  border: 1px solid rgb(variables.$input-border-color);
-  border-radius: variables.$input-border-radius;
+  padding: #{v.$input-padding};
+  background: hsl(#{v.$input-bg});
+  border: 1px solid hsl(#{v.$input-border-color});
+  border-radius: #{v.$input-border-radius};
   outline: 3px solid transparent;
   outline-offset: 2px;
   transition: outline 0.2s ease-in-out;
 
   &:focus {
-    outline-color: rgba(variables.$input-border-color, 0.5);
+    outline-color: hsla(v.$input-border-color/ 0.5);
   }
 }
 
@@ -27,18 +28,18 @@
 .show-errors-touched .ng-touched,
 .show-errors-dirty .ng-dirty) {
   .ef-input-select.ng-invalid {
-    border-color: rgb(variables.$invalid-color);
+    border-color: hsl(#{v.$invalid-color});
 
     &:focus {
-      outline-color: rgba(variables.$invalid-color, 0.5);
+      outline-color: hsla(v.$invalid-color/ 0.5);
     }
   }
 
   .ef-input-select.ng-valid {
-    border-color: rgb(variables.$valid-color);
+    border-color: hsl(#{v.$valid-color});
 
     &:focus {
-      outline-color: rgba(variables.$valid-color, 0.5);
+      outline-color: hsla(v.$valid-color/ 0.5);
     }
   }
 }

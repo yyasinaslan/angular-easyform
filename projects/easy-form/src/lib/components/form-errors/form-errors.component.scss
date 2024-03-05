@@ -1,7 +1,6 @@
 @use "variables" as v;
 
 :host {
-  --ef-form-errors-font-size: 0.8em;
   display: none;
 }
 
@@ -14,6 +13,6 @@
 }
 
 .ef-errors {
-  color: rgb(v.$invalid-color);
-  font-size: v.$errors-font-size;
+  color: hsl(#{v.$invalid-color});
+  font-size: #{v.$errors-font-size};
 }

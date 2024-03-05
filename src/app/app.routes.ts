@@ -1,9 +1,11 @@
 import {Routes} from '@angular/router';
 import {AlternativeSchemaComponent} from "./alternative-schema/alternative-schema.component";
 import {LoginComponent} from "./login/login.component";
+import {HomeComponent} from "./home/home.component";
 
 export const routes: Routes = [
-  {path: '', component: AlternativeSchemaComponent, pathMatch: 'full'},
+  {path: '', component: HomeComponent, pathMatch: 'full'},
   {path: 'login', component: LoginComponent},
+  {path: 'examples', component: AlternativeSchemaComponent},
 
 ];

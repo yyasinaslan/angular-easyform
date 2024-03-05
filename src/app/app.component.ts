@@ -13,5 +13,16 @@ import {routes} from "./app.routes";
 export class AppComponent {
   title = 'dynamic-form-2';
 
+  theme = localStorage.getItem('theme') || 'dark';
   protected readonly routes = routes;
+
+  toggleTheme() {
+    this.theme = this.theme === 'light' ? 'dark' : 'light';
+    document.body.classList.toggle('dark', this.theme === 'dark');
+    localStorage.setItem('theme', this.theme);
+  }
+
+  ngOnInit() {
+    document.body.classList.toggle('dark', this.theme === 'dark');
+  }
 }

@@ -3,6 +3,82 @@
 @tailwind utilities;
 
 
+@layer base {
+  :root {
+    // Application variables
+    --background: 0 0% 100%;
+    --foreground: 20 14.3% 4.1%;
+    --card: 0 0% 100%;
+    --card-foreground: 20 14.3% 4.1%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 20 14.3% 4.1%;
+    --primary: 200 100% 50%;
+    --primary-foreground: 60 9.1% 97.8%;
+    --secondary: 60 4.8% 95.9%;
+    --secondary-foreground: 24 9.8% 10%;
+    --muted: 60 4.8% 95.9%;
+    --muted-foreground: 25 5.3% 44.7%;
+    --accent: 60 4.8% 95.9%;
+    --accent-foreground: 24 9.8% 10%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 60 9.1% 97.8%;
+    --border: 20 5.9% 90%;
+    --input: 20 5.9% 90%;
+    --ring: 24.6 95% 53.1%;
+    --radius: 0.5rem;
+
+    // Easy Form variables
+    --ef-invalid-color: 0 100% 50%;
+    --ef-valid-color: var(--border);
+    --ef-input-bg: 0 100% 100%;
+    --ef-input-border-color: var(--border);
+    --ef-input-border-radius: 5px;
+    --ef-input-padding: 0.5em;
+    --ef-form-errors-font-size: 0.8em;
+  }
+
+  .dark {
+    // Application variables
+    --background: 222 47% 11%;
+    --foreground: 60 9.1% 85%;
+    --card: 217 33% 17%;
+    --card-foreground: 60 9.1% 85%;
+    --popover: 20 14.3% 4.1%;
+    --popover-foreground: 60 9.1% 85%;
+    --primary: 200 100% 50%;
+    --primary-foreground: 60 9.1% 85%;
+    --secondary: 12 6.5% 15.1%;
+    --secondary-foreground: 60 9.1% 85%;
+    --muted: 12 6.5% 15.1%;
+    --muted-foreground: 24 5.4% 60%;
+    --accent: 12 6.5% 15.1%;
+    --accent-foreground: 60 9.1% 85%;
+    --destructive: 0 72.2% 50.6%;
+    --destructive-foreground: 60 9.1% 85%;
+    --border: 222 30% 30%;
+    --input: 211 33% 18%;
+    --ring: 20.5 90.2% 48.2%;
+
+    // Easy Form variables
+    --ef-invalid-color: 0 100% 60%;
+    --ef-valid-color: var(--border);
+    --ef-input-bg: 211 24% 12%;
+    --ef-input-border-color: var(--border);
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+
+}
+
+
 @layer components {
   button {
     @apply px-3 py-2 rounded-lg border focus:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2 active:scale-95;
@@ -12,16 +88,15 @@
     @apply px-3 py-2 rounded-lg bg-green-600 border-green-600 text-white hover:bg-green-500 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 active:scale-95;
   }
 
-  input[type=text] {
-    @apply border p-2 ps-3 block rounded-lg focus-visible:outline-green-600 disabled:bg-slate-100 w-full;
+  input {
+    @apply p-2 ps-3 border bg-input block rounded-lg focus-visible:outline-green-600 disabled:bg-slate-100 w-full;
   }
 
   .badge {
-    @apply px-2 py-1 text-xs rounded bg-purple-700 text-white;
+    @apply px-2 py-1 text-xs rounded bg-purple-700/20;
   }
 
   .card {
-    @apply p-5 border bg-white rounded-xl shadow-lg;
+    @apply p-5 border bg-card text-card-foreground rounded-xl shadow-lg;
   }
 }
-
