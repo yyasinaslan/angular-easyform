@@ -7,9 +7,14 @@
       <ng-container easyFormField path="name"/>
       <ng-container easyFormField path="email"/>
       <ng-container easyFormField path="phone"/>
-      <ng-container easyFormField path="userType"/>
+      <ng-container easyFormField path="userType" #userType="easyFormField" (change)="handleChange($event)"/>
+      @if (userType.value === 'admin') {
+        <div>
+          <ng-container easyFormField path="adminRoles"/>
+        </div>
+      }
       <ng-container easyFormField path="publishDate"/>
-      {{ form.getRawValue('publishDate') | json }}
+      <ng-container easyFormField path="gender"/>
     </div>
 
     <div class="card space-y-3">

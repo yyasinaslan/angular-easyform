@@ -16,6 +16,7 @@ import {FormFieldDirective} from "../directives/form-field.directive";
 import {FormGroup, ReactiveFormsModule} from "@angular/forms";
 import {EfCheckboxComponent} from "../controls/ef-checkbox/ef-checkbox.component";
 import {EfSelectComponent} from "../controls/ef-select/ef-select.component";
+import {EfRadioComponent} from "../controls/ef-radio/ef-radio.component";
 
 @Component({
   selector: 'easy-form',
@@ -39,7 +40,6 @@ export class EasyFormComponent implements AfterContentInit {
   @Input() focusFirstError = true;
 
   @Output() submit = new EventEmitter<FormGroup>();
-  protected readonly onsubmit = onsubmit;
 
   constructor() {
     if (!this.formConfig) {
@@ -58,24 +58,17 @@ export class EasyFormComponent implements AfterContentInit {
   handleSubmit($event: any) {
     if (this.form.invalid && this.focusFirstError && this.elementRef) {
       const firstError = this.elementRef.nativeElement.querySelector('.ng-invalid:not(form), ef-errors:has(*)');
-      console.log('firstError', firstError)
       if (firstError) {
         setTimeout(() => {
-          if (firstError.tagName == 'EF-SELECT') {
+          if (firstError.tagName == 'EF-ERRORS') {
             firstError.scrollIntoView({behavior: 'smooth', block: 'center'})
           } else {
-            (firstError as HTMLElement).scrollIntoView({behavior: 'smooth', block: 'center'});
             (firstError as HTMLElement).focus()
           }
         }, 100)
       }
     }
-    console.log($event)
     this.submit.emit(this.form.formGroup)
-  }
-
-  private renderFormGroup() {
-
   }
 
   private loadDefaultConfig() {
@@ -85,6 +78,7 @@ export class EasyFormComponent implements AfterContentInit {
         {name: 'text', component: EfTextComponent},
         {name: 'select', component: EfSelectComponent},
         {name: 'checkbox', component: EfCheckboxComponent},
+        {name: 'radio', component: EfRadioComponent},
       ]
     }
   }

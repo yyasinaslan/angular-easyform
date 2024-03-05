@@ -179,13 +179,13 @@ export class ValidationChain<FormType = any, RemoteType = FormType> implements F
    * @param toForm
    * @param fromForm
    */
-  transform(toForm: (value: RemoteType) => FormType, fromForm: (value: FormType) => RemoteType) {
-    if (!this.transformer) this.transformer = {};
-
-    this.transformer.toForm = toForm;
-    this.transformer.fromForm = fromForm;
-    return this;
-  }
+  // transform(toForm: (value: RemoteType) => FormType, fromForm: (value: FormType) => RemoteType) {
+  //   if (!this.transformer) this.transformer = {};
+  //
+  //   this.transformer.toForm = toForm;
+  //   this.transformer.fromForm = fromForm;
+  //   return this;
+  // }
 
   toForm(toForm: (value: RemoteType) => FormType) {
     if (!this.transformer) this.transformer = {};

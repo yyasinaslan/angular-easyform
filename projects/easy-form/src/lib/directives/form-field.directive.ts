@@ -1,16 +1,20 @@
 import {
   AfterContentInit,
   ComponentRef,
+  DestroyRef,
   Directive,
+  EventEmitter,
   inject,
   Input,
   OnChanges,
+  Output,
   SimpleChanges,
   ViewContainerRef
 } from '@angular/core';
 import {FormControl} from "@angular/forms";
 import {EasyFormComponent} from "../easy-form/easy-form.component";
 import {EasyFormControl} from "../easy-form-control";
+import {takeUntilDestroyed} from "@angular/core/rxjs-interop";
 
 @Directive({
   selector: 'ng-container[easyFormField]',
@@ -18,6 +22,7 @@ import {EasyFormControl} from "../easy-form-control";
   exportAs: 'easyFormField'
 })
 export class FormFieldDirective implements OnChanges, AfterContentInit {
+  destroyRef = inject(DestroyRef)
   viewContainerRef = inject(ViewContainerRef)
   easyFormComponent = inject(EasyFormComponent)
 
@@ -26,12 +31,14 @@ export class FormFieldDirective implements OnChanges, AfterContentInit {
   @Input() path?: string | Array<string | number>;
   @Input() disabled = false;
   @Input() props?: Record<string, any>;
+
+  @Output() change = new EventEmitter<any>();
+
   public instance?: EasyFormControl;
   private componentRef?: ComponentRef<EasyFormControl>;
-  private _renderTimeout: any;
 
-  constructor() {
-
+  get value() {
+    return this.control?.value;
   }
 
   private get form() {
@@ -57,14 +64,15 @@ export class FormFieldDirective implements OnChanges, AfterContentInit {
 
   render() {
     this._render();
-    // clearTimeout(this._renderTimeout);
-    // this._renderTimeout = setTimeout(() => {
-    //   this._render();
-    // }, 10);
   }
 
   ngAfterContentInit(): void {
     this.render();
+
+    // Subscribe to value changes and emit change event
+    this.control?.valueChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(value => {
+      this.change.emit(value);
+    })
   }
 
   private _render() {

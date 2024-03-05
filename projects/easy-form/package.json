@@ -1,6 +1,19 @@
 {
-  "name": "@yyasinaslan/easy-form",
+  "name": "@yyasinaslan/easyform",
   "version": "0.0.1",
+  "author": "yyasinaslan https://github.com/yyasinaslan",
+  "description": "Angular Easy Form",
+  "homepage": "https://github.com/yyasinaslan/angular-easyform",
+  "license": "MIT",
+  "keywords": [
+    "angular",
+    "angular 17",
+    "form",
+    "easy",
+    "easyform",
+    "form array",
+    "form group"
+  ],
   "peerDependencies": {
     "@angular/common": ">=17.0.0",
     "@angular/core": ">=17.0.0"

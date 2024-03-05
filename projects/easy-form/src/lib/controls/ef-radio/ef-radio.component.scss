@@ -1,0 +1,8 @@
+@use "variables" as v;
+
+:host-context(.show-errors-submitted .ng-submitted,
+.show-errors-always,
+.show-errors-touched .ng-touched,
+.show-errors-dirty .ng-dirty) {
+
+}

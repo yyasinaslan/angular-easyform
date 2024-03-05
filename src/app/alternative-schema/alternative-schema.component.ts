@@ -38,8 +38,14 @@ export class AlternativeSchemaComponent {
     userType: ef.select([
       {label: 'Admin', value: 'admin'},
       {label: 'User', value: 'user'}
-    ], 'User Type').required('User Type is required'),
-    publishDate: ef.date<string, Date>('Publish Date').required('Publish Date is required'),
+    ], 'User Type'),
+    adminRoles: ef.radio([{label: 'Super Admin', value: 'super'}, {label: 'Admin', value: 'admin'}], 'Admin Roles'),
+    publishDate: ef.date<string, Date>('Publish Date'),
+    gender: ef.radio([
+      {label: 'Male', value: 'male'},
+      {label: 'Female', value: 'female'},
+      {label: 'Dont want to provide', value: 'unprovided'},
+    ], 'Gender'),
     skills: ef.array(ef.text().required('Skill is required'), {initialValue: ['programming', 'devops']})
       .required('Skills are required')
       .minLength(3, 'At least 3 skills are required'),
@@ -59,5 +65,12 @@ export class AlternativeSchemaComponent {
 
   submitted(event: FormGroup) {
     console.log('submitted', event.value);
+    if (this.form.invalid) return;
+
+    const data = this.form.getValue();
+  }
+
+  handleChange(event: Event) {
+    console.log('change', event);
   }
 }

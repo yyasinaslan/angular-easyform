@@ -27,7 +27,7 @@ export type FormFieldBase<FormType = any, RemoteType = FormType> = {
   props?: Record<string, HTMLInputElement['attributes']>;
 
   // select options
-  options?: SelectOptions;
+  options?: SelectOptions<FormType>;
 
   transformer?: {
     toForm?: (value: RemoteType) => FormType;

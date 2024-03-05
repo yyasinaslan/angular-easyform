@@ -1,14 +1,16 @@
 {
-  "name": "dynamic-form-2",
+  "name": "@yyasinaslan/easyform",
   "version": "0.0.0",
+  "author": "yyasinaslan https://github.com/yyasinaslan",
+  "homepage": "https://github.com/yyasinaslan/angular-easyform",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "build:lib": "ng build --project easy-form"
   },
-  "private": true,
   "dependencies": {
     "@angular/animations": "^17.2.3",
     "@angular/common": "^17.2.3",

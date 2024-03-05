@@ -1,11 +1,15 @@
 <easy-form [form]="form">
-
   <div class="container mx-auto max-w-2xl space-y-5 py-10 px-2">
     <div class="card space-y-6">
       <h1 class="text-lg">Login Page</h1>
       <ng-container easyFormField path="email"/>
       <ng-container easyFormField path="password"/>
-      <button type="submit">Login</button>
+      <div>
+        <ng-container easyFormField path="rememberMe"/>
+      </div>
+      <div>
+        <button type="submit">Login</button>
+      </div>
 
     </div>
 

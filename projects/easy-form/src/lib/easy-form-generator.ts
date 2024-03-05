@@ -55,7 +55,7 @@ export abstract class EasyFormGenerator {
     return vc;
   }
 
-  public static select<FormType = any, RemoteType = FormType>(options: SelectOptions, label?: ObservableString, configs?: GeneratorBaseOptions) {
+  public static select<FormType = any, RemoteType = FormType>(options: SelectOptions<FormType>, label?: ObservableString, configs?: GeneratorBaseOptions) {
     const vc = new ValidationChain<FormType, RemoteType>({...configs, label, controlType: BasicControlTypes.Select});
     vc.options = options;
     return vc;
@@ -65,13 +65,18 @@ export abstract class EasyFormGenerator {
     return new ValidationChain<FormType, RemoteType>({...configs, label, controlType: BasicControlTypes.Checkbox});
   }
 
+  public static radio<FormType = any, RemoteType = FormType>(options: SelectOptions<FormType>, label: string, configs?: GeneratorBaseOptions) {
+    const vc = new ValidationChain<FormType, RemoteType>({...configs, label, controlType: BasicControlTypes.Radio});
+    vc.options = options;
+    return vc;
+  }
+
   public static date<FormType = any, RemoteType = FormType>(label: string, configs?: GeneratorBaseOptions) {
     const vc = new ValidationChain<FormType, RemoteType>({...configs, label, controlType: "text"});
     if (!vc.props) vc.props = {};
     vc.props['type'] = "date";
     return vc;
   }
-
 
   public static group<FormType = Record<string, any>, RemoteType = FormType>(schema: FormFieldGroup['fields'], configs?: GeneratorBaseOptions) {
     return new ValidationChain<FormType, RemoteType>({

@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import {EasyForm, EasyFormComponent, FormFieldDirective} from "easy-form";
+import {Component} from '@angular/core';
+import {EasyForm as ef, EasyFormComponent, FormFieldDirective} from "easy-form";
 
 @Component({
   selector: 'app-login',
@@ -12,8 +12,9 @@ import {EasyForm, EasyFormComponent, FormFieldDirective} from "easy-form";
   styleUrl: './login.component.scss'
 })
 export class LoginComponent {
-  form = EasyForm.create({
-    email: EasyForm.email('Email').required('Email is required').email('Email is not valid'),
-    password: EasyForm.password('Password').required('Password is required'),
+  form = ef.create({
+    email: ef.email('Email').required('Email is required').email('Email is not valid'),
+    password: ef.password('Password').required('Password is required'),
+    rememberMe: ef.checkbox('Remember me')
   });
 }
