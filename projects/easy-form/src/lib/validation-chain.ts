@@ -2,10 +2,11 @@ import {FormField, FormFieldBase} from "./interfaces/form-field";
 import {BasicControlTypes} from "./interfaces/basic-control-types";
 import {AdvancedControlTypes} from "./interfaces/advanced-control-types";
 import {Validation} from "./interfaces/validation";
-import {ObservableString} from "easy-form";
+import {SelectOptions} from "easy-form";
 import {ValidatorFn, Validators} from "@angular/forms";
+import {ObservableString} from "./interfaces/observable-string";
 
-export class ValidationChain implements FormFieldBase {
+export class ValidationChain<FormType = any, RemoteType = FormType> implements FormFieldBase<FormType, RemoteType> {
 
   /**
    * The type of control to be rendered
@@ -16,8 +17,14 @@ export class ValidationChain implements FormFieldBase {
 
   props?: Record<string, any>;
 
-  initialValue?: any;
+  initialValue?: RemoteType;
 
+  options?: SelectOptions<FormType>;
+
+  transformer?: {
+    toForm?: (value: RemoteType) => FormType;
+    fromForm?: (value: FormType) => RemoteType;
+  }
 
   constructor(options: FormField) {
     Object.assign(this, options);
@@ -157,4 +164,38 @@ export class ValidationChain implements FormFieldBase {
     return this;
   }
 
+  /**
+   * Set the initial value of the field
+   * @param value
+   */
+  default(value: RemoteType) {
+    this.initialValue = value;
+    return this;
+  }
+
+  /**
+   * Transform the value from the form to the remote value
+   * ! Not implemented yet
+   * @param toForm
+   * @param fromForm
+   */
+  transform(toForm: (value: RemoteType) => FormType, fromForm: (value: FormType) => RemoteType) {
+    if (!this.transformer) this.transformer = {};
+
+    this.transformer.toForm = toForm;
+    this.transformer.fromForm = fromForm;
+    return this;
+  }
+
+  toForm(toForm: (value: RemoteType) => FormType) {
+    if (!this.transformer) this.transformer = {};
+    this.transformer.toForm = toForm;
+    return this;
+  }
+
+  fromForm(fromForm: (value: FormType) => RemoteType) {
+    if (!this.transformer) this.transformer = {};
+    this.transformer.fromForm = fromForm;
+    return this;
+  }
 }

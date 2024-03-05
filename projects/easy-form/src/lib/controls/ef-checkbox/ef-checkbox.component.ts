@@ -1,7 +1,8 @@
 import {Component, Input} from '@angular/core';
-import {EasyFormControl, FormErrorsComponent, ObservableStringPipe} from "easy-form";
+import {EasyFormControl, FormErrorsComponent} from "easy-form";
 import {FormControl, ReactiveFormsModule} from "@angular/forms";
 import {FormField} from "../../interfaces/form-field";
+import {ObservePipe} from "../../pipes/observe";
 
 @Component({
   selector: 'ef-checkbox',
@@ -9,7 +10,7 @@ import {FormField} from "../../interfaces/form-field";
   imports: [
     FormErrorsComponent,
     ReactiveFormsModule,
-    ObservableStringPipe
+    ObservePipe
   ],
   templateUrl: './ef-checkbox.component.html',
   styleUrl: './ef-checkbox.component.scss'

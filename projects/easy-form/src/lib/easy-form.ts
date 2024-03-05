@@ -65,7 +65,7 @@ export class EasyForm<T = Record<string, any>> extends EasyFormGenerator {
    * @param options
    */
   public static create<T>(schema: FormSchema<T>, options?: EasyFormOptions<T>) {
-    return new EasyForm(schema, options);
+    return new EasyForm<T>(schema, options);
   }
 
   getSchema(path: string | Array<string | number>) {
@@ -98,6 +98,20 @@ export class EasyForm<T = Record<string, any>> extends EasyFormGenerator {
 
   getOptions() {
     return this.options;
+  }
+
+  getValue(path?: string | Array<string | number>) {
+    if (path) {
+      return this.formGroup.get(path)?.value;
+    }
+    return this.formGroup.value;
+  }
+
+  getRawValue(path?: string | Array<string | number>) {
+    if (path) {
+      return this.formGroup.get(path)?.getRawValue();
+    }
+    return this.formGroup.getRawValue();
   }
 
   addToArray(path: string, value: any) {

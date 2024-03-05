@@ -1,16 +1,18 @@
-<easy-form [form]="form">
+<easy-form [form]="form" [focusFirstError]="true" (submit)="submitted($event)">
 
-  <div class="container mx-auto max-w-2xl space-y-5">
-    <div class="border border-dashed p-3 rounded-lg space-y-3">
+  <div class="container mx-auto max-w-2xl py-10 space-y-10 px-2">
+    <div class="card space-y-3">
       <h1 class="text-lg">General <span
         class="badge">Individual form fields</span></h1>
       <ng-container easyFormField path="name"/>
       <ng-container easyFormField path="email"/>
       <ng-container easyFormField path="phone"/>
       <ng-container easyFormField path="userType"/>
+      <ng-container easyFormField path="publishDate"/>
+      {{ form.getRawValue('publishDate') | json }}
     </div>
 
-    <div class="border border-dashed p-3 rounded-lg space-y-3">
+    <div class="card space-y-3">
       <h1 class="text-lg">Notification Settings <span
         class="badge">Group</span></h1>
       <div class="grid grid-cols-2 gap-3">
@@ -19,7 +21,7 @@
       </div>
     </div>
 
-    <div class="border border-dashed p-3 rounded-lg space-y-3">
+    <div class="card space-y-3">
       <div class="flex gap-2 justify-between items-center">
         <h1 class="text-lg">Skills <span
           class="badge">Array with single field</span>
@@ -42,7 +44,7 @@
       </ef-form-array>
     </div>
 
-    <div class="border border-dashed p-3 rounded-lg space-y-3">
+    <div class="card space-y-3">
       <div class="flex gap-2 justify-between items-center">
         <h1 class="text-lg">Addresses <span
           class="badge">Array with group</span></h1>

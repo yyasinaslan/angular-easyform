@@ -3,7 +3,7 @@ import {EasyFormControl} from "../../easy-form-control";
 import {FormControl, ReactiveFormsModule} from "@angular/forms";
 import {FormField} from "../../interfaces/form-field";
 import {FormErrorsComponent} from "../../components/form-errors/form-errors.component";
-import {ObservableStringPipe} from "easy-form";
+import {ObservePipe} from "../../pipes/observe";
 
 @Component({
   selector: 'ef-text',
@@ -11,7 +11,7 @@ import {ObservableStringPipe} from "easy-form";
   imports: [
     ReactiveFormsModule,
     FormErrorsComponent,
-    ObservableStringPipe
+    ObservePipe
   ],
   templateUrl: './ef-text.component.html',
   styleUrl: './ef-text.component.scss'

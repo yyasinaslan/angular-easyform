@@ -3,9 +3,10 @@ import {BasicControlTypes} from "./basic-control-types";
 import {ComponentType} from "./component-type";
 import {EasyFormControl} from "../easy-form-control";
 import {AdvancedControlTypes} from "./advanced-control-types";
-import {ObservableString} from "easy-form";
+import {ObservableString} from "./observable-string";
+import {SelectOptions} from "easy-form";
 
-export type FormFieldBase = {
+export type FormFieldBase<FormType = any, RemoteType = FormType> = {
 
   // Optional field id
   id?: string;
@@ -14,7 +15,7 @@ export type FormFieldBase = {
   label?: ObservableString;
 
   // Field initial value
-  initialValue?: any;
+  initialValue?: RemoteType;
 
   // Field validations
   validations?: Record<string, Validation>;
@@ -24,6 +25,14 @@ export type FormFieldBase = {
 
   // Additional props
   props?: Record<string, HTMLInputElement['attributes']>;
+
+  // select options
+  options?: SelectOptions;
+
+  transformer?: {
+    toForm?: (value: RemoteType) => FormType;
+    fromForm?: (value: FormType) => RemoteType;
+  }
 }
 
 export type FormFieldGeneric = {

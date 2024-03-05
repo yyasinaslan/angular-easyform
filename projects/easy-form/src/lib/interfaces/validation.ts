@@ -1,5 +1,5 @@
 import {ValidatorFn} from "@angular/forms";
-import {ObservableString} from "../pipes/observable-string";
+import {ObservableString} from "./observable-string";
 
 export interface Validation {
   // Validator name

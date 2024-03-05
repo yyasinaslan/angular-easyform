@@ -19,5 +19,9 @@
   .badge {
     @apply px-2 py-1 text-xs rounded bg-purple-700 text-white;
   }
+
+  .card {
+    @apply p-5 border bg-white rounded-xl shadow-lg;
+  }
 }
 

@@ -1,6 +1,6 @@
 <ng-template #defaultErrorMessage let-message>
   @if (message) {
-    <div class="ef-errors">{{ message | observableString }}</div>
+    <div class="ef-errors">{{ message | observe }}</div>
   }
 </ng-template>
 

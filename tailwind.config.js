@@ -6,7 +6,7 @@ module.exports = {
   theme: {
     extend: {
       borderColor: {
-        DEFAULT: '#c5c5c5',
+        DEFAULT: '#dedede',
       }
     },
   },

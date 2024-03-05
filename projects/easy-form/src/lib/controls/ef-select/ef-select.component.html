@@ -1,10 +1,12 @@
 @if (control) {
-  <label class="ef-form-label" [for]="id">{{ formField.label | observableString }}</label>
+  @if (formField.label) {
+    <label class="ef-form-label" [for]="id">{{ formField.label | observe }}</label>
+  }
   <select [id]="id" [formControl]="control"
           class="ef-input-select">
-    @if (props && props['items']) {
-      @for (item of props['items']; track item.value) {
-        <option [value]="item.value">{{ item.label | observableString }}</option>
+    @if (formField.options) {
+      @for (item of (formField.options | observe); track item.value) {
+        <option [value]="item.value">{{ item.label | observe }}</option>
       }
     }
   </select>

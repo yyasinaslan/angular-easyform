@@ -3,7 +3,7 @@ import {KeyValuePipe, NgTemplateOutlet} from "@angular/common";
 import {EasyFormComponent} from "../../easy-form/easy-form.component";
 import {FormControl} from "@angular/forms";
 import {FormField} from "../../interfaces/form-field";
-import {ObservableStringPipe} from "../../pipes/observable-string";
+import {ObservePipe} from "../../pipes/observe";
 
 @Component({
   selector: 'ef-errors',
@@ -11,7 +11,7 @@ import {ObservableStringPipe} from "../../pipes/observable-string";
   imports: [
     KeyValuePipe,
     NgTemplateOutlet,
-    ObservableStringPipe
+    ObservePipe
   ],
   templateUrl: './form-errors.component.html',
   styleUrl: './form-errors.component.scss'

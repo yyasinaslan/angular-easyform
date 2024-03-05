@@ -1,7 +1,8 @@
 import {Component, Input} from '@angular/core';
-import {EasyFormControl, FormErrorsComponent, ObservableStringPipe} from "easy-form";
+import {EasyFormControl, FormErrorsComponent} from "easy-form";
 import {FormControl, FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {FormField} from "../../interfaces/form-field";
+import {ObservePipe} from "../../pipes/observe";
 
 @Component({
   selector: 'ef-select',
@@ -9,8 +10,8 @@ import {FormField} from "../../interfaces/form-field";
   imports: [
     FormErrorsComponent,
     FormsModule,
-    ObservableStringPipe,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ObservePipe
   ],
   templateUrl: './ef-select.component.html',
   styleUrl: './ef-select.component.scss'
