@@ -64,6 +64,16 @@ export class FormFieldDirective implements OnChanges, AfterContentInit {
 
   render() {
     this._render();
+
+    if (this.control) {
+      setTimeout(() => {
+        if (this.disabled) {
+          this.control!.disable();
+        } else {
+          this.control!.enable();
+        }
+      })
+    }
   }
 
   ngAfterContentInit(): void {

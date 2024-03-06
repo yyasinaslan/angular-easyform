@@ -1,7 +1,13 @@
 $invalid-color: var(--ef-invalid-color, (0 100% 50%));
 $valid-color: var(--ef-valid-color, (120 100% 42%));
 $input-bg: var(--ef-input-bg, (0 100% 100%));
+$input-accent-color: var(--ef-input-acccent-color, (240 100% 50%));
 $input-border-color: var(--ef-input-border-color, (0 0% 90%));
 $input-border-radius: var(--ef-input-border-radius, 5px);
 $input-padding: var(--ef-input-padding, 0.5em);
 $errors-font-size: var(--ef-form-errors-font-size, 0.8em);
+
+
+$radio-spacing: 0.5rem;
+$radio-size: 20px;
+

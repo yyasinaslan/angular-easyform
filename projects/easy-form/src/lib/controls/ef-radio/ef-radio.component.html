@@ -7,7 +7,7 @@
       @for (option of (formField.options | observe); track option.value) {
         <label class="ef-radio-option">
           <input type="radio" [formControl]="control" [value]="option.value">
-          <span class="ef-radio-label">{{ option.label | observe }}</span>
+          <span class="ef-form-label">{{ option.label | observe }}</span>
         </label>
       }
     </div>

@@ -10,13 +10,14 @@ import {
   QueryList
 } from '@angular/core';
 import {EASY_FORM_CONFIG} from "../tokens/easy-form-config";
+import {FormFieldDirective} from "../directives/form-field.directive";
 import {EasyForm} from "../easy-form";
 import {EfTextComponent} from "../controls/ef-text/ef-text.component";
-import {FormFieldDirective} from "../directives/form-field.directive";
 import {FormGroup, ReactiveFormsModule} from "@angular/forms";
 import {EfCheckboxComponent} from "../controls/ef-checkbox/ef-checkbox.component";
 import {EfSelectComponent} from "../controls/ef-select/ef-select.component";
 import {EfRadioComponent} from "../controls/ef-radio/ef-radio.component";
+import {EfTextAreaComponent} from "../controls/ef-textarea/ef-textarea.component";
 
 @Component({
   selector: 'easy-form',
@@ -76,6 +77,7 @@ export class EasyFormComponent implements AfterContentInit {
       validators: [],
       controls: [
         {name: 'text', component: EfTextComponent},
+        {name: 'textarea', component: EfTextAreaComponent},
         {name: 'select', component: EfSelectComponent},
         {name: 'checkbox', component: EfCheckboxComponent},
         {name: 'radio', component: EfRadioComponent},

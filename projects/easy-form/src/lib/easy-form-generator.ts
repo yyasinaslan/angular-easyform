@@ -34,6 +34,10 @@ export abstract class EasyFormGenerator {
     return new ValidationChain<FormType, RemoteType>({...configs, label, controlType: "text"});
   }
 
+  public static textarea<FormType = string, RemoteType = FormType>(label?: ObservableString, configs?: GeneratorBaseOptions) {
+    return new ValidationChain<FormType, RemoteType>({...configs, label, controlType: "textarea"});
+  }
+
   public static email<FormType = string, RemoteType = FormType>(label?: ObservableString, configs?: GeneratorBaseOptions) {
     const vc = new ValidationChain<FormType, RemoteType>({...configs, label, controlType: "text"});
     if (!vc.props) vc.props = {};

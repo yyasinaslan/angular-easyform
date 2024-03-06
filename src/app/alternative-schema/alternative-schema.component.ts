@@ -45,7 +45,7 @@ export class AlternativeSchemaComponent {
       {label: 'Male', value: 'male'},
       {label: 'Female', value: 'female'},
       {label: 'Dont want to provide', value: 'unprovided'},
-    ], 'Gender'),
+    ], 'Gender').default('male'),
     skills: ef.array(ef.text().required('Skill is required'), {initialValue: ['programming', 'devops']})
       .required('Skills are required')
       .minLength(3, 'At least 3 skills are required'),
@@ -58,7 +58,9 @@ export class AlternativeSchemaComponent {
     notificationSettings: ef.group({
       email: ef.checkbox('Email').default(true),
       sms: ef.checkbox('Sms').default(false)
-    })
+    }),
+    description: ef.textarea('Description')
+      .maxLength(500, 'Description must be no more than 500 characters'),
   }, {
     showErrors: 'submitted'
   });

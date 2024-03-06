@@ -8,7 +8,7 @@
 .show-errors-always,
 .show-errors-touched .ng-touched,
 .show-errors-dirty .ng-dirty) {
-  .ef-input-text.ng-invalid {
+  .ef-input-textarea.ng-invalid {
     border-color: hsl(#{v.$invalid-color});
 
     &:focus {
@@ -16,7 +16,7 @@
     }
   }
 
-  .ef-input-text.ng-valid {
+  .ef-input-textarea.ng-valid {
     border-color: hsl(#{v.$valid-color});
 
     &:focus {
@@ -29,7 +29,7 @@
   display: block;
 }
 
-.ef-input-text {
+.ef-input-textarea {
   width: 100%;
   padding: #{v.$input-padding};
   background: hsl(#{v.$input-bg});
@@ -38,17 +38,8 @@
   outline: 3px solid transparent;
   outline-offset: 2px;
   transition: outline 0.2s ease-in-out;
-
-  &:disabled {
-    opacity: 0.3;
-    cursor: default;
-  }
-
-  &:active {
-    outline-color: hsla(v.$valid-color/ 0.5);
-
-
-  }
+  height: auto;
+  min-height: 72px;
 
   &:focus {
     outline-color: hsla(v.$input-border-color/ 0.5);

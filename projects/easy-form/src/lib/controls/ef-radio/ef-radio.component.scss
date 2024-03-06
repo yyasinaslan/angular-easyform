@@ -1,8 +1,91 @@
 @use "variables" as v;
 
+:host {
+  display: block;
+}
+
+.ef-radio-container {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  gap: v.$radio-spacing;
+
+  .ef-radio-option {
+    display: flex;
+    gap: 0.4rem;
+    justify-content: start;
+    align-items: center;
+
+    input[type="radio"] {
+      appearance: none;
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      width: v.$radio-size;
+      height: v.$radio-size;
+      border-radius: 50%;
+      padding: 0;
+      background-color: hsl(v.$input-bg);
+      border: 1px solid hsl(v.$input-border-color);
+      accent-color: hsl(v.$input-accent-color);
+      transition: transform 50ms ease-in-out;
+
+      &:active {
+        transform: scale(1.2);
+
+        &:disabled {
+          transform: none;
+        }
+      }
+
+      &:focus-visible {
+        outline: 3px solid hsl(v.$input-border-color);
+        outline-offset: 2px;
+      }
+
+      &:checked {
+        border: 1px solid hsl(v.$input-accent-color);
+      }
+
+      &:checked:after {
+        content: "";
+        width: calc(#{v.$radio-size} * 0.6);
+        height: calc(#{v.$radio-size} * 0.6);
+        border-radius: 50%;
+        background-color: hsl(v.$input-accent-color);
+      }
+
+      &:disabled {
+        opacity: 0.3;
+        cursor: default;
+      }
+
+    }
+
+    /* method 1 - yanındaki komşusunun disable olması için */
+    input[type="radio"]:disabled ~ .ef-form-label {
+      opacity: 0.5;
+    }
+
+    /* method 2 - disable olan radio nun lable ının opacitesini azaltmak için */
+    //&:has(input[type="radio"]:disabled) {
+    //  .ef-form-label {
+    //    opacity: 0.5;
+    //  }
+    //}
+  }
+
+  /* checkbox da background url(data) çekilecek. içindeki ckech iconu için. Bootstrapa bak.
+  Datepicker daki iconu değiştirmeye çalış. */
+
+}
+
 :host-context(.show-errors-submitted .ng-submitted,
 .show-errors-always,
 .show-errors-touched .ng-touched,
 .show-errors-dirty .ng-dirty) {
 
 }
+
+
+
