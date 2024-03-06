@@ -1,8 +1,8 @@
 <easy-form [form]="form" [focusFirstError]="true" (submit)="submitted($event)">
 
   <div class="container mx-auto py-10 space-y-10 px-2">
-    <div class="grid grid-cols-1 lg:grid-rows-3 lg:grid-cols-6 gap-3">
-      <div class="card col-span-3 row-span-3 space-y-3">
+    <div class="grid grid-rows-3 grid-cols-12 gap-3">
+      <div class="card col-span-4 row-span-3 space-y-3">
         <h1 class="text-lg">General <span
           class="badge">Individual form fields</span></h1>
         <ng-container easyFormField path="name"/>
@@ -19,7 +19,7 @@
         <ng-container easyFormField path="gender"/>
       </div>
 
-      <div class="card space-y-3 col-span-2 row-span-1">
+      <div class="card space-y-3 col-span-5 row-span-1">
         <h1 class="text-lg">Notification Settings <span
           class="badge">Group</span></h1>
         <div class="grid grid-cols-2 gap-3">
@@ -28,7 +28,7 @@
         </div>
       </div>
 
-      <div class="card space-y-3 col-span-1 row-span-3">
+      <div class="card space-y-3 col-span-3 row-span-3">
         <div class="flex gap-2 justify-between items-center">
           <h1 class="text-lg">Skills <span
             class="badge">Array with single field</span>
@@ -52,7 +52,7 @@
         <button type="button" class="block w-full" (click)="form.addToArray('skills', '')">+ Add</button>
       </div>
 
-      <div class="card space-y-3 col-span-2 row-span-2">
+      <div class="card space-y-3 col-span-5 row-span-2">
         <div class="flex gap-2 justify-between items-center">
           <h1 class="text-lg">Addresses <span
             class="badge">Array with group</span></h1>
@@ -74,7 +74,6 @@
         </ef-form-array>
       </div>
     </div>
-
 
     <button type="submit">Submit</button>
 
