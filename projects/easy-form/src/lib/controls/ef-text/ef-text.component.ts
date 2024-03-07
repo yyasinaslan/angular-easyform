@@ -4,6 +4,7 @@ import {FormControl, ReactiveFormsModule} from "@angular/forms";
 import {FormField} from "../../interfaces/form-field";
 import {FormErrorsComponent} from "../../components/form-errors/form-errors.component";
 import {ObservePipe} from "../../pipes/observe";
+import {FormFieldDirective} from "../../directives/form-field.directive";
 
 @Component({
   selector: 'ef-text',
@@ -16,15 +17,5 @@ import {ObservePipe} from "../../pipes/observe";
   templateUrl: './ef-text.component.html',
   styleUrl: './ef-text.component.scss'
 })
-export class EfTextComponent implements EasyFormControl {
-
-  id = Math.random().toString(36).substring(2);
-
-  name = 'text';
-
-  control!: FormControl;
-  formField!: FormField;
-
-  @Input() props?: Record<string, any>;
-
+export class EfTextComponent extends EasyFormControl {
 }

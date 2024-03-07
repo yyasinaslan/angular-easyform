@@ -1,16 +1,16 @@
-@if (control) {
-  @if (formField.label) {
-    <label class="ef-form-label" [for]="id">{{ formField.label | observe }}</label>
+@if (hasInitialized()) {
+  @if (easyFormControl().schema?.label) {
+    <label class="ef-form-label" [for]="easyFormControl().id">{{ easyFormControl().schema?.label | observe }}</label>
   }
-  @if (formField.options) {
+  @if (easyFormControl().schema?.options) {
     <div class="ef-radio-container">
-      @for (option of (formField.options | observe); track option.value) {
+      @for (option of (easyFormControl().schema?.options | observe); track option.value) {
         <label class="ef-radio-option">
-          <input type="radio" [formControl]="control" [value]="option.value">
+          <input type="radio" [formControl]="easyFormControl().control!" [value]="option.value" [attr.aria-describedby]="easyFormControl().id">
           <span class="ef-form-label">{{ option.label | observe }}</span>
         </label>
       }
     </div>
   }
-  <ef-errors [control]="control" [formField]="formField"/>
+  <ef-errors [control]="easyFormControl().control!" [formField]="easyFormControl().schema!"/>
 }

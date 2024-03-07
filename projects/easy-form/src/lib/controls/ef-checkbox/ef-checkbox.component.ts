@@ -1,7 +1,6 @@
-import {Component, Input} from '@angular/core';
+import {Component} from '@angular/core';
 import {EasyFormControl, FormErrorsComponent} from "easy-form";
-import {FormControl, ReactiveFormsModule} from "@angular/forms";
-import {FormField} from "../../interfaces/form-field";
+import {ReactiveFormsModule} from "@angular/forms";
 import {ObservePipe} from "../../pipes/observe";
 
 @Component({
@@ -15,13 +14,5 @@ import {ObservePipe} from "../../pipes/observe";
   templateUrl: './ef-checkbox.component.html',
   styleUrl: './ef-checkbox.component.scss'
 })
-export class EfCheckboxComponent implements EasyFormControl {
-  id = Math.random().toString(36).substring(2);
-
-  name = 'text';
-
-  control!: FormControl;
-  formField!: FormField;
-
-  @Input() props?: Record<string, any>;
+export class EfCheckboxComponent extends EasyFormControl {
 }

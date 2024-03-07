@@ -15,15 +15,5 @@ import {EasyFormControl, FormErrorsComponent} from "easy-form";
   templateUrl: './ef-textarea.component.html',
   styleUrl: './ef-textarea.component.scss'
 })
-export class EfTextAreaComponent implements EasyFormControl {
-
-  id = Math.random().toString(36).substring(2);
-
-  name = 'textarea';
-
-  control!: FormControl;
-  formField!: FormField;
-
-  @Input() props?: Record<string, any>;
-
+export class EfTextAreaComponent extends EasyFormControl {
 }

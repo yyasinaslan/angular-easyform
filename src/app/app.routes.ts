@@ -3,11 +3,13 @@ import {AlternativeSchemaComponent} from "./alternative-schema/alternative-schem
 import {LoginComponent} from "./login/login.component";
 import {HomeComponent} from "./home/home.component";
 import {TableExampleComponent} from "./playground/table-example/table-example.component";
+import {EventsExampleComponent} from "./playground/events-example/events-example.component";
 
 export const routes: Routes = [
   {path: '', component: HomeComponent, pathMatch: 'full'},
   {path: 'login', component: LoginComponent},
   {path: 'examples', component: AlternativeSchemaComponent},
   {path: 'array-table', component: TableExampleComponent},
+  {path: 'events', component: EventsExampleComponent},
 
 ];

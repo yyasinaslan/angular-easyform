@@ -33,7 +33,8 @@ export class FormFieldDirective implements OnChanges, AfterContentInit {
   @Input() props?: Record<string, any>;
 
   @Output() change = new EventEmitter<any>();
-  @Output() focus = new EventEmitter<FocusEvent>();
+
+  @Output() fieldEvent = new EventEmitter<Event>();
 
   public instance?: EasyFormControl;
   private componentRef?: ComponentRef<EasyFormControl>;
@@ -58,13 +59,17 @@ export class FormFieldDirective implements OnChanges, AfterContentInit {
     }
 
     if (changes['props'] && this.componentRef) {
-      this.componentRef.instance.props = this.props;
+      this.componentRef.instance.props.set(changes['props'].currentValue);
       this.componentRef.changeDetectorRef.detectChanges();
     }
   }
 
   render() {
-    this._render();
+    try {
+      this._render();
+    } catch (e) {
+      console.error(e);
+    }
 
     if (this.control) {
       setTimeout(() => {
@@ -105,30 +110,29 @@ export class FormFieldDirective implements OnChanges, AfterContentInit {
       throw new Error(`Component configuration not found for ${schema.controlType}`);
     }
 
-    // console.log('component', component)
 
-    try {
-      const componentRef = this.viewContainerRef.createComponent<EasyFormControl>(component, {});
-      this.componentRef = componentRef;
-      this.instance = componentRef.instance;
+    const componentRef = this.viewContainerRef.createComponent<EasyFormControl>(component, {});
+    this.componentRef = componentRef;
+    this.instance = componentRef.instance;
 
-      this.instance.formFieldDirective = this;
-
-      const control = this.form.formGroup.get(path);
-      if (control) {
-        this.control = control as FormControl;
-        componentRef.instance.control = control as FormControl;
-      }
-
-      if (schema.props) {
-        componentRef.instance.props = schema.props;
-      }
-
-      componentRef.instance.formField = schema;
-
-      componentRef.changeDetectorRef.detectChanges();
-    } catch (e) {
-      console.error(e);
+    const control = this.form.formGroup.get(path);
+    if (!control) {
+      throw new Error(`FormControl not found for ${path}`);
     }
+    this.control = control as FormControl;
+
+    if (schema.props) {
+      // Initialize props
+      this.instance.props.set(schema.props);
+    }
+
+    componentRef.instance.easyFormControl.set({
+      id: (typeof path === 'string' ? path : path.join('_')) + '_' + Math.random().toString(36).substring(2),
+      control: this.control!,
+      schema: schema,
+      formFieldDirective: this
+    });
+
+    componentRef.changeDetectorRef.detectChanges();
   }
 }

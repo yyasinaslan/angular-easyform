@@ -15,13 +15,6 @@ import {FormField} from "../../interfaces/form-field";
   templateUrl: './ef-radio.component.html',
   styleUrl: './ef-radio.component.scss'
 })
-export class EfRadioComponent implements EasyFormControl {
-  id = Math.random().toString(36).substring(2);
+export class EfRadioComponent extends EasyFormControl {
 
-  name = 'text';
-
-  control!: FormControl;
-  formField!: FormField;
-
-  @Input() props?: Record<string, any>;
 }
