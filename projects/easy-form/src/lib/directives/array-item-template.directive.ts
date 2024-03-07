@@ -1,14 +1,14 @@
 import {Directive, inject, TemplateRef} from '@angular/core';
 
 @Directive({
-  selector: 'ng-template[formArrayTemplate]',
+  selector: 'ng-template[arrayItem]',
   standalone: true,
-  exportAs: 'easyFormArray'
+  exportAs: 'arrayItem'
 })
-export class FormArrayTemplateDirective {
+export class ArrayItemTemplateDirective {
   public templateRef = inject(TemplateRef);
 
-  static ngTemplateContextGuard<T>(dir: FormArrayTemplateDirective, ctx: any): ctx is {
+  static ngTemplateContextGuard<T>(dir: ArrayItemTemplateDirective, ctx: any): ctx is {
     $implicit: any,
     index: number
   } {

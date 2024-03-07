@@ -1,11 +1,14 @@
 import {FormControl} from "@angular/forms";
 import {FormField} from "./interfaces/form-field";
+import {FormFieldDirective} from "./directives/form-field.directive";
 
 /**
  * Every form control should implement this interface
  * to work with EasyFormComponent
  */
 export interface EasyFormControl {
+  formFieldDirective?: FormFieldDirective;
+  
   name: string; // Form control name as input
 
   formField: FormField;

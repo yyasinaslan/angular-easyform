@@ -1,0 +1,57 @@
+<div class="container py-10 space-y-5">
+  <h1 class="text-3xl">Array input with table appearance</h1>
+  <div class="card">
+    <easy-form [form]="form">
+      <div class="block space-y-5">
+        <button type="button" (click)="addNewAddress()">Add Item</button>
+        <ef-form-array path="addresses" class="block">
+
+          <ng-template arrayWrapper let-controls let-itemTemplate="itemTemplate">
+            <table class="w-full">
+              <thead>
+              <tr>
+                <th class="text-start">Street</th>
+                <th class="text-start">City</th>
+                <th class="text-start">State</th>
+                <th class="text-start">Zip</th>
+                <th></th>
+              </tr>
+              </thead>
+              <tbody>
+                @for (control of controls; track control) {
+                  <ng-container [ngTemplateOutlet]="itemTemplate"
+                                [ngTemplateOutletContext]="{$implicit: '', index: $index}"/>
+                }
+              </tbody>
+            </table>
+          </ng-template>
+
+          <ng-template arrayItem let-index="index">
+            <tr>
+              <td class="align-top">
+                <ng-container easyFormField [path]="['addresses', index, 'street']"/>
+              </td>
+              <td class="align-top">
+                <ng-container easyFormField [path]="['addresses', index, 'city']"/>
+              </td>
+              <td class="align-top">
+                <ng-container easyFormField [path]="['addresses', index, 'state']"/>
+              </td>
+              <td class="align-top">
+                <ng-container easyFormField [path]="['addresses', index, 'zip']"/>
+              </td>
+              <td class="align-top">
+                <button type="button" class="bg-red-500 text-white" (click)="form.removeFromArray('addresses', index)">
+                  Remove
+                </button>
+              </td>
+            </tr>
+          </ng-template>
+
+        </ef-form-array>
+
+        <button type="submit">Submit</button>
+      </div>
+    </easy-form>
+  </div>
+</div>

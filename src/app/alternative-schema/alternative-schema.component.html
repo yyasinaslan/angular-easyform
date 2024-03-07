@@ -5,7 +5,7 @@
       <div class="card col-span-4 row-span-3 space-y-3">
         <h1 class="text-lg">General <span
           class="badge">Individual form fields</span></h1>
-        <ng-container easyFormField path="name"/>
+        <ng-container easyFormField path="name" (focus)="handleFocus($event)"/>
         <ng-container easyFormField path="email"/>
         <ng-container easyFormField path="phone"/>
         <ng-container easyFormField path="userType" #userType="easyFormField" (change)="handleChange($event)"/>
@@ -37,7 +37,7 @@
         </div>
         <ef-errors path="skills"/>
         <ef-form-array path="skills" class="block space-y-4">
-          <ng-template formArrayTemplate let-index="index">
+          <ng-template arrayItem let-index="index">
             <div class="flex justify-between items-center gap-2">
               <div class="flex-auto">
                 <ng-container easyFormField [path]="['skills', index]"/>
@@ -59,7 +59,7 @@
           <button type="button" (click)="form.addToArray('addresses', {})">Add</button>
         </div>
         <ef-form-array path="addresses" class="block space-y-4">
-          <ng-template formArrayTemplate let-index="index">
+          <ng-template arrayItem let-index="index">
             <div class="flex items-center gap-2">
               <ng-container easyFormField [path]="['addresses', index, 'title']"/>
               <ng-container easyFormField [path]="['addresses', index, 'street']"/>

@@ -1,10 +1,10 @@
 import {Component, signal} from '@angular/core';
 import {JsonPipe} from "@angular/common";
 import {
+  ArrayItemTemplateDirective,
   EasyForm as ef,
   EasyFormComponent,
   EfFormArrayComponent,
-  FormArrayTemplateDirective,
   FormErrorsComponent,
   FormFieldDirective
 } from "easy-form";
@@ -18,7 +18,7 @@ import {FormGroup} from "@angular/forms";
     FormFieldDirective,
     JsonPipe,
     EfFormArrayComponent,
-    FormArrayTemplateDirective,
+    ArrayItemTemplateDirective,
     FormErrorsComponent
   ],
   templateUrl: './alternative-schema.component.html',
@@ -74,5 +74,9 @@ export class AlternativeSchemaComponent {
 
   handleChange(event: Event) {
     console.log('change', event);
+  }
+
+  handleFocus($event: FocusEvent) {
+    console.log('focus', $event);
   }
 }
