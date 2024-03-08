@@ -2,8 +2,9 @@ import {Component, ContentChild, inject, Input, TemplateRef} from '@angular/core
 import {EasyFormComponent} from "../../easy-form/easy-form.component";
 import {NgTemplateOutlet} from "@angular/common";
 import {FormArray} from "@angular/forms";
-import {FormArrayTemplateDirective} from "../../directives/form-array-template.directive";
+import {ArrayItemTemplateDirective} from "../../directives/array-item-template.directive";
 import {FormErrorsComponent} from "../form-errors/form-errors.component";
+import {ArrayWrapperTemplateDirective} from "../../directives/array-wrapper-template.directive";
 
 @Component({
   selector: 'ef-form-array',
@@ -16,9 +17,14 @@ import {FormErrorsComponent} from "../form-errors/form-errors.component";
   styleUrl: './ef-form-array.component.scss'
 })
 export class EfFormArrayComponent {
-  @ContentChild(FormArrayTemplateDirective, {read: TemplateRef}) arrayTemplate!: TemplateRef<{
+  @ContentChild(ArrayItemTemplateDirective, {read: TemplateRef}) itemTemplate!: TemplateRef<{
     $implicit: any,
     index: number
+  }>;
+
+  @ContentChild(ArrayWrapperTemplateDirective, {read: TemplateRef}) wrapperTemplate!: TemplateRef<{
+    $implicit: any,
+    itemTemplate: TemplateRef<any>
   }>;
 
   @Input({required: true}) path!: string;

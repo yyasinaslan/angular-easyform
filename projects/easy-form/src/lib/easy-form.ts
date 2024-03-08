@@ -92,8 +92,8 @@ export class EasyForm<T = Record<string, any>> extends EasyFormGenerator {
     return c;
   }
 
-  getControl(path: string | Array<string | number>) {
-    return this.formGroup.get(path) as FormControl;
+  getControl<T = FormControl>(path: string | Array<string | number>) {
+    return this.formGroup.get(path) as T;
   }
 
   getOptions() {
@@ -112,6 +112,22 @@ export class EasyForm<T = Record<string, any>> extends EasyFormGenerator {
       return this.formGroup.get(path)?.getRawValue();
     }
     return this.formGroup.getRawValue();
+  }
+
+  setValue(value: any, path?: string | Array<string | number>) {
+    if (path) {
+      this.formGroup.get(path)?.setValue(value);
+      return;
+    }
+    this.formGroup.setValue(value);
+  }
+
+  patchValue(value: any, path?: string | Array<string | number>) {
+    if (path) {
+      this.formGroup.get(path)?.patchValue(value);
+      return;
+    }
+    this.formGroup.patchValue(value);
   }
 
   addToArray(path: string, value: any) {

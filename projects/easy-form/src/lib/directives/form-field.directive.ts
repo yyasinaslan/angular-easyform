@@ -33,6 +33,7 @@ export class FormFieldDirective implements OnChanges, AfterContentInit {
   @Input() props?: Record<string, any>;
 
   @Output() change = new EventEmitter<any>();
+  @Output() focus = new EventEmitter<FocusEvent>();
 
   public instance?: EasyFormControl;
   private componentRef?: ComponentRef<EasyFormControl>;
@@ -110,6 +111,8 @@ export class FormFieldDirective implements OnChanges, AfterContentInit {
       const componentRef = this.viewContainerRef.createComponent<EasyFormControl>(component, {});
       this.componentRef = componentRef;
       this.instance = componentRef.instance;
+
+      this.instance.formFieldDirective = this;
 
       const control = this.form.formGroup.get(path);
       if (control) {
