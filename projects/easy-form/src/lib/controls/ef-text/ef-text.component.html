@@ -1,8 +1,10 @@
-@if (control) {
-  @if (formField.label) {
-    <label class="ef-form-label" [for]="id">{{ formField.label | observe }}</label>
+@if (hasInitialized()) {
+  @if (easyFormControl().schema!.label) {
+    <label class="ef-form-label" [for]="easyFormControl().id">{{ easyFormControl().schema?.label | observe }}</label>
   }
-  <input [id]="id" [type]="(props && props['type']) ? props!['type'] : 'text'" [formControl]="control"
+  <input [id]="easyFormControl().id" [type]="(props() && props()['type']) ? props()['type'] : 'text'"
+         [formControl]="easyFormControl().control!" (focus)="emitEvent($event)" (blur)="emitEvent($event)"
+         (input)="emitEvent($event)"
          class="ef-input-text">
-  <ef-errors [control]="control" [formField]="formField"/>
+  <ef-errors [control]="easyFormControl().control!" [formField]="easyFormControl().schema!"/>
 }

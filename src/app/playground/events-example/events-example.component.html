@@ -1,0 +1,14 @@
+<div class="container py-10 space-y-5">
+  <h1 class="text-3xl">Event binding example</h1>
+  <div class="card">
+    {{ eventMessage }}
+    <easy-form [form]="form">
+      <div class="block space-y-5">
+        <ng-container easyFormField path="name" (change)="handleChange($event)"
+                      (fieldEvent)="handleEvent($event)"/>
+
+        <button type="submit">Submit</button>
+      </div>
+    </easy-form>
+  </div>
+</div>

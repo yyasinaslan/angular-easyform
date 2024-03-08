@@ -1,14 +1,14 @@
-@if (control) {
-  @if (formField.label) {
-    <label class="ef-form-label" [for]="id">{{ formField.label | observe }}</label>
+@if (hasControl()) {
+  @if (easyFormControl().schema?.label) {
+    <label class="ef-form-label" [for]="easyFormControl().id">{{ easyFormControl().schema?.label | observe }}</label>
   }
-  <select [id]="id" [formControl]="control"
+  <select [id]="easyFormControl().id" [formControl]="easyFormControl().control!"
           class="ef-input-select">
-    @if (formField.options) {
-      @for (item of (formField.options | observe); track item.value) {
+    @if (easyFormControl().schema?.options) {
+      @for (item of (easyFormControl().schema?.options | observe); track item.value) {
         <option [value]="item.value">{{ item.label | observe }}</option>
       }
     }
   </select>
-  <ef-errors [control]="control" [formField]="formField"/>
+  <ef-errors [control]="easyFormControl().control!" [formField]="easyFormControl().schema!"/>
 }
