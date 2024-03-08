@@ -7,7 +7,7 @@
           class="badge">Individual form fields</span></h1>
         <ng-container easyFormField path="name"/>
         <ng-container easyFormField path="email"/>
-        <ng-container easyFormField path="phone"/>
+        <ng-container easyFormField path="phone" [disabled]="true"/>
         <ng-container easyFormField path="userType" #userType="easyFormField" (change)="handleChange($event)"/>
         @if (userType.value === 'admin') {
           <div>
@@ -15,16 +15,22 @@
           </div>
         }
         <ng-container easyFormField path="publishDate"/>
-        <ng-container easyFormField path="description" [disabled]="true"/>
+        <ng-container easyFormField path="description"/>
         <ng-container easyFormField path="gender"/>
       </div>
 
       <div class="card space-y-3 col-span-5 row-span-1">
-        <h1 class="text-lg">Notification Settings <span
-          class="badge">Group</span></h1>
+        <h1 class="text-lg">Notification Settings <span class="badge">Group</span></h1>
         <div class="grid grid-cols-2 gap-3">
           <ng-container easyFormField path="notificationSettings.email"/>
           <ng-container easyFormField path="notificationSettings.sms"/>
+        </div>
+      </div>
+
+      <div class="card space-y-3 col-span-5 row-span-1">
+        <h1 class="text-lg">Permission Settings</h1>
+        <div class="grid grid-cols-2 gap-3">
+          <ng-container easyFormField path="permissionsSettings.active"/>
         </div>
       </div>
 

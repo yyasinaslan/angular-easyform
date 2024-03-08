@@ -1,7 +1,7 @@
 @if (control) {
+  <input type="checkbox" [formControl]="control" [id]="id">
   @if (formField.label) {
     <label class="ef-form-label" [for]="id">{{ formField.label | observe }}</label>
   }
-  <input type="checkbox" [formControl]="control" [id]="id">
   <ef-errors [control]="control" [formField]="formField"/>
 }
