@@ -1,15 +1,10 @@
 import {InjectionToken} from "@angular/core";
-
+import {ComponentType} from "../interfaces/component-type";
+import {EasyFormControl} from "easy-form";
 
 export interface EasyFormConfig {
-  // Custom validators available to the form
-  validators: any[];
-
   // Custom form control components to be used in the form
-  controls: any[];
-
-  // Schema adapter
-  adapter?: any;
+  controls: Record<string, ComponentType<EasyFormControl>>;
 }
 
 const EASY_FORM_CONFIG_TOKEN = 'EASY_FORM_CONFIG_TOKEN';

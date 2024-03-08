@@ -5,7 +5,7 @@
       <div class="card col-span-4 row-span-3 space-y-3">
         <h1 class="text-lg">General <span
           class="badge">Individual form fields</span></h1>
-        <ng-container easyFormField path="name" (focus)="handleFocus($event)"/>
+        <ng-container easyFormField path="name" (fieldEvent)="handleFocus($event)"/>
         <ng-container easyFormField path="email"/>
         <ng-container easyFormField path="phone" [disabled]="true"/>
         <ng-container easyFormField path="userType" #userType="easyFormField" (change)="handleChange($event)"/>

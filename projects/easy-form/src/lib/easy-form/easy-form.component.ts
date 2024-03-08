@@ -9,7 +9,7 @@ import {
   Output,
   QueryList
 } from '@angular/core';
-import {EASY_FORM_CONFIG} from "../tokens/easy-form-config";
+import {EASY_FORM_CONFIG, EasyFormConfig} from "../tokens/easy-form-config";
 import {FormFieldDirective} from "../directives/form-field.directive";
 import {EasyForm} from "../easy-form";
 import {EfTextComponent} from "../controls/ef-text/ef-text.component";
@@ -35,7 +35,9 @@ export class EasyFormComponent implements AfterContentInit {
   @ContentChildren(FormFieldDirective, {descendants: true}) fields!: QueryList<FormFieldDirective>;
 
   elementRef = inject<ElementRef<HTMLDivElement>>(ElementRef);
-  formConfig = inject(EASY_FORM_CONFIG, {optional: true});
+  _formConfig = inject(EASY_FORM_CONFIG, {optional: true});
+
+  formConfig: EasyFormConfig = this.defaultConfig();
 
   @Input({required: true}) form!: EasyForm;
   @Input() focusFirstError = true;
@@ -43,8 +45,8 @@ export class EasyFormComponent implements AfterContentInit {
   @Output() submit = new EventEmitter<FormGroup>();
 
   constructor() {
-    if (!this.formConfig) {
-      this.loadDefaultConfig();
+    if (this._formConfig) {
+      this.formConfig.controls = {...this.formConfig.controls, ...this._formConfig.controls};
     }
   }
 
@@ -52,8 +54,8 @@ export class EasyFormComponent implements AfterContentInit {
 
   }
 
-  getComponent(type: string) {
-    return this.formConfig?.controls.find(control => control.name === type)?.component;
+  getComponentType(type: string) {
+    return this.formConfig.controls[type];
   }
 
   handleSubmit($event: any) {
@@ -72,16 +74,15 @@ export class EasyFormComponent implements AfterContentInit {
     this.submit.emit(this.form.formGroup)
   }
 
-  private loadDefaultConfig() {
-    this.formConfig = {
-      validators: [],
-      controls: [
-        {name: 'text', component: EfTextComponent},
-        {name: 'textarea', component: EfTextAreaComponent},
-        {name: 'select', component: EfSelectComponent},
-        {name: 'checkbox', component: EfCheckboxComponent},
-        {name: 'radio', component: EfRadioComponent},
-      ]
+  private defaultConfig() {
+    return {
+      controls: {
+        text: EfTextComponent,
+        textarea: EfTextAreaComponent,
+        select: EfSelectComponent,
+        checkbox: EfCheckboxComponent,
+        radio: EfRadioComponent
+      }
     }
   }
 }

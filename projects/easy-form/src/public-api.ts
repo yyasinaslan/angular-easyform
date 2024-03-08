@@ -10,6 +10,11 @@ export * from './lib/components/ef-form-array/ef-form-array.component'
 export * from './lib/components/form-errors/form-errors.component'
 export * from './lib/easy-form-control'
 export * from './lib/interfaces/select-options'
+export * from './lib/pipes/observe'
 
 // Controls
 export * from './lib/controls/ef-text/ef-text.component'
+export * from './lib/controls/ef-textarea/ef-textarea.component'
+export * from './lib/controls/ef-select/ef-select.component'
+export * from './lib/controls/ef-checkbox/ef-checkbox.component'
+export * from './lib/controls/ef-radio/ef-radio.component'

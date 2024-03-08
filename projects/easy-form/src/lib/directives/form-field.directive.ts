@@ -15,6 +15,7 @@ import {FormControl} from "@angular/forms";
 import {EasyFormComponent} from "../easy-form/easy-form.component";
 import {EasyFormControl} from "../easy-form-control";
 import {takeUntilDestroyed} from "@angular/core/rxjs-interop";
+import {isComponent} from "../helpers/component-helper";
 
 @Directive({
   selector: 'ng-container[easyFormField]',
@@ -65,11 +66,7 @@ export class FormFieldDirective implements OnChanges, AfterContentInit {
   }
 
   render() {
-    try {
-      this._render();
-    } catch (e) {
-      console.error(e);
-    }
+    this._render();
 
     if (this.control) {
       setTimeout(() => {
@@ -100,16 +97,19 @@ export class FormFieldDirective implements OnChanges, AfterContentInit {
     if (!schema) {
       throw new Error(`Path not found for ${path}`);
     }
-    let component = typeof schema.controlType === 'string' ? this.form.getComponent(schema.controlType) : schema.controlType;
+    let component = typeof schema.controlType === 'string' ? this.form.getComponentType(schema.controlType) : schema.controlType;
     if (!component) {
       // Get component from formConfig
-      component = this.easyFormComponent.getComponent(schema.controlType as string);
+      component = this.easyFormComponent.getComponentType(schema.controlType as string);
     }
 
     if (!component) {
       throw new Error(`Component configuration not found for ${schema.controlType}`);
     }
 
+    if (!isComponent(component)) {
+      throw new Error(`${schema.controlType} is not a valid Angular component. Please provide a valid Angular component for ${schema.controlType} on provider EasyFormConfig`);
+    }
 
     const componentRef = this.viewContainerRef.createComponent<EasyFormControl>(component, {});
     this.componentRef = componentRef;

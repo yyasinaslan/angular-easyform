@@ -12,7 +12,7 @@ export interface EfControlData {
 }
 
 /**
- * Every form control should implement this interface
+ * Every form control should extend this class
  * to work with EasyFormComponent
  */
 export class EasyFormControl {
@@ -22,6 +22,12 @@ export class EasyFormControl {
     schema: null,
     formFieldDirective: null
   });
+
+  control = computed(() => this.easyFormControl().control);
+
+  schema = computed(() => this.easyFormControl().schema);
+
+  formFieldDirective = computed(() => this.easyFormControl().formFieldDirective);
 
   props = signal<Record<string, any>>({});
 

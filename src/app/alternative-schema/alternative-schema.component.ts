@@ -77,7 +77,7 @@ export class AlternativeSchemaComponent {
     console.log('change', event);
   }
 
-  handleFocus($event: FocusEvent) {
+  handleFocus($event: Event) {
     console.log('focus', $event);
   }
 }

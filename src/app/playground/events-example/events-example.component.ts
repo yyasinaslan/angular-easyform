@@ -26,6 +26,7 @@ export class EventsExampleComponent {
 
   form = EasyForm.create({
     name: EasyForm.text().required('Name is required'),
+    phone: EasyForm.custom('customText', 'Phone').pattern(/\d+/, 'Phone is not valid').required('Phone is required'),
   })
 
   handleEvent(event: Event) {

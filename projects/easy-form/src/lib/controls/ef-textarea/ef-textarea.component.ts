@@ -1,6 +1,5 @@
-import {Component, Input} from '@angular/core';
-import {FormControl, ReactiveFormsModule} from "@angular/forms";
-import {FormField} from "../../interfaces/form-field";
+import {Component} from '@angular/core';
+import {ReactiveFormsModule} from "@angular/forms";
 import {ObservePipe} from "../../pipes/observe";
 import {EasyFormControl, FormErrorsComponent} from "easy-form";
 

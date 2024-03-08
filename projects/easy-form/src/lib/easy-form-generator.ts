@@ -86,6 +86,10 @@ export abstract class EasyFormGenerator {
     return vc;
   }
 
+  public static custom<FormType = any, RemoteType = FormType>(type: string, label?: string, configs?: GeneratorBaseOptions) {
+    return new ValidationChain<FormType, RemoteType>({...configs, label, controlType: type});
+  }
+
   public static group<FormType = Record<string, any>, RemoteType = FormType>(schema: FormFieldGroup['fields'], configs?: GeneratorBaseOptions) {
     return new ValidationChain<FormType, RemoteType>({
       ...configs,

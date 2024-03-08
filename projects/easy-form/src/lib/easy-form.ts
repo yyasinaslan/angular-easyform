@@ -81,7 +81,7 @@ export class EasyForm<T = Record<string, any>> extends EasyFormGenerator {
     this.formGroup.enable()
   }
 
-  getComponent(type: BasicControlTypes | string) {
+  getComponentType(type: BasicControlTypes | string) {
     if (!this.options.components) {
       return null;
     }

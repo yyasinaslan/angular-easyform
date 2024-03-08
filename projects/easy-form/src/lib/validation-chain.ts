@@ -154,7 +154,7 @@ export class ValidationChain<FormType = any, RemoteType = FormType> implements F
    * @param validator
    * @param message
    */
-  custom(key: string, validator: ValidatorFn, message: ObservableString) {
+  customValidator(key: string, validator: ValidatorFn, message: ObservableString) {
     if (this.validations && this.validations[key]) return this;
 
     if (!this.validations) this.validations = {};

@@ -1,0 +1,7 @@
+@if (hasInitialized()) {
+  @if (schema()?.label) {
+    <label class="text-lg">{{ schema()?.label | observe }}</label>
+  }
+  <input type="tel" pattern="\d+" [formControl]="control()!">
+  <ef-errors [control]="control()!" [formField]="schema()!"/>
+}
