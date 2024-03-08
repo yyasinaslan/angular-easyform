@@ -59,6 +59,7 @@ export class AlternativeSchemaComponent {
       email: ef.checkbox('Email').default(true),
       sms: ef.checkbox('Sms').default(false)
     }),
+    permissionsSettings: ef.switch('Active').default(true),
     description: ef.textarea('Description')
       .maxLength(500, 'Description must be no more than 500 characters'),
   }, {

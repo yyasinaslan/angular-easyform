@@ -69,6 +69,10 @@ export abstract class EasyFormGenerator {
     return new ValidationChain<FormType, RemoteType>({...configs, label, controlType: BasicControlTypes.Checkbox});
   }
 
+  public static switch<FormType = any, RemoteType = FormType>(label: string, configs?: GeneratorBaseOptions) {
+    return new ValidationChain<FormType, RemoteType>({...configs, label, controlType: BasicControlTypes.Checkbox});
+  }
+
   public static radio<FormType = any, RemoteType = FormType>(options: SelectOptions<FormType>, label: string, configs?: GeneratorBaseOptions) {
     const vc = new ValidationChain<FormType, RemoteType>({...configs, label, controlType: BasicControlTypes.Radio});
     vc.options = options;
