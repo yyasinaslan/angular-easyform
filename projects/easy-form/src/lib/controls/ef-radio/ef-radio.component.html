@@ -6,7 +6,8 @@
     <div class="ef-radio-container">
       @for (option of (easyFormControl().schema?.options | observe); track option.value) {
         <label class="ef-radio-option">
-          <input type="radio" [formControl]="easyFormControl().control!" [value]="option.value" [attr.aria-describedby]="easyFormControl().id">
+          <input type="radio" [formControl]="easyFormControl().control!" [name]="easyFormControl().id!"
+                 [value]="option.value" [attr.aria-describedby]="easyFormControl().id">
           <span class="ef-form-label">{{ option.label | observe }}</span>
         </label>
       }
