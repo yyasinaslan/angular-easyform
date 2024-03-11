@@ -4,7 +4,7 @@ import {AsyncPipe} from "@angular/common";
 
 
 /**
- * If we don't know string is observable or not. We can use this pipe.
+ * Observe both Observable and Signal values
  */
 @Pipe({
   name: 'observe',

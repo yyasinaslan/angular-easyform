@@ -36,6 +36,11 @@
     --ef-input-border-radius: 5px;
     --ef-input-padding: 0.5em;
     --ef-form-errors-font-size: 0.8em;
+
+    --ng-doc-code-background: unset;
+    --ng-doc-sidebar-background:  hsl(var(--background));
+    --ng-doc-navbar-background:  hsl(var(--background));
+    --ng-doc-demo-displayer-background: hsl(var(--background));
   }
 
   .dark {
@@ -65,7 +70,14 @@
     --ef-valid-color: var(--border);
     --ef-input-bg: 211 24% 12%;
     --ef-input-border-color: var(--border);
+
+    --ng-doc-code-background: unset;
+    --ng-doc-sidebar-background:  hsl(var(--background));
+    --ng-doc-navbar-background:  hsl(var(--background));
+    --ng-doc-demo-displayer-background: hsl(var(--background));
   }
+
+
 }
 
 @layer base {
@@ -79,6 +91,8 @@
 
   body {
     @apply bg-background text-foreground;
+    height: unset;
+    min-height: 100vh;
   }
 
 }
