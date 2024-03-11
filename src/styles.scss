@@ -73,6 +73,10 @@
     @apply border-border;
   }
 
+  html {
+    scroll-behavior: smooth;
+  }
+
   body {
     @apply bg-background text-foreground;
   }
@@ -82,7 +86,7 @@
 
 @layer components {
   button {
-    @apply px-3 py-2 rounded-lg border focus:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2 active:scale-95;
+    @apply px-3 py-2 rounded-lg border focus:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2 ;
   }
 
   button[type=submit] {

@@ -1,15 +1,6 @@
 import {Routes} from '@angular/router';
-import {AlternativeSchemaComponent} from "./alternative-schema/alternative-schema.component";
-import {LoginComponent} from "./login/login.component";
-import {HomeComponent} from "./home/home.component";
-import {TableExampleComponent} from "./playground/table-example/table-example.component";
-import {EventsExampleComponent} from "./playground/events-example/events-example.component";
 
 export const routes: Routes = [
-  {path: '', component: HomeComponent, pathMatch: 'full'},
-  {path: 'login', component: LoginComponent},
-  {path: 'examples', component: AlternativeSchemaComponent},
-  {path: 'array-table', component: TableExampleComponent},
-  {path: 'events', component: EventsExampleComponent},
-
+  {path: '', loadChildren: () => import('./website/website.routes')},
+  {path: 'docs', loadChildren: () => import('./docs/docs.component')},
 ];

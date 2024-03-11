@@ -1,0 +1,19 @@
+<div class="bg-background border-b shadow-lg sticky top-0 z-20">
+  <div class="container flex gap-2">
+    <a routerLink="/"
+       class="flex items-center gap-2 me-10">
+      <img src="assets/angular_gradient.png" alt="angular-logo" class="w-8 h-8">
+      <span class="text-xl font-light">EasyForm</span></a>
+
+    @for (route of routes; track route.path) {
+      <a [routerLink]="route.path" routerLinkActive="!text-primary !border-primary"
+         [routerLinkActiveOptions]="{exact: route.exact ?? false}"
+         class="border-b-2 translate-y-[2px] border-transparent px-5 py-3 hover:text-primary">{{ route.label }}</a>
+    }
+    <div class="flex-auto"></div>
+    <app-theme-switcher/>
+  </div>
+</div>
+<div class="py-3">
+  <router-outlet/>
+</div>

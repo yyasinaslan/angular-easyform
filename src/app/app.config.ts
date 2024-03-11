@@ -1,18 +1,52 @@
+import {
+  NG_DOC_DEFAULT_PAGE_PROCESSORS,
+  NG_DOC_DEFAULT_PAGE_SKELETON,
+  NgDocDefaultSearchEngine,
+  provideMainPageProcessor,
+  provideNgDocApp,
+  providePageSkeleton,
+  provideSearchEngine
+} from "@ng-doc/app";
+import {provideNgDocContext} from "@ng-doc/generated";
+import {provideAnimations} from "@angular/platform-browser/animations";
 import {ApplicationConfig} from '@angular/core';
-import {provideRouter} from '@angular/router';
-
-import {routes} from './app.routes';
+import {provideRouter, withInMemoryScrolling} from '@angular/router';
 import {EASY_FORM_CONFIG, EasyFormConfig} from "../../projects/easy-form/src/lib/tokens/easy-form-config";
 import {CustomTextComponent} from "./input-components/custom-text/custom-text.component";
+import {provideHttpClient, withFetch, withInterceptorsFromDi} from "@angular/common/http";
+import {routes} from "./app.routes";
 
 export const appConfig: ApplicationConfig = {
-  providers: [provideRouter(routes), {
-    provide: EASY_FORM_CONFIG,
-    useValue: {
-      controls: {
-        customText: CustomTextComponent
-      }
-    } as EasyFormConfig
-  }
-  ]
+  providers: [
+    {
+      provide: EASY_FORM_CONFIG,
+      useValue: {
+        controls: {
+          customText: CustomTextComponent
+        }
+      } as EasyFormConfig
+    },
+    provideAnimations(),
+    provideRouter(routes, withInMemoryScrolling({
+      scrollPositionRestoration: "enabled",
+      anchorScrolling: "enabled"
+    })),
+    provideHttpClient(withInterceptorsFromDi(), withFetch()),
+    provideNgDocContext(),
+    provideNgDocApp({
+      themes: [
+        {
+          path: 'ngdoc-light.css',
+          id: 'light'
+        },
+        {
+          path: 'ngdoc-dark.css',
+          id: 'dark'
+        }
+      ],
+      defaultThemeId: 'light'
+    }),
+    provideSearchEngine(NgDocDefaultSearchEngine),
+    providePageSkeleton(NG_DOC_DEFAULT_PAGE_SKELETON),
+    provideMainPageProcessor(NG_DOC_DEFAULT_PAGE_PROCESSORS)]
 };

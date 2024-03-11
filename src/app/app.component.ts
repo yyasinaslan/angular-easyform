@@ -1,28 +1,19 @@
-import {Component} from '@angular/core';
+import {NgDocNavbarComponent, NgDocRootComponent, NgDocSidebarComponent} from "@ng-doc/app";
+import {Component, inject} from '@angular/core';
 import {RouterLink, RouterLinkActive, RouterOutlet} from '@angular/router';
 import {JsonPipe} from "@angular/common";
-import {routes} from "./app.routes";
+import {ThemeService} from "./services/theme.service";
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, JsonPipe, RouterLink, RouterLinkActive],
+  imports: [RouterOutlet, JsonPipe, RouterLink, RouterLinkActive, NgDocRootComponent, NgDocNavbarComponent, NgDocSidebarComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
 export class AppComponent {
-  title = 'dynamic-form-2';
+  themeService = inject(ThemeService)
 
-  theme = localStorage.getItem('theme') || 'dark';
-  protected readonly routes = routes;
+  title = 'easy-form-demo';
 
-  toggleTheme() {
-    this.theme = this.theme === 'light' ? 'dark' : 'light';
-    document.body.classList.toggle('dark', this.theme === 'dark');
-    localStorage.setItem('theme', this.theme);
-  }
-
-  ngOnInit() {
-    document.body.classList.toggle('dark', this.theme === 'dark');
-  }
 }

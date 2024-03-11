@@ -19,6 +19,11 @@ import {EfSelectComponent} from "../controls/ef-select/ef-select.component";
 import {EfRadioComponent} from "../controls/ef-radio/ef-radio.component";
 import {EfTextAreaComponent} from "../controls/ef-textarea/ef-textarea.component";
 
+/**
+ * EasyFormComponent is the main component that is used to create forms
+ *
+ * @see `EasyForm`
+ */
 @Component({
   selector: 'easy-form',
   standalone: true,
@@ -39,9 +44,17 @@ export class EasyFormComponent implements AfterContentInit {
 
   formConfig: EasyFormConfig = this.defaultConfig();
 
+  /**
+   * EasyForm instance
+   *
+   * @type `EasyForm`
+   */
   @Input({required: true}) form!: EasyForm;
   @Input() focusFirstError = true;
 
+  /**
+   * Submit event output
+   */
   @Output() submit = new EventEmitter<FormGroup>();
 
   constructor() {

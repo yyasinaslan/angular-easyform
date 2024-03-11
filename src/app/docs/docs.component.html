@@ -1,0 +1,15 @@
+<ng-doc-root>
+  <ng-doc-navbar [leftContent]="leftContent" [rightContent]="rightContent">
+    <ng-template #leftContent>
+      <a routerLink="/"
+         class="flex items-center gap-2 me-10">
+        <img src="assets/angular_gradient.png" alt="angular-logo" class="w-8 h-8">
+        <span class="text-xl font-light">EasyForm</span></a>
+    </ng-template>
+    <ng-template #rightContent>
+      <app-theme-switcher/>
+    </ng-template>
+  </ng-doc-navbar>
+  <ng-doc-sidebar></ng-doc-sidebar>
+  <router-outlet></router-outlet>
+</ng-doc-root>

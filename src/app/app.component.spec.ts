@@ -14,16 +14,16 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have the 'dynamic-form-2' title`, () => {
+  it(`should have the 'easy-form-demo' title`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('dynamic-form-2');
+    expect(app.title).toEqual('easy-form-demo');
   });
 
   it('should render title', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, dynamic-form-2');
+    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, easy-form-demo');
   });
 });
