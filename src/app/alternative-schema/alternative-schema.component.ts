@@ -4,8 +4,8 @@ import {
   ArrayItemTemplateDirective,
   EasyForm as ef,
   EasyFormComponent,
+  EfErrorsComponent,
   EfFormArrayComponent,
-  FormErrorsComponent,
   FormFieldDirective
 } from "easy-form";
 import {FormGroup} from "@angular/forms";
@@ -19,7 +19,7 @@ import {FormGroup} from "@angular/forms";
     JsonPipe,
     EfFormArrayComponent,
     ArrayItemTemplateDirective,
-    FormErrorsComponent
+    EfErrorsComponent
   ],
   templateUrl: './alternative-schema.component.html',
   styleUrl: './alternative-schema.component.scss'

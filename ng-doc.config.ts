@@ -7,8 +7,8 @@ const config: NgDocConfiguration = {
     mainBranch: 'main',
     releaseBranch: 'main',
   },
-  pages: ['docs'],
-  routePrefix: 'docs'
+  pages: 'docs',
+  routePrefix: '/docs'
 }
 
 

@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {EasyFormControl, FormErrorsComponent, ObservePipe} from "easy-form";
+import {EasyFormControl, EfErrorsComponent, ObservePipe} from "easy-form";
 import {ReactiveFormsModule} from "@angular/forms";
 
 @Component({
@@ -7,7 +7,7 @@ import {ReactiveFormsModule} from "@angular/forms";
   standalone: true,
   imports: [
     ObservePipe,
-    FormErrorsComponent,
+    EfErrorsComponent,
     ReactiveFormsModule
   ],
   templateUrl: './custom-text.component.html',

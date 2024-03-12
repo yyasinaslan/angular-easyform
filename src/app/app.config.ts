@@ -11,8 +11,7 @@ import {provideNgDocContext} from "@ng-doc/generated";
 import {provideAnimations} from "@angular/platform-browser/animations";
 import {ApplicationConfig} from '@angular/core';
 import {provideRouter, withInMemoryScrolling} from '@angular/router';
-import {EASY_FORM_CONFIG, EasyFormConfig} from "../../projects/easy-form/src/lib/tokens/easy-form-config";
-import {CustomTextComponent} from "./input-components/custom-text/custom-text.component";
+import {EASY_FORM_CONFIG, EasyFormConfig} from "easy-form";
 import {provideHttpClient, withFetch, withInterceptorsFromDi} from "@angular/common/http";
 import {routes} from "./app.routes";
 
@@ -22,7 +21,7 @@ export const appConfig: ApplicationConfig = {
       provide: EASY_FORM_CONFIG,
       useValue: {
         controls: {
-          customText: CustomTextComponent
+          customText: () => import('./input-components/custom-text/custom-text.component').then(m => m.CustomTextComponent),
         }
       } as EasyFormConfig
     },

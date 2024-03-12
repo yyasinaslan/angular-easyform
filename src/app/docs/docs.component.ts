@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {NgDocNavbarComponent, NgDocRootComponent, NgDocSidebarComponent} from "@ng-doc/app";
 import {RouterLink, RouterOutlet, Routes} from "@angular/router";
 import {NG_DOC_ROUTING} from "@ng-doc/generated";
@@ -23,6 +23,7 @@ export class DocsComponent {
 }
 
 const routes: Routes = [
+  {path: '', redirectTo: 'getting-started/introduction', pathMatch: 'full'},
   {
     path: '',
     component: DocsComponent,

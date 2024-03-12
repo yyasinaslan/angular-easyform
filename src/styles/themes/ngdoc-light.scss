@@ -2,8 +2,8 @@
 
 :root {
   --ng-doc-base-0: #ffffff;
-  --ng-doc-base-1: #e1e1e1;
-  --ng-doc-base-2: #c0c0c0;
+  --ng-doc-base-1: #f1f1f1;
+  --ng-doc-base-2: #f3f3f3;
   --ng-doc-base-3: #a9a9a9;
   --ng-doc-base-4: #a4a4a4;
   --ng-doc-base-5: #5f5f5f;
@@ -14,13 +14,13 @@
   --ng-doc-base-10: #252424;
   --ng-doc-text: #151515;
   --ng-doc-text-muted: var(--ng-doc-base-10);
-  --ng-doc-text-selection: rgba(110, 110, 110, 0.81);
+  --ng-doc-text-selection: rgba(110, 110, 110, 0.5);
 
   --ng-doc-shadow-color: rgba(0, 0, 0, 0.4);
   --ng-doc-link-color: #30a5ff;
   --ng-doc-inline-code-background: #606060;
 
-  --ng-doc-primary: #faab00;
+  --ng-doc-primary: hsl(var(--primary));
   --ng-doc-info: #7095ff;
 
   --ng-doc-mark-background: rgba(48, 165, 255, 0.3);

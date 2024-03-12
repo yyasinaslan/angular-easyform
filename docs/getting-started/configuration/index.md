@@ -2,11 +2,13 @@
 
 EasyForm comes with a set of built-in controls. The following controls are available out of the box:
 
-- text: `EfTextComponent`,
-- textarea: `EfTextAreaComponent`,
-- select: `EfSelectComponent`,
-- checkbox: `EfCheckboxComponent`,
-- radio: `EfRadioComponent`
+| Control Type (string) | Component             | Usage Guide                            |
+|-----------------------|-----------------------|----------------------------------------|
+| text                  | `EfTextComponent`     | [Text](/docs/basic-controls/text)      |
+| textarea              | `EfTextAreaComponent` | [Text Area](/docs/basic-controls/text) |
+| select                | `EfSelectComponent`   | [Select](/docs/basic-controls/text)    |
+| checkbox              | `EfCheckboxComponent` | [Checkbox](/docs/basic-controls/text)  |
+| radio                 | `EfRadioComponent`    | [Radio](/docs/basic-controls/text)     |
 
 You can add more controls or modify the existing ones by setting the `controls` property in the `EasyFormConfig` object.
 
@@ -22,7 +24,7 @@ const customConfig = {
   provide: EASY_FORM_CONFIG,
   useValue: {
     controls: {
-      // Replace the default text control with a custom one
+      // You can replace the default text control with a custom one
       text: CustomTextComponent,
 
       // Add a new control
@@ -32,17 +34,18 @@ const customConfig = {
 }
 ```
 
-## Usage of Custom Controls
+## Lazy Loading the Custom Controls
 
 ```typescript
-import {EasyForm} from "./easy-form";
+import {EASY_FORM_CONFIG, EasyFormConfig} from "easy-form";
 
-@Component({
-  /* ... */
-})
-class AppComponent {
-  form = EasyForm.create({
-    name: EasyForm.custom('myControl', 'Name').required('Name is required'),
-  })
+const customConfig = {
+  provide: EASY_FORM_CONFIG,
+  useValue: {
+    controls: {
+      customText: () => 
+        import('../input-components/custom-text/custom-text.component').then(m => m.CustomTextComponent),
+    }
+  } as EasyFormConfig
 }
 ```

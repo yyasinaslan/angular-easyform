@@ -22,7 +22,7 @@ export class WebsiteLayoutComponent {
 
   protected readonly routes: { path: string, exact?: boolean, label: string }[] = [
     {path: '', exact: true, label: 'Home'},
-    {path: '/docs/getting-started/introduction', label: 'Docs'},
+    {path: '/docs', label: 'Docs'},
     {path: '/examples', label: 'Examples'},
     {path: '/array-table', label: 'Array Table'},
     {path: '/events', label: 'Events'},

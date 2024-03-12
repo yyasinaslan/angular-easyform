@@ -2,9 +2,9 @@ import {FormField, FormFieldBase} from "./interfaces/form-field";
 import {BasicControlTypes} from "./interfaces/basic-control-types";
 import {AdvancedControlTypes} from "./interfaces/advanced-control-types";
 import {Validation} from "./interfaces/validation";
-import {SelectOptions} from "easy-form";
 import {ValidatorFn, Validators} from "@angular/forms";
 import {ObservableString} from "./interfaces/observable-string";
+import {SelectOptions} from "./interfaces/select-options";
 
 export class ValidationChain<FormType = any, RemoteType = FormType> implements FormFieldBase<FormType, RemoteType> {
 

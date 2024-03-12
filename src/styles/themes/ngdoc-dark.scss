@@ -20,7 +20,7 @@
   --ng-doc-link-color: #30a5ff;
   --ng-doc-inline-code-background: #b9b9b9;
 
-  --ng-doc-primary: #faab00;
+  --ng-doc-primary: hsl(var(--primary));
   --ng-doc-info: #7095ff;
 
   --ng-doc-mark-background: rgba(48, 165, 255, 0.3);
