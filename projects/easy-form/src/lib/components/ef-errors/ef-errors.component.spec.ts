@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { FormErrorsComponent } from './form-errors.component';
+import { EfErrorsComponent } from './ef-errors.component';
 
-describe('FormErrorsComponent', () => {
-  let component: FormErrorsComponent;
-  let fixture: ComponentFixture<FormErrorsComponent>;
+describe('EfErrorsComponent', () => {
+  let component: EfErrorsComponent;
+  let fixture: ComponentFixture<EfErrorsComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [FormErrorsComponent]
+      imports: [EfErrorsComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(FormErrorsComponent);
+    fixture = TestBed.createComponent(EfErrorsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

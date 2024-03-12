@@ -3,15 +3,15 @@ import {EasyFormComponent} from "../../easy-form/easy-form.component";
 import {NgTemplateOutlet} from "@angular/common";
 import {FormArray} from "@angular/forms";
 import {ArrayItemTemplateDirective} from "../../directives/array-item-template.directive";
-import {FormErrorsComponent} from "../form-errors/form-errors.component";
 import {ArrayWrapperTemplateDirective} from "../../directives/array-wrapper-template.directive";
+import {EfErrorsComponent} from "../ef-errors/ef-errors.component";
 
 @Component({
   selector: 'ef-form-array',
   standalone: true,
   imports: [
     NgTemplateOutlet,
-    FormErrorsComponent
+    EfErrorsComponent
   ],
   templateUrl: './ef-form-array.component.html',
   styleUrl: './ef-form-array.component.scss'

@@ -4,7 +4,7 @@ import {ComponentType} from "./component-type";
 import {EasyFormControl} from "../easy-form-control";
 import {AdvancedControlTypes} from "./advanced-control-types";
 import {ObservableString} from "./observable-string";
-import {SelectOptions} from "easy-form";
+import {SelectOptions} from "./select-options";
 
 export type FormFieldBase<FormType = any, RemoteType = FormType> = {
 

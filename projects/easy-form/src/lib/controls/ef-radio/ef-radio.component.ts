@@ -1,16 +1,16 @@
-import {Component, Input} from '@angular/core';
-import {EasyFormControl, FormErrorsComponent} from "easy-form";
+import {Component} from '@angular/core';
 import {ObservePipe} from "../../pipes/observe";
-import {FormControl, ReactiveFormsModule} from "@angular/forms";
-import {FormField} from "../../interfaces/form-field";
+import {ReactiveFormsModule} from "@angular/forms";
+import {EasyFormControl} from "../../easy-form-control";
+import {EfErrorsComponent} from "../../components/ef-errors/ef-errors.component";
 
 @Component({
   selector: 'lib-ef-radio',
   standalone: true,
   imports: [
-    FormErrorsComponent,
     ObservePipe,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    EfErrorsComponent
   ],
   templateUrl: './ef-radio.component.html',
   styleUrl: './ef-radio.component.scss'

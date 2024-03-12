@@ -8,9 +8,9 @@ import {
 import {ValidatorFn} from "@angular/forms";
 import {BasicControlTypes} from "./interfaces/basic-control-types";
 import {AdvancedControlTypes} from "./interfaces/advanced-control-types";
-import {SelectOptions} from "easy-form";
 import {ValidationChain} from "./validation-chain";
 import {ObservableString} from "./interfaces/observable-string";
+import {SelectOptions} from "./interfaces/select-options";
 
 interface EfDefaultValidations {
   required: (message: string) => FormFieldWithValidation;

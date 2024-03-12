@@ -16,6 +16,7 @@ import {EasyFormComponent} from "../easy-form/easy-form.component";
 import {EasyFormControl} from "../easy-form-control";
 import {takeUntilDestroyed} from "@angular/core/rxjs-interop";
 import {isComponent} from "../helpers/component-helper";
+import {EasyFormControlComponent, LazyLoadingComponent} from "../tokens/easy-form-config";
 
 @Directive({
   selector: 'ng-container[easyFormField]',
@@ -65,8 +66,8 @@ export class FormFieldDirective implements OnChanges, AfterContentInit {
     }
   }
 
-  render() {
-    this._render();
+  async render() {
+    await this._render();
 
     if (this.control) {
       setTimeout(() => {
@@ -88,7 +89,7 @@ export class FormFieldDirective implements OnChanges, AfterContentInit {
     })
   }
 
-  private _render() {
+  private async _render() {
     const path = this.path;
     if (!path) {
       return;
@@ -97,24 +98,44 @@ export class FormFieldDirective implements OnChanges, AfterContentInit {
     if (!schema) {
       throw new Error(`Path not found for ${path}`);
     }
-    let component = typeof schema.controlType === 'string' ? this.form.getComponentType(schema.controlType) : schema.controlType;
-    if (!component) {
+    let componentDefinition = typeof schema.controlType === 'string' ? this.form.getComponentType(schema.controlType) : schema.controlType;
+    let component: EasyFormControlComponent;
+    if (!componentDefinition) {
       // Get component from formConfig
-      component = this.easyFormComponent.getComponentType(schema.controlType as string);
+      componentDefinition = this.easyFormComponent.getComponentType(schema.controlType as string);
     }
 
-    if (!component) {
+    if (!componentDefinition) {
       throw new Error(`Component configuration not found for ${schema.controlType}`);
     }
 
+    if (!isComponent(componentDefinition)) {
+      // Assume this is lazy loading component
+      if (typeof componentDefinition !== 'function') {
+        throw new Error(`${schema.controlType} is not a valid Angular component`);
+      }
+      const lazyLoadingComponent = componentDefinition as LazyLoadingComponent;
+      const loaded = await lazyLoadingComponent() as any;
+      if (loaded.default) {
+        component = loaded.default;
+      } else if (typeof loaded === 'function' && isComponent(loaded)) {
+        component = loaded as EasyFormControlComponent;
+      } else {
+        throw new Error(`${schema.controlType} has no default export or is not a valid Angular component`);
+      }
+    } else {
+      component = componentDefinition as EasyFormControlComponent;
+    }
+
+    // Double check if component is a valid Angular component
     if (!isComponent(component)) {
       throw new Error(`${schema.controlType} is not a valid Angular component. Please provide a valid Angular component for ${schema.controlType} on provider EasyFormConfig`);
     }
-
-    const componentRef = this.viewContainerRef.createComponent<EasyFormControl>(component, {});
+    //
+    const componentRef = this.viewContainerRef.createComponent<EasyFormControl>(component as EasyFormControlComponent, {});
     this.componentRef = componentRef;
     this.instance = componentRef.instance;
-
+    //
     const control = this.form.formGroup.get(path);
     if (!control) {
       throw new Error(`FormControl not found for ${path}`);

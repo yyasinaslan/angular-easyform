@@ -12,12 +12,12 @@ import {
 import {EASY_FORM_CONFIG, EasyFormConfig} from "../tokens/easy-form-config";
 import {FormFieldDirective} from "../directives/form-field.directive";
 import {EasyForm} from "../easy-form";
-import {EfTextComponent} from "../controls/ef-text/ef-text.component";
 import {FormGroup, ReactiveFormsModule} from "@angular/forms";
-import {EfCheckboxComponent} from "../controls/ef-checkbox/ef-checkbox.component";
-import {EfSelectComponent} from "../controls/ef-select/ef-select.component";
-import {EfRadioComponent} from "../controls/ef-radio/ef-radio.component";
+import {EfTextComponent} from "../controls/ef-text/ef-text.component";
 import {EfTextAreaComponent} from "../controls/ef-textarea/ef-textarea.component";
+import {EfSelectComponent} from "../controls/ef-select/ef-select.component";
+import {EfCheckboxComponent} from "../controls/ef-checkbox/ef-checkbox.component";
+import {EfRadioComponent} from "../controls/ef-radio/ef-radio.component";
 
 /**
  * EasyFormComponent is the main component that is used to create forms
@@ -59,7 +59,7 @@ export class EasyFormComponent implements AfterContentInit {
 
   constructor() {
     if (this._formConfig) {
-      this.formConfig.controls = {...this.formConfig.controls, ...this._formConfig.controls};
+      Object.assign(this.formConfig.controls, this._formConfig.controls);
     }
   }
 

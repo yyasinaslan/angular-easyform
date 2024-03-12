@@ -15,6 +15,7 @@ import {
 } from "./interfaces/form-field";
 import {AdvancedControlTypes} from "./interfaces/advanced-control-types";
 import {EasyFormGenerator} from "./easy-form-generator";
+import {EasyFormControlComponent, LazyLoadingComponent} from "./tokens/easy-form-config";
 
 export interface EasyFormOptions<T = Record<string, any>> {
   showErrors?: 'submitted' | 'touched' | 'dirty' | 'always' | 'never';
@@ -26,7 +27,7 @@ export interface EasyFormOptions<T = Record<string, any>> {
   disabled?: boolean | Signal<boolean> | Observable<boolean>;
   // Form field components
 
-  components?: Record<string, ComponentType<EasyFormControl>>
+  components?: Record<string, EasyFormControlComponent | LazyLoadingComponent>
 }
 
 export class EasyForm<T = Record<string, any>> extends EasyFormGenerator {
