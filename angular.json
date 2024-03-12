@@ -46,6 +46,7 @@
                 "output": "assets/ng-doc"
               },
               "src/favicon.ico",
+              "src/_redirects",
               "src/assets"
             ],
             "styles": [
