@@ -70,7 +70,7 @@ export abstract class EasyFormGenerator {
   }
 
   public static switch<FormType = any, RemoteType = FormType>(label: string, configs?: GeneratorBaseOptions) {
-    return new ValidationChain<FormType, RemoteType>({...configs, label, controlType: BasicControlTypes.Checkbox});
+    return new ValidationChain<FormType, RemoteType>({...configs, label, controlType: BasicControlTypes.Switch});
   }
 
   public static radio<FormType = any, RemoteType = FormType>(options: SelectOptions<FormType>, label: string, configs?: GeneratorBaseOptions) {

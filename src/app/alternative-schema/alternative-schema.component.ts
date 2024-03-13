@@ -59,7 +59,10 @@ export class AlternativeSchemaComponent {
       email: ef.checkbox('Email').default(true),
       sms: ef.checkbox('Sms').default(false)
     }),
-    permissionsSettings: ef.switch('Active').default(true),
+    permissionsSettings: ef.group({
+      acceptTermsOfService: ef.switch('Accept Terms of Service').default(true),
+      enableWifi: ef.switch('Enable Wifi').default(false)
+    }),
     description: ef.textarea('Description')
       .maxLength(500, 'Description must be no more than 500 characters'),
   }, {

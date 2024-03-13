@@ -18,6 +18,7 @@ import {EfTextAreaComponent} from "../controls/ef-textarea/ef-textarea.component
 import {EfSelectComponent} from "../controls/ef-select/ef-select.component";
 import {EfCheckboxComponent} from "../controls/ef-checkbox/ef-checkbox.component";
 import {EfRadioComponent} from "../controls/ef-radio/ef-radio.component";
+import {EfSwitchComponent} from "../controls/ef-switch/ef-switch.component";
 
 /**
  * EasyFormComponent is the main component that is used to create forms
@@ -94,7 +95,8 @@ export class EasyFormComponent implements AfterContentInit {
         textarea: EfTextAreaComponent,
         select: EfSelectComponent,
         checkbox: EfCheckboxComponent,
-        radio: EfRadioComponent
+        radio: EfRadioComponent,
+        switch: EfSwitchComponent
       }
     }
   }

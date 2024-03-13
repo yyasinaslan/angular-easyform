@@ -38,8 +38,8 @@
     --ef-form-errors-font-size: 0.8em;
 
     --ng-doc-code-background: unset;
-    --ng-doc-sidebar-background:  hsl(var(--background));
-    --ng-doc-navbar-background:  hsl(var(--background));
+    --ng-doc-sidebar-background: hsl(var(--background));
+    --ng-doc-navbar-background: hsl(var(--background));
     --ng-doc-demo-displayer-background: hsl(var(--background));
   }
 
@@ -71,9 +71,16 @@
     --ef-input-bg: 211 24% 12%;
     --ef-input-border-color: var(--border);
 
+    --ef-radio-spacing: 0.5rem;
+    --ef-radio-size: 1.5rem;
+    --ef-checkbox-spacing: 0.5rem;
+    --ef-checkbox-size: 1.5rem;
+    --ef-switch-spacing: 0.5rem;
+    --ef-switch-size: 1.5rem;
+
     --ng-doc-code-background: unset;
-    --ng-doc-sidebar-background:  hsl(var(--background));
-    --ng-doc-navbar-background:  hsl(var(--background));
+    --ng-doc-sidebar-background: hsl(var(--background));
+    --ng-doc-navbar-background: hsl(var(--background));
     --ng-doc-demo-displayer-background: hsl(var(--background));
   }
 

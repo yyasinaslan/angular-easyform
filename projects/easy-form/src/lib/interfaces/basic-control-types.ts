@@ -21,4 +21,7 @@ export enum BasicControlTypes {
   Number = "number",
   Time = "time",
   DateTime = "datetime",
+
+  // Switch with label
+  Switch = "switch",
 }

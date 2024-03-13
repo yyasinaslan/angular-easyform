@@ -21,8 +21,10 @@
       display: inline-flex;
       justify-content: center;
       align-items: center;
-      width: v.$radio-size;
-      height: v.$radio-size;
+      min-width: v.$radio-size;
+      min-height: v.$radio-size;
+      max-width: v.$radio-size;
+      max-height: v.$radio-size;
       border-radius: 50%;
       padding: 0;
       background-color: hsl(v.$input-bg);
@@ -55,8 +57,9 @@
         background-color: hsl(v.$input-accent-color);
       }
 
+      &[disabled],
       &:disabled {
-        opacity: 0.3;
+        opacity: 0.5;
         cursor: default;
       }
 

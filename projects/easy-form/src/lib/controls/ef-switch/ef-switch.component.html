@@ -1,1 +1,7 @@
-<p>ef-switch works!</p>
+@if (hasInitialized()) {
+  <input type="checkbox" [formControl]="easyFormControl().control!" [id]="easyFormControl().id">
+  @if (easyFormControl().schema?.label) {
+    <label class="ef-form-label" [for]="easyFormControl().id">{{ easyFormControl().schema?.label | observe }}</label>
+  }
+  <ef-errors [control]="easyFormControl().control!" [formField]="easyFormControl().schema!"/>
+}
