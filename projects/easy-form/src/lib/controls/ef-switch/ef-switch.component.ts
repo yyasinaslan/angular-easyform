@@ -1,7 +1,8 @@
 import {Component} from '@angular/core';
-import {EasyFormControl} from "../../easy-form-control";
-import {EfErrorsComponent, ObservePipe} from "easy-form";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import { EasyFormControl } from '../../easy-form-control';
+import { EfErrorsComponent } from '../../components/ef-errors/ef-errors.component';
+import { ObservePipe } from '../../pipes/observe';
 
 @Component({
   selector: 'lib-ef-switch',
