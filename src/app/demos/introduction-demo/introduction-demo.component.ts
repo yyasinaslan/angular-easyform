@@ -3,21 +3,20 @@ import {FormGroup} from "@angular/forms";
 import {EasyForm, EasyFormComponent, FormFieldDirective} from "@yyasinaslan/easyform";
 
 @Component({
-  selector: 'app-login',
+  selector: 'app-introduction-demo',
   standalone: true,
   imports: [
     EasyFormComponent,
     FormFieldDirective
   ],
-  templateUrl: './login.component.html',
-  styleUrl: './login.component.scss'
+  templateUrl: './introduction-demo.component.html',
+  styleUrl: './introduction-demo.component.scss'
 })
-export class LoginComponent {
+export class IntroductionDemoComponent {
   form = EasyForm.create({
-    email: EasyForm.email('Email').required('Email is required').email('Email is not valid'),
-    password: EasyForm.password('Password').required('Password is required'),
-    rememberMe: EasyForm.checkbox('Remember me')
-  });
+    name: EasyForm.text('Name').required('Name is required'),
+    phone: EasyForm.number('Phone').required('Phone is required'),
+  })
 
   handleSubmit(event: FormGroup) {
     if (this.form.invalid) {

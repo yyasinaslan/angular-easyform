@@ -16,8 +16,11 @@
       "docs/*": [
         "./docs/*"
       ],
-      "easy-form": [
+      "@yyasinaslan/easyform": [
         "./projects/easy-form/src/public-api.ts"
+      ],
+      "@demos/*": [
+        "./src/app/demos/*"
       ]
     },
     "forceConsistentCasingInFileNames": true,

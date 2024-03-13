@@ -6,7 +6,7 @@ import {
   EasyFormComponent,
   EfFormArrayComponent,
   FormFieldDirective
-} from "easy-form";
+} from "@yyasinaslan/easyform";
 
 @Component({
   selector: 'app-events-example',

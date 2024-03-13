@@ -7,7 +7,7 @@ import {
   EfErrorsComponent,
   EfFormArrayComponent,
   FormFieldDirective
-} from "easy-form";
+} from "@yyasinaslan/easyform";
 import {FormGroup} from "@angular/forms";
 
 @Component({

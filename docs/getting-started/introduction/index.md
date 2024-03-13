@@ -14,4 +14,4 @@ npm i @yyasinaslan/easyform
 
 ## Usage
 
-{{ NgDocActions.demo("LoginComponent", {expanded: true}) }}
+{{ NgDocActions.demo("demo", {expanded: true}) }}

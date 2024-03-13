@@ -6,7 +6,7 @@
         <h1 class="text-lg">General <span
           class="badge">Individual form fields</span></h1>
         <ng-container easyFormField path="name" (fieldEvent)="handleFocus($event)"/>
-        <ng-container easyFormField path="email"/>
+        <ng-container easyFormField path="email" [props]="{placeholder:'Email Address'}"/>
         <ng-container easyFormField path="phone" [disabled]="true"/>
         <ng-container easyFormField path="userType" #userType="easyFormField" (change)="handleChange($event)"/>
         @if (userType.value === 'admin') {
@@ -27,12 +27,12 @@
         </div>
       </div>
 
-<!--      <div class="card space-y-3 col-span-5 row-span-1">-->
-<!--        <h1 class="text-lg">Permission Settings</h1>-->
-<!--        <div class="grid grid-cols-2 gap-3">-->
-<!--          <ng-container easyFormField path="permissionsSettings.active"/>-->
-<!--        </div>-->
-<!--      </div>-->
+      <!--      <div class="card space-y-3 col-span-5 row-span-1">-->
+      <!--        <h1 class="text-lg">Permission Settings</h1>-->
+      <!--        <div class="grid grid-cols-2 gap-3">-->
+      <!--          <ng-container easyFormField path="permissionsSettings.active"/>-->
+      <!--        </div>-->
+      <!--      </div>-->
 
       <div class="card space-y-3 col-span-3 row-span-3">
         <div class="flex gap-2 justify-between items-center">

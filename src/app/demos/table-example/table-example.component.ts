@@ -1,15 +1,12 @@
 import {Component} from '@angular/core';
-import {
-  ArrayItemTemplateDirective,
-  ArrayWrapperTemplateDirective,
-  EasyForm,
-  EasyFormComponent,
-  EfFormArrayComponent,
-  EfTextComponent,
-  FormFieldDirective
-} from "easy-form";
 import {NgTemplateOutlet} from "@angular/common";
 import {FormsModule} from "@angular/forms";
+import {
+  ArrayItemTemplateDirective, ArrayWrapperTemplateDirective, EasyForm,
+  EasyFormComponent,
+  EfFormArrayComponent, EfTextComponent,
+  FormFieldDirective
+} from "@yyasinaslan/easyform";
 
 @Component({
   selector: 'app-table-example',

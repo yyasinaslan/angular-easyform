@@ -11,7 +11,7 @@ import {provideNgDocContext} from "@ng-doc/generated";
 import {provideAnimations} from "@angular/platform-browser/animations";
 import {ApplicationConfig} from '@angular/core';
 import {provideRouter, withInMemoryScrolling} from '@angular/router';
-import {EASY_FORM_CONFIG, EasyFormConfig} from "easy-form";
+import {EASY_FORM_CONFIG, EasyFormConfig} from "@yyasinaslan/easyform";
 import {provideHttpClient, withFetch, withInterceptorsFromDi} from "@angular/common/http";
 import {routes} from "./app.routes";
 

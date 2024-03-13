@@ -35,7 +35,6 @@ export class FormFieldDirective implements OnChanges, AfterContentInit {
   @Input() props?: Record<string, any>;
 
   @Output() change = new EventEmitter<any>();
-
   @Output() fieldEvent = new EventEmitter<Event>();
 
   public instance?: EasyFormControl;
@@ -66,7 +65,7 @@ export class FormFieldDirective implements OnChanges, AfterContentInit {
     }
   }
 
-  async render() {
+  private async render() {
     await this._render();
 
     if (this.control) {
@@ -145,6 +144,10 @@ export class FormFieldDirective implements OnChanges, AfterContentInit {
     if (schema.props) {
       // Initialize props
       this.instance.props.set(schema.props);
+    }
+
+    if (this.props) {
+      this.componentRef.instance.props.set(this.props);
     }
 
     componentRef.instance.easyFormControl.set({

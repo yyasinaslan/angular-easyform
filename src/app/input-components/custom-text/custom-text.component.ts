@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
-import {EasyFormControl, EfErrorsComponent, ObservePipe} from "easy-form";
 import {ReactiveFormsModule} from "@angular/forms";
+import {EasyFormControl, EfErrorsComponent, ObservePipe} from "@yyasinaslan/easyform";
 
 @Component({
   selector: 'app-custom-text',
