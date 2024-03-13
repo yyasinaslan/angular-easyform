@@ -8,9 +8,11 @@ $input-padding: var(--ef-input-padding, 0.5em);
 $errors-font-size: var(--ef-form-errors-font-size, 0.8em);
 
 
-$radio-spacing: 0.5rem;
-$radio-size: 20px;
+$radio-spacing: var(--ef-radio-spacing, (0.5rem));
+$radio-size: var(--ef-radio-size, (1.5rem));
 
-$checkbox-spacing: 0.5rem;
-$checkbox-size: 20px;
+$checkbox-spacing: var(--checkbox-spacing, (0.5rem));
+$checkbox-size: var(--checkbox-size, (1.5rem));
 
+$switch-spacing: var(--switch-spacing, (0.5rem));
+$switch-size: var(--switch-size, (1.5rem));

@@ -27,12 +27,13 @@
         </div>
       </div>
 
-      <!--      <div class="card space-y-3 col-span-5 row-span-1">-->
-      <!--        <h1 class="text-lg">Permission Settings</h1>-->
-      <!--        <div class="grid grid-cols-2 gap-3">-->
-      <!--          <ng-container easyFormField path="permissionsSettings.active"/>-->
-      <!--        </div>-->
-      <!--      </div>-->
+      <div class="card space-y-3 col-span-5 row-span-1">
+        <h1 class="text-lg">Permission Settings <span class="badge">Switch</span></h1>
+        <div class="grid grid-cols-2 gap-3">
+          <ng-container easyFormField path="permissionsSettings.acceptTermsOfService"/>
+          <ng-container easyFormField path="permissionsSettings.enableWifi" [disabled]="true" />
+        </div>
+      </div>
 
       <div class="card space-y-3 col-span-3 row-span-3">
         <div class="flex gap-2 justify-between items-center">
