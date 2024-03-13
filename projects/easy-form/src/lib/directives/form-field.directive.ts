@@ -17,6 +17,7 @@ import {EasyFormControl} from "../easy-form-control";
 import {takeUntilDestroyed} from "@angular/core/rxjs-interop";
 import {isComponent} from "../helpers/component-helper";
 import {EasyFormControlComponent, LazyLoadingComponent} from "../tokens/easy-form-config";
+import {filter} from "rxjs";
 
 @Directive({
   selector: 'ng-container[easyFormField]',
@@ -34,8 +35,19 @@ export class FormFieldDirective implements OnChanges, AfterContentInit {
   @Input() disabled = false;
   @Input() props?: Record<string, any>;
 
+  // Emit control value changes
   @Output() change = new EventEmitter<any>();
+
+  // Emit all events
   @Output() fieldEvent = new EventEmitter<Event>();
+
+  // Event emitters derived from fieldEvent
+  // Filter events
+  @Output("focus") focus = this.fieldEvent.pipe(filter(e => e.type == 'focus' || e.type == 'focusin'));
+  @Output("blur") blur = this.fieldEvent.pipe(filter(e => e.type == 'blur' || e.type == 'focusout'));
+  @Output("input") input = this.fieldEvent.pipe(filter(e => e.type == 'input'));
+  @Output("keyup") keyup = this.fieldEvent.pipe(filter(e => e.type == 'keyup'));
+  @Output("keydown") keydown = this.fieldEvent.pipe(filter(e => e.type == 'keydown'));
 
   public instance?: EasyFormControl;
   private componentRef?: ComponentRef<EasyFormControl>;
@@ -65,6 +77,15 @@ export class FormFieldDirective implements OnChanges, AfterContentInit {
     }
   }
 
+  ngAfterContentInit(): void {
+    this.render();
+
+    // Subscribe to value changes and emit change event
+    this.control?.valueChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(value => {
+      this.change.emit(value);
+    })
+  }
+
   private async render() {
     await this._render();
 
@@ -77,15 +98,6 @@ export class FormFieldDirective implements OnChanges, AfterContentInit {
         }
       })
     }
-  }
-
-  ngAfterContentInit(): void {
-    this.render();
-
-    // Subscribe to value changes and emit change event
-    this.control?.valueChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(value => {
-      this.change.emit(value);
-    })
   }
 
   private async _render() {

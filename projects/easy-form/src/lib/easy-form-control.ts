@@ -1,7 +1,7 @@
 import {FormControl} from "@angular/forms";
 import {FormField} from "./interfaces/form-field";
 import {FormFieldDirective} from "./directives/form-field.directive";
-import {computed, EventEmitter, signal} from "@angular/core";
+import {computed, effect, EventEmitter, signal} from "@angular/core";
 
 
 export interface EfControlData {
@@ -44,9 +44,12 @@ export class EasyFormControl {
    * @param event
    */
   emitEvent = (event: Event) => {
-    const directive = this.easyFormControl().formFieldDirective!;
+    const directive = this.formFieldDirective()!;
     if (directive.fieldEvent && directive.fieldEvent instanceof EventEmitter) {
-      directive.fieldEvent.emit(event);
+      // Check if there are any subscribers to the event
+      if (directive.fieldEvent.observed) {
+        directive.fieldEvent.emit(event);
+      }
     }
   }
 }

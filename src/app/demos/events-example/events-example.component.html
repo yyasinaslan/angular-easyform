@@ -4,8 +4,10 @@
     {{ eventMessage }}
     <easy-form [form]="form">
       <div class="block space-y-5">
-        <ng-container easyFormField path="name" (change)="handleChange($event)"
-                      (fieldEvent)="handleEvent($event)"/>
+        <ng-container easyFormField path="name"
+                      (change)="handleChange($event)"
+                      (focus)="handleEvent($event)"
+        />
 
         <ng-container easyFormField path="phone" (change)="handleChange($event)"
                       (fieldEvent)="handleEvent($event)"/>

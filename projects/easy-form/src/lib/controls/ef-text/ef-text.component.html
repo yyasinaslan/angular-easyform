@@ -3,9 +3,13 @@
     <label class="ef-form-label" [for]="easyFormControl().id">{{ schema()?.label | observe }}</label>
   }
   <input [id]="easyFormControl().id" [type]="props()['type'] ?? 'text'"
-         [formControl]="control()!" (focus)="emitEvent($event)" (blur)="emitEvent($event)"
-         [placeholder]="props()['placeholder'] ?? ''"
+         [formControl]="control()!"
+         (focus)="emitEvent($event)"
+         (blur)="emitEvent($event)"
          (input)="emitEvent($event)"
+         (keyup)="emitEvent($event)"
+         (keydown)="emitEvent($event)"
+         [placeholder]="props()['placeholder'] ?? ''"
          class="ef-input-text">
   <ef-errors [control]="control()!" [formField]="schema()!"/>
 }

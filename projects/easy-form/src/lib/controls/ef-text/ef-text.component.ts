@@ -16,4 +16,5 @@ import {EfErrorsComponent} from "../../components/ef-errors/ef-errors.component"
   styleUrl: './ef-text.component.scss'
 })
 export class EfTextComponent extends EasyFormControl {
+
 }
