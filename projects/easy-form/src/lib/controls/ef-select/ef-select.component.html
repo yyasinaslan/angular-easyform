@@ -2,7 +2,7 @@
   @if (easyFormControl().schema?.label) {
     <label class="ef-form-label" [for]="easyFormControl().id">{{ easyFormControl().schema?.label | observe }}</label>
   }
-  <select [id]="easyFormControl().id" [formControl]="easyFormControl().control!"
+  <select bindEvents [id]="easyFormControl().id" [formControl]="easyFormControl().control!"
           class="ef-input-select">
     @if (easyFormControl().schema?.options) {
       @for (item of (easyFormControl().schema?.options | observe); track item.value) {

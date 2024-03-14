@@ -23,7 +23,7 @@
         "./src/app/demos/*"
       ],
       "@app/*": [
-        "./src/*"
+        "./src/app/*"
       ]
     },
     "forceConsistentCasingInFileNames": true,

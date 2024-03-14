@@ -1,14 +1,13 @@
 import {FormControl} from "@angular/forms";
 import {FormField} from "./interfaces/form-field";
-import {FormFieldDirective} from "./directives/form-field.directive";
-import {computed, effect, EventEmitter, signal} from "@angular/core";
+import {computed, EventEmitter, signal} from "@angular/core";
 
 
 export interface EfControlData {
   id: string | null;
   control: FormControl | null;
   schema: FormField | null;
-  formFieldDirective: FormFieldDirective | null;
+  // formFieldDirective: FormFieldDirective | null;
 }
 
 /**
@@ -16,18 +15,20 @@ export interface EfControlData {
  * to work with EasyFormComponent
  */
 export class EasyFormControl {
+  // formFieldDirective = inject(FormFieldDirective, {optional: true});
+
   easyFormControl = signal<EfControlData>({
     id: null,
     control: null,
     schema: null,
-    formFieldDirective: null
+    // formFieldDirective: null
   });
 
   control = computed(() => this.easyFormControl().control);
 
   schema = computed(() => this.easyFormControl().schema);
 
-  formFieldDirective = computed(() => this.easyFormControl().formFieldDirective);
+  // formFieldDirective = computed(() => this.easyFormControl().formFieldDirective);
 
   props = signal<Record<string, any>>({});
 
@@ -35,7 +36,7 @@ export class EasyFormControl {
 
   hasInitialized = computed(() => {
     const efData = this.easyFormControl();
-    return efData.control !== null && efData.schema !== null && efData.formFieldDirective !== null;
+    return efData.control !== null && efData.schema !== null;
   });
 
   /**
@@ -44,12 +45,12 @@ export class EasyFormControl {
    * @param event
    */
   emitEvent = (event: Event) => {
-    const directive = this.formFieldDirective()!;
-    if (directive.fieldEvent && directive.fieldEvent instanceof EventEmitter) {
-      // Check if there are any subscribers to the event
-      if (directive.fieldEvent.observed) {
-        directive.fieldEvent.emit(event);
-      }
-    }
+    // const directive = this.formFieldDirective;
+    // if (directive && directive.fieldEvent && directive.fieldEvent instanceof EventEmitter) {
+    //   // Check if there are any subscribers to the event
+    //   if (directive.fieldEvent.observed) {
+    //     directive.fieldEvent.emit(event);
+    //   }
+    // }
   }
 }

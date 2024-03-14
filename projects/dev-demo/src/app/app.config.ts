@@ -10,7 +10,7 @@ export const appConfig: ApplicationConfig = {
       provide: EASY_FORM_CONFIG,
       useValue: {
         controls: {
-          customText: () => import('@app/app/input-components/custom-text/custom-text.component').then(m => m.CustomTextComponent),
+          customText: () => import('@app/input-components/custom-text/custom-text.component').then(m => m.CustomTextComponent),
         }
       } as EasyFormConfig
     },
