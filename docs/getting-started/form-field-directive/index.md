@@ -28,6 +28,18 @@ There are a few keypoints to remember when using path property of `FormFieldDire
 }
 ```
 
+### Dynamic Path
+
+You can render one field interchangeably with another field by using `path` input of `FormFieldDirective`.
+
+Example:
+
+In this example we have two field components `email` and `name`.
+We can render one of them by using `path` input.
+With custom validator we can validate only visible field.
+
+{{ NgDocActions.demo("dynamicPath", {expanded: true}) }}
+
 ## Props `@Input`
 
 With `props` input of `FormFieldDirective` you can pass additional properties to the control component.
@@ -62,6 +74,7 @@ Example:
 <!-- Disabled -->
 <ng-container easyFormField path="email" (change)="handleChange($event)"/>
 ```
+
 ```typescript
 @Component({
   /* ... */
@@ -83,6 +96,7 @@ Example:
 <!-- Disabled -->
 <ng-container easyFormField path="email" (fieldEvent)="handleInputEvent($event)"/>
 ```
+
 ```typescript
 @Component({
   /* ... */
@@ -94,6 +108,23 @@ export class MyComponent {
   }
 }
 ```
+
+### Other Events
+
+`FormFieldDirective` also has other event emitters that you can listen to. See the list below:
+
+- `@Output` `focus`
+- `@Output` `blur`
+- `@Output` `input`
+- `@Output` `keydown`
+- `@Output` `keyup`
+
+> **Warning**
+> **Note:** These events are emitted from the control component. Therefore, if custom component does not emit these events, they will not be available.
+
+> **Warning**
+> **Note:** Events like `(keyup.*)` won't work with `FormFieldDirective`. 
+
 
 ## Get Value With Ref
 

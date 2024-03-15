@@ -8,6 +8,8 @@ You can add your custom form field components and use them in your forms. See [c
 
 ## Quick Start
 
+Install the package using npm:
+
 ```bash
 npm i @yyasinaslan/easyform
 ```

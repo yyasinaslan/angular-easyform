@@ -1,3 +1,7 @@
 # {{ NgDocPage.title }}
 
-It's time to write some awesome docs!
+## Examples
+
+### Example 1: Basic form group
+
+{{ NgDocActions.demo("groupDemo", {expanded: true}) }}

@@ -1,6 +1,6 @@
 import {NgDocNavbarComponent, NgDocRootComponent, NgDocSidebarComponent} from "@ng-doc/app";
-import {Component, inject} from '@angular/core';
-import {RouterLink, RouterLinkActive, RouterOutlet} from '@angular/router';
+import {Component, inject, OnInit, signal} from '@angular/core';
+import {NavigationEnd, NavigationStart, Router, RouterLink, RouterLinkActive, RouterOutlet} from '@angular/router';
 import {JsonPipe} from "@angular/common";
 import {ThemeService} from "./services/theme.service";
 
@@ -11,9 +11,20 @@ import {ThemeService} from "./services/theme.service";
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   themeService = inject(ThemeService)
+  router = inject(Router)
 
   title = 'easy-form-demo';
+  loading = signal(false);
 
+  ngOnInit() {
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationStart) {
+        this.loading.set(true)
+      } else if (event instanceof NavigationEnd) {
+        this.loading.set(false)
+      }
+    })
+  }
 }

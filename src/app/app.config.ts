@@ -9,8 +9,8 @@ import {
 } from "@ng-doc/app";
 import {provideNgDocContext} from "@ng-doc/generated";
 import {provideAnimations} from "@angular/platform-browser/animations";
-import {ApplicationConfig} from '@angular/core';
-import {provideRouter, withInMemoryScrolling} from '@angular/router';
+import {ApplicationConfig, isDevMode} from '@angular/core';
+import {NoPreloading, PreloadAllModules, provideRouter, withInMemoryScrolling, withPreloading} from '@angular/router';
 import {EASY_FORM_CONFIG, EasyFormConfig} from "@yyasinaslan/easyform";
 import {provideHttpClient, withFetch, withInterceptorsFromDi} from "@angular/common/http";
 import {routes} from "./app.routes";
@@ -26,7 +26,7 @@ export const appConfig: ApplicationConfig = {
       } as EasyFormConfig
     },
     provideAnimations(),
-    provideRouter(routes, withInMemoryScrolling({
+    provideRouter(routes, withPreloading(isDevMode() ? NoPreloading : PreloadAllModules), withInMemoryScrolling({
       scrollPositionRestoration: "enabled",
       anchorScrolling: "enabled"
     })),

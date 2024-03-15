@@ -1,1 +1,7 @@
 <router-outlet/>
+@if (loading()){
+  <div class="fixed z-50 inset-0 bg-black/20 backdrop-blur grid place-items-center">
+    <div>Loading...</div>
+  </div>
+
+}
