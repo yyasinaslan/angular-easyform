@@ -20,7 +20,7 @@ import {EasyFormComponent} from "../easy-form/easy-form.component";
 import {EasyFormControl} from "../easy-form-control";
 import {isComponent} from "../helpers/component-helper";
 import {EasyFormControlComponent, LazyLoadingComponent} from "../tokens/easy-form-config";
-import {filter, Subscription} from "rxjs";
+import {filter, Observable, Subscription} from "rxjs";
 import {takeUntilDestroyed} from "@angular/core/rxjs-interop";
 
 @Directive({
@@ -39,12 +39,12 @@ export class FormFieldDirective implements OnChanges {
   // Emit all events
   @Output() fieldEvent = new EventEmitter<Event>();
   // Filter events
-  @Output("focus") focus = this.fieldEvent.pipe(filter(e => e.type == 'focus' || e.type == 'focusin'));
-  @Output("blur") blur = this.fieldEvent.pipe(filter(e => e.type == 'blur' || e.type == 'focusout'));
+  @Output("focus") focus = this.fieldEvent.pipe(filter(e => e.type == 'focus' || e.type == 'focusin')) as Observable<FocusEvent>;
+  @Output("blur") blur = this.fieldEvent.pipe(filter(e => e.type == 'blur' || e.type == 'focusout')) as Observable<FocusEvent>;
   // Event emitters derived from fieldEvent
-  @Output("input") input = this.fieldEvent.pipe(filter(e => e.type == 'input'));
-  @Output("keyup") keyup = this.fieldEvent.pipe(filter(e => e.type == 'keyup'));
-  @Output("keydown") keydown = this.fieldEvent.pipe(filter(e => e.type == 'keydown'));
+  @Output("input") input = this.fieldEvent.pipe(filter(e => e.type == 'input')) as Observable<InputEvent>;
+  @Output("keyup") keyup = this.fieldEvent.pipe(filter(e => e.type == 'keyup')) as Observable<KeyboardEvent>;
+  @Output("keydown") keydown = this.fieldEvent.pipe(filter(e => e.type == 'keydown')) as Observable<KeyboardEvent>;
   public instance?: EasyFormControl;
   private componentRef?: ComponentRef<EasyFormControl>;
 
