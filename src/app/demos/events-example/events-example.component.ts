@@ -7,6 +7,7 @@ import {
   EfFormArrayComponent,
   FormFieldDirective
 } from "@yyasinaslan/easyform";
+import {ValidatorFn, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-events-example',
@@ -24,10 +25,7 @@ import {
 export class EventsExampleComponent {
   eventMessage = '';
 
-  form = EasyForm.create({
-    name: EasyForm.text().required('Name is required'),
-    phone: EasyForm.custom('customText', 'Phone').pattern(/\d+/, 'Phone is not valid').required('Phone is required'),
-  })
+  dynamicPath = 'name';
 
   handleEvent(event: Event) {
     console.log('handleEvent', event.type);
@@ -37,4 +35,11 @@ export class EventsExampleComponent {
   handleChange(value: any) {
     console.log('handleChange', value);
   }
+
+
+  form = EasyForm.create({
+    name: EasyForm.text('Name').required('Name is required'),
+    email: EasyForm.email('Email').email('Email is not valid').required('Email is required'),
+    phone: EasyForm.custom('customText', 'Phone').pattern(/\d+/, 'Phone is not valid').required('Phone is required'),
+  })
 }

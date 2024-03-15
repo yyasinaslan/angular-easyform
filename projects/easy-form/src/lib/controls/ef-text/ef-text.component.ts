@@ -2,6 +2,7 @@ import {Component} from '@angular/core';
 import {EasyFormControl} from "../../easy-form-control";
 import {ReactiveFormsModule} from "@angular/forms";
 import {ObservePipe} from "../../pipes/observe";
+import {BindEventsDirective} from "../../directives/bind-events.directive";
 import {EfErrorsComponent} from "../../components/ef-errors/ef-errors.component";
 
 @Component({
@@ -10,7 +11,8 @@ import {EfErrorsComponent} from "../../components/ef-errors/ef-errors.component"
   imports: [
     ReactiveFormsModule,
     ObservePipe,
-    EfErrorsComponent
+    EfErrorsComponent,
+    BindEventsDirective
   ],
   templateUrl: './ef-text.component.html',
   styleUrl: './ef-text.component.scss'

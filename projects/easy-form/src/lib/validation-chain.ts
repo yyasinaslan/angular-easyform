@@ -150,16 +150,15 @@ export class ValidationChain<FormType = any, RemoteType = FormType> implements F
 
   /**
    * Add a custom validation to the field
-   * @param key
    * @param validator
-   * @param message
+   * @param messages
    */
-  customValidator(key: string, validator: ValidatorFn, message: ObservableString) {
-    if (this.validations && this.validations[key]) return this;
-
+  customValidator(validator: ValidatorFn, messages: Record<string, ObservableString>) {
     if (!this.validations) this.validations = {};
 
-    this.validations[key] = {validator, message};
+    Object.keys(messages).forEach(key => {
+      this.validations[key] = {validator, message: messages[key]};
+    });
 
     return this;
   }

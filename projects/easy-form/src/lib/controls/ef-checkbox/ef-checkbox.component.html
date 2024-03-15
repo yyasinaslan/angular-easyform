@@ -1,5 +1,5 @@
 @if (hasInitialized()) {
-  <input type="checkbox" [formControl]="easyFormControl().control!" [id]="easyFormControl().id">
+  <input type="checkbox" bindEvents [formControl]="easyFormControl().control!" [id]="easyFormControl().id">
   @if (easyFormControl().schema?.label) {
     <label class="ef-form-label" [for]="easyFormControl().id">{{ easyFormControl().schema?.label | observe }}</label>
   }

@@ -1,16 +1,21 @@
 <div class="container py-10 space-y-5">
-  <h1 class="text-3xl">Event binding example</h1>
+  <h1 class="text-3xl">Event Binding</h1>
   <div class="card">
-    {{ eventMessage }}
+
     <easy-form [form]="form">
       <div class="block space-y-5">
-        <ng-container easyFormField path="name" (change)="handleChange($event)"
-                      (fieldEvent)="handleEvent($event)"/>
+        <ng-container easyFormField path="name"
+                      (change)="handleChange($event)"
+                      (keyup)="handleEvent($event)"
+                      (focus)="handleEvent($event)"
+                      (blur)="handleEvent($event)"
+        />
+        <ng-container easyFormField path="email" (change)="handleChange($event)"/>
 
-        <ng-container easyFormField path="phone" (change)="handleChange($event)"
-                      (fieldEvent)="handleEvent($event)"/>
+        <ng-container easyFormField path="phone" (change)="handleChange($event)"/>
 
         <button type="submit">Submit</button>
+        <div class="text-lg font-bold">{{ eventMessage }}</div>
       </div>
     </easy-form>
   </div>

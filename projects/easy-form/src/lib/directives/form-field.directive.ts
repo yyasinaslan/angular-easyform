@@ -1,47 +1,104 @@
 import {
-  AfterContentInit,
   ComponentRef,
+  computed,
   DestroyRef,
   Directive,
+  effect,
   EventEmitter,
   inject,
+  Injector,
   Input,
   OnChanges,
   Output,
+  signal,
   SimpleChanges,
+  untracked,
   ViewContainerRef
 } from '@angular/core';
 import {FormControl} from "@angular/forms";
 import {EasyFormComponent} from "../easy-form/easy-form.component";
 import {EasyFormControl} from "../easy-form-control";
-import {takeUntilDestroyed} from "@angular/core/rxjs-interop";
 import {isComponent} from "../helpers/component-helper";
 import {EasyFormControlComponent, LazyLoadingComponent} from "../tokens/easy-form-config";
+import {filter, Observable, Subscription} from "rxjs";
+import {takeUntilDestroyed} from "@angular/core/rxjs-interop";
 
 @Directive({
   selector: 'ng-container[easyFormField]',
   standalone: true,
   exportAs: 'easyFormField'
 })
-export class FormFieldDirective implements OnChanges, AfterContentInit {
+export class FormFieldDirective implements OnChanges {
   destroyRef = inject(DestroyRef)
   viewContainerRef = inject(ViewContainerRef)
   easyFormComponent = inject(EasyFormComponent)
-
-  control?: FormControl;
-
-  @Input() path?: string | Array<string | number>;
   @Input() disabled = false;
   @Input() props?: Record<string, any>;
-
+  // It emits control value changes
   @Output() change = new EventEmitter<any>();
+  // Emit all events
   @Output() fieldEvent = new EventEmitter<Event>();
-
+  // Filter events
+  @Output("focus") focus = this.fieldEvent.pipe(filter(e => e.type == 'focus' || e.type == 'focusin')) as Observable<FocusEvent>;
+  @Output("blur") blur = this.fieldEvent.pipe(filter(e => e.type == 'blur' || e.type == 'focusout')) as Observable<FocusEvent>;
+  // Event emitters derived from fieldEvent
+  @Output("input") input = this.fieldEvent.pipe(filter(e => e.type == 'input')) as Observable<InputEvent>;
+  @Output("keyup") keyup = this.fieldEvent.pipe(filter(e => e.type == 'keyup')) as Observable<KeyboardEvent>;
+  @Output("keydown") keydown = this.fieldEvent.pipe(filter(e => e.type == 'keydown')) as Observable<KeyboardEvent>;
   public instance?: EasyFormControl;
   private componentRef?: ComponentRef<EasyFormControl>;
 
+  private valueChangeSubscription?: Subscription;
+
+  constructor() {
+    effect(() => {
+      // track control changes
+      const control = this.control();
+      if (this.valueChangeSubscription) {
+        this.valueChangeSubscription.unsubscribe();
+      }
+      untracked(() => {
+        if (control) {
+          this.valueChangeSubscription = control.valueChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(value => {
+            this.change.emit(value);
+          });
+          this.render();
+        }
+      })
+    });
+  }
+
   get value() {
-    return this.control?.value;
+    return this.control()?.value;
+  }
+
+  private _path = signal<Array<string | number>>([]);
+
+  control = computed(() => {
+    const path = this._path();
+    if (!path || path.length === 0) {
+      return;
+    }
+    const control = this.easyFormComponent.form.formGroup.get(this._path());
+    if (!control) {
+      throw new Error(`Form definition not found for ${this._path()}`);
+    }
+    return control as FormControl;
+  });
+
+  // This will be useful for dynamic path changes
+  @Input() set path(value: string | Array<string | number>) {
+    let path: Array<string | number>;
+    if (typeof value === 'string') {
+      path = value.split('.');
+    } else {
+      path = value;
+    }
+    this._path.set(path);
+
+    // setTimeout(() => {
+    //   this._path.set(path);
+    // }, 1000)
   }
 
   private get form() {
@@ -50,11 +107,12 @@ export class FormFieldDirective implements OnChanges, AfterContentInit {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['disabled']) {
-      if (this.control) {
+      const control = this.control();
+      if (control) {
         if (this.disabled) {
-          this.control.disable();
+          control.disable();
         } else {
-          this.control.enable();
+          control.enable();
         }
       }
     }
@@ -68,28 +126,20 @@ export class FormFieldDirective implements OnChanges, AfterContentInit {
   private async render() {
     await this._render();
 
-    if (this.control) {
+    const control = this.control();
+    if (control) {
       setTimeout(() => {
         if (this.disabled) {
-          this.control!.disable();
+          control.disable();
         } else {
-          this.control!.enable();
+          control.enable();
         }
       })
     }
   }
 
-  ngAfterContentInit(): void {
-    this.render();
-
-    // Subscribe to value changes and emit change event
-    this.control?.valueChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(value => {
-      this.change.emit(value);
-    })
-  }
-
   private async _render() {
-    const path = this.path;
+    const path = this._path();
     if (!path) {
       return;
     }
@@ -130,16 +180,26 @@ export class FormFieldDirective implements OnChanges, AfterContentInit {
     if (!isComponent(component)) {
       throw new Error(`${schema.controlType} is not a valid Angular component. Please provide a valid Angular component for ${schema.controlType} on provider EasyFormConfig`);
     }
-    //
-    const componentRef = this.viewContainerRef.createComponent<EasyFormControl>(component as EasyFormControlComponent, {});
+    // Forwards this instance to the child component
+    const injector = Injector.create({
+      parent: this.viewContainerRef.injector,
+      providers: [
+        {
+          provide: FormFieldDirective,
+          useValue: this
+        }
+      ]
+    })
+    this.viewContainerRef.clear();
+    if (this.componentRef) {
+      this.componentRef.destroy();
+    }
+    const componentRef = this.viewContainerRef.createComponent<EasyFormControl>(component as EasyFormControlComponent, {
+      injector: injector
+    });
     this.componentRef = componentRef;
     this.instance = componentRef.instance;
-    //
-    const control = this.form.formGroup.get(path);
-    if (!control) {
-      throw new Error(`FormControl not found for ${path}`);
-    }
-    this.control = control as FormControl;
+
 
     if (schema.props) {
       // Initialize props
@@ -151,10 +211,9 @@ export class FormFieldDirective implements OnChanges, AfterContentInit {
     }
 
     componentRef.instance.easyFormControl.set({
-      id: (typeof path === 'string' ? path : path.join('_')) + '_' + Math.random().toString(36).substring(2),
-      control: this.control!,
-      schema: schema,
-      formFieldDirective: this
+      id: path.join('_') + '_' + Math.random().toString(36).substring(2),
+      control: this.control()!,
+      schema: schema
     });
 
     componentRef.changeDetectorRef.detectChanges();
