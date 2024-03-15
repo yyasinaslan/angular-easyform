@@ -7,7 +7,7 @@ import {
   EfFormArrayComponent,
   FormFieldDirective
 } from "@yyasinaslan/easyform";
-import {ValidatorFn} from "@angular/forms";
+import {ValidatorFn, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-events-example',
@@ -36,25 +36,10 @@ export class EventsExampleComponent {
     console.log('handleChange', value);
   }
 
-  toggleField() {
-    this.dynamicPath = this.dynamicPath === 'name' ? 'fullName' : 'name';
-    // Force validation
-    const otherControl = this.form.getControl(this.dynamicPath == 'name' ? 'fullName' : 'name');
-    otherControl.setValue(otherControl.value);
-  }
-
-  private requiredCustom = (path: string): ValidatorFn => {
-    return (control) => {
-      if (this.dynamicPath == path && (control.value === null || control.value === "")) {
-        return {required: true};
-      }
-      return null;
-    }
-  };
 
   form = EasyForm.create({
-    name: EasyForm.text('Name').customValidator('required', this.requiredCustom('name'), 'Name is required'),
-    fullName: EasyForm.text('Full Name').customValidator('required', this.requiredCustom('fullName'), 'Fullname is required'),
+    name: EasyForm.text('Name').required('Name is required'),
+    email: EasyForm.email('Email').email('Email is not valid').required('Email is required'),
     phone: EasyForm.custom('customText', 'Phone').pattern(/\d+/, 'Phone is not valid').required('Phone is required'),
   })
 }
