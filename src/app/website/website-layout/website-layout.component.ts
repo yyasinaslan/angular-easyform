@@ -2,6 +2,7 @@ import {Component, inject} from '@angular/core';
 import {RouterLink, RouterLinkActive, RouterOutlet} from "@angular/router";
 import {ThemeService} from "../../services/theme.service";
 import {ThemeSwitcherComponent} from "../../ui/theme-switcher/theme-switcher.component";
+import {HeaderLinksComponent} from "@app/ui/header-links/header-links.component";
 
 @Component({
   selector: 'app-website-layout',
@@ -10,7 +11,8 @@ import {ThemeSwitcherComponent} from "../../ui/theme-switcher/theme-switcher.com
     RouterLink,
     RouterLinkActive,
     RouterOutlet,
-    ThemeSwitcherComponent
+    ThemeSwitcherComponent,
+    HeaderLinksComponent
   ],
   templateUrl: './website-layout.component.html',
   styleUrl: './website-layout.component.scss'

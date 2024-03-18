@@ -3,6 +3,7 @@ import {NgDocNavbarComponent, NgDocRootComponent, NgDocSidebarComponent} from "@
 import {RouterLink, RouterOutlet, Routes} from "@angular/router";
 import {NG_DOC_ROUTING} from "@ng-doc/generated";
 import {ThemeSwitcherComponent} from "../ui/theme-switcher/theme-switcher.component";
+import {HeaderLinksComponent} from "@app/ui/header-links/header-links.component";
 
 @Component({
   selector: 'app-docs',
@@ -13,7 +14,8 @@ import {ThemeSwitcherComponent} from "../ui/theme-switcher/theme-switcher.compon
     NgDocSidebarComponent,
     RouterOutlet,
     RouterLink,
-    ThemeSwitcherComponent
+    ThemeSwitcherComponent,
+    HeaderLinksComponent
   ],
   templateUrl: './docs.component.html',
   styleUrl: './docs.component.scss'
