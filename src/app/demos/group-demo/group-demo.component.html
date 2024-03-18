@@ -5,7 +5,7 @@
       <h4 class="text-lg">Address</h4>
       <div class="space-y-3">
         <ng-container easyFormField path="address.street"/>
-        <ng-container easyFormField path="address.city"/>
+        <ng-container easyFormField [path]="['address','city']"/>
         <ng-container easyFormField path="address.country"/>
       </div>
     </div>

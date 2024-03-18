@@ -1,0 +1,31 @@
+<easy-form [form]="form">
+  <div class="p-4 space-y-5">
+    <ng-container easyFormField path="customerName"/>
+    <div class="p-4 border rounded-lg border-dashed">
+      <div class="flex justify-between items-center mb-3">
+        <h4 class="text-lg">Contacts</h4>
+        <button type="button" (click)="form.addToArray('contacts', '')">+ Add</button>
+      </div>
+      <ef-errors [form]="form" path="contacts"/>
+      <ef-form-array path="contacts" class="block space-y-4">
+        <ng-template arrayItem let-index="index">
+          <div class="flex justify-between items-center gap-2">
+            <div class="flex-auto">
+              <ng-container easyFormField [path]="['contacts', index]"/>
+            </div>
+            <button type="button"
+                    class="transition-colors bg-background text-red-600 hover:bg-red-500 hover:text-white aspect-square rounded-full p-0 w-8 h-8 flex items-center justify-center border-0"
+                    (click)="form.removeFromArray('contacts',index)">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg"
+                   viewBox="0 0 16 16">
+                <path
+                  d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z"/>
+              </svg>
+            </button>
+          </div>
+        </ng-template>
+      </ef-form-array>
+    </div>
+    <button type="submit">Submit</button>
+  </div>
+</easy-form>

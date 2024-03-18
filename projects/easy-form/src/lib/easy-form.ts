@@ -4,8 +4,6 @@ import {Signal} from "@angular/core";
 import {Observable} from "rxjs";
 import {FormArray, FormControl, FormGroup} from "@angular/forms";
 import {BasicControlTypes} from "./interfaces/basic-control-types";
-import {ComponentType} from "./interfaces/component-type";
-import {EasyFormControl} from "./easy-form-control";
 import {
   FormField,
   FormFieldArray,
@@ -95,6 +93,12 @@ export class EasyForm<T = Record<string, any>> extends EasyFormGenerator {
 
   getControl<T = FormControl>(path: string | Array<string | number>) {
     return this.formGroup.get(path) as T;
+  }
+
+  getArrayControls(path: string | Array<string | number>) {
+    const arrayControl = this.getControl<FormArray>(path);
+    if (!arrayControl) return [];
+    return arrayControl.controls as FormControl[];
   }
 
   getOptions() {
