@@ -1,0 +1,41 @@
+.slogan {
+  background: linear-gradient(180deg, hsl(var(--primary) / .5), hsl(var(--primary)));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.title {
+  background: linear-gradient(180deg, hsl(var(--primary)), hsl(var(--primary) / .5));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+
+/* form logo color */
+.cls-1 {
+  fill: #DD0031;
+}
+
+.cls-2 {
+  fill: #C3002F;
+}
+
+.cls-3 {
+  fill: #fff;
+}
+
+
+.tooltipText {
+  visibility: hidden;
+  bottom: 125%;
+  transform: translateX(-50%);
+  transition: visibility 1s ease-in-out;
+}
+
+
+.toolTip:hover .tooltipText {
+  visibility: visible;
+}
+

@@ -107,7 +107,7 @@
 
 
 @layer components {
-  button {
+  button, a.button {
     @apply px-3 py-2 rounded-lg border focus:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2 active:scale-95;
   }
 
