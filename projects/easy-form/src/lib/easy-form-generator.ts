@@ -1,16 +1,11 @@
-import {
-  FormFieldArray,
-  FormFieldArraySimple,
-  FormFieldBase,
-  FormFieldControl,
-  FormFieldGroup
-} from "./interfaces/form-field";
+import {FormFieldBase,} from "./interfaces/form-field";
 import {ValidatorFn} from "@angular/forms";
 import {BasicControlTypes} from "./interfaces/basic-control-types";
 import {AdvancedControlTypes} from "./interfaces/advanced-control-types";
-import {ValidationChain} from "./validation-chain";
+import {EasyFormField} from "./easy-form-field";
 import {ObservableString} from "./interfaces/observable-string";
 import {SelectOptions} from "./interfaces/select-options";
+import {FormSchema} from "./interfaces/form-schema";
 
 interface EfDefaultValidations {
   required: (message: string) => FormFieldWithValidation;
@@ -31,86 +26,85 @@ type GeneratorBaseOptions = Omit<FormFieldBase, "label" | "validations">;
 export abstract class EasyFormGenerator {
 
   public static text<FormType = string, RemoteType = FormType>(label?: ObservableString, configs?: GeneratorBaseOptions) {
-    return new ValidationChain<FormType, RemoteType>({...configs, label, controlType: "text"});
+    return new EasyFormField<FormType, RemoteType>({...configs, label, controlType: "text"});
   }
 
   public static textarea<FormType = string, RemoteType = FormType>(label?: ObservableString, configs?: GeneratorBaseOptions) {
-    return new ValidationChain<FormType, RemoteType>({...configs, label, controlType: "textarea"});
+    return new EasyFormField<FormType, RemoteType>({...configs, label, controlType: "textarea"});
   }
 
   public static email<FormType = string, RemoteType = FormType>(label?: ObservableString, configs?: GeneratorBaseOptions) {
-    const vc = new ValidationChain<FormType, RemoteType>({...configs, label, controlType: "text"});
+    const vc = new EasyFormField<FormType, RemoteType>({...configs, label, controlType: "text"});
     if (!vc.props) vc.props = {};
     vc.props['type'] = "email";
     return vc;
   }
 
   public static password<FormType = string, RemoteType = FormType>(label?: ObservableString, configs?: GeneratorBaseOptions) {
-    const vc = new ValidationChain<FormType, RemoteType>({...configs, label, controlType: "text"});
+    const vc = new EasyFormField<FormType, RemoteType>({...configs, label, controlType: "text"});
     if (!vc.props) vc.props = {};
     vc.props['type'] = "password";
     return vc;
   }
 
   public static number<FormType = number, RemoteType = FormType>(label?: ObservableString, configs?: GeneratorBaseOptions) {
-    const vc = new ValidationChain<FormType, RemoteType>({...configs, label, controlType: "text"});
+    const vc = new EasyFormField<FormType, RemoteType>({...configs, label, controlType: "text"});
     if (!vc.props) vc.props = {};
     vc.props['type'] = "number";
     return vc;
   }
 
   public static select<FormType = any, RemoteType = FormType>(options: SelectOptions<FormType>, label?: ObservableString, configs?: GeneratorBaseOptions) {
-    const vc = new ValidationChain<FormType, RemoteType>({...configs, label, controlType: BasicControlTypes.Select});
+    const vc = new EasyFormField<FormType, RemoteType>({...configs, label, controlType: BasicControlTypes.Select});
     vc.options = options;
     return vc;
   }
 
-  public static checkbox<FormType = any, RemoteType = FormType>(label: string, configs?: GeneratorBaseOptions) {
-    return new ValidationChain<FormType, RemoteType>({...configs, label, controlType: BasicControlTypes.Checkbox});
+  public static checkbox<FormType = boolean, RemoteType = FormType>(label: string, configs?: GeneratorBaseOptions) {
+    return new EasyFormField<FormType, RemoteType>({...configs, label, controlType: BasicControlTypes.Checkbox});
   }
 
   public static switch<FormType = any, RemoteType = FormType>(label: string, configs?: GeneratorBaseOptions) {
-    return new ValidationChain<FormType, RemoteType>({...configs, label, controlType: BasicControlTypes.Switch});
+    return new EasyFormField<FormType, RemoteType>({...configs, label, controlType: BasicControlTypes.Switch});
   }
 
   public static radio<FormType = any, RemoteType = FormType>(options: SelectOptions<FormType>, label: string, configs?: GeneratorBaseOptions) {
-    const vc = new ValidationChain<FormType, RemoteType>({...configs, label, controlType: BasicControlTypes.Radio});
+    const vc = new EasyFormField<FormType, RemoteType>({...configs, label, controlType: BasicControlTypes.Radio});
     vc.options = options;
     return vc;
   }
 
   public static date<FormType = any, RemoteType = FormType>(label: string, configs?: GeneratorBaseOptions) {
-    const vc = new ValidationChain<FormType, RemoteType>({...configs, label, controlType: "text"});
+    const vc = new EasyFormField<FormType, RemoteType>({...configs, label, controlType: "text"});
     if (!vc.props) vc.props = {};
     vc.props['type'] = "date";
     return vc;
   }
 
   public static custom<FormType = any, RemoteType = FormType>(type: string, label?: string, configs?: GeneratorBaseOptions) {
-    return new ValidationChain<FormType, RemoteType>({...configs, label, controlType: type});
+    return new EasyFormField<FormType, RemoteType>({...configs, label, controlType: type});
   }
 
-  public static group<FormType = Record<string, any>, RemoteType = FormType>(schema: FormFieldGroup['fields'], configs?: GeneratorBaseOptions) {
-    return new ValidationChain<FormType, RemoteType>({
+  public static group<FormType = any, RemoteType = FormType>(schema: FormSchema<FormType>, configs?: GeneratorBaseOptions) {
+    return new EasyFormField<FormType, RemoteType>({
       ...configs,
       controlType: AdvancedControlTypes.Group,
-      fields: schema as Record<string, FormFieldControl>
+      schema: schema
     });
   }
 
-  public static array<FormType = Array<any>, RemoteType = FormType>(schema: FormFieldArray['fields'] | FormFieldArraySimple['field'], configs?: GeneratorBaseOptions) {
-    const simpleArray = !!schema.controlType;
-    if (simpleArray) {
-      return new ValidationChain<FormType, RemoteType>({
+  public static array<FormType = Array<any>, RemoteType = FormType>(schema: EasyFormField | Record<string, EasyFormField>, configs?: GeneratorBaseOptions) {
+    if (schema instanceof EasyFormField) {
+      return new EasyFormField<FormType, RemoteType>({
         ...configs,
         controlType: AdvancedControlTypes.ArraySimple,
-        field: schema as FormFieldControl
+        schema: schema
       });
     }
-    return new ValidationChain<FormType, RemoteType>({
+    return new EasyFormField<FormType, RemoteType>({
       ...configs,
       controlType: AdvancedControlTypes.Array,
-      fields: schema as Record<string, FormFieldControl>
+      schema: schema
     });
   }
 }

@@ -1,13 +1,12 @@
 import {Validation} from "./validation";
 import {BasicControlTypes} from "./basic-control-types";
-import {ComponentType} from "./component-type";
-import {EasyFormControl} from "../easy-form-control";
 import {AdvancedControlTypes} from "./advanced-control-types";
 import {ObservableString} from "./observable-string";
 import {SelectOptions} from "./select-options";
+import {EasyFormField} from "../easy-form-field";
 
 export type FormFieldBase<FormType = any, RemoteType = FormType> = {
-
+  controlType?: string | BasicControlTypes | AdvancedControlTypes;
   // Optional field id
   id?: string;
 
@@ -29,33 +28,11 @@ export type FormFieldBase<FormType = any, RemoteType = FormType> = {
   // select options
   options?: SelectOptions<FormType>;
 
-  transformer?: {
-    toForm?: (value: RemoteType) => FormType;
-    fromForm?: (value: FormType) => RemoteType;
-  }
-}
+  // transformer?: {
+  //   toForm?: (value: RemoteType) => FormType;
+  //   fromForm?: (value: FormType) => RemoteType;
+  // }
 
-export type FormFieldGeneric = {
-  // Field type
-  controlType: string | BasicControlTypes | ComponentType<EasyFormControl>;
+  // Child schema for array or group
+  schema?: EasyFormField | Record<string, EasyFormField>;
 }
-
-export type FormFieldControl = FormFieldBase & FormFieldGeneric;
-
-export type FormFieldGroup = {
-  controlType: AdvancedControlTypes.Group | 'group';
-  fields: Record<string, FormFieldControl>;
-}
-export type FormFieldArray = {
-  controlType: AdvancedControlTypes.Array | 'array';
-  fields: Record<string, FormFieldControl>;
-}
-export type FormFieldArraySimple = {
-  controlType: AdvancedControlTypes.ArraySimple | 'arraySimple'
-  field: FormFieldControl;
-  initialValue?: any[];
-}
-
-export type FormField =
-  FormFieldBase &
-  (FormFieldGeneric | FormFieldGroup | FormFieldArray | FormFieldArraySimple)

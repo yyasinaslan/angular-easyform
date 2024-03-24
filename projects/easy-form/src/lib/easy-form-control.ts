@@ -1,12 +1,12 @@
 import {FormControl} from "@angular/forms";
-import {FormField} from "./interfaces/form-field";
-import {computed, EventEmitter, signal} from "@angular/core";
+import {computed, signal} from "@angular/core";
+import {EasyFormField} from "./easy-form-field";
 
 
 export interface EfControlData {
   id: string | null;
   control: FormControl | null;
-  schema: FormField | null;
+  schema: EasyFormField | null;
   // formFieldDirective: FormFieldDirective | null;
 }
 

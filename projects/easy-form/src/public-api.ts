@@ -2,6 +2,7 @@
  * Public API Surface of easy-form
  */
 export * from './lib/easy-form';
+export * from './lib/easy-form-field';
 export * from './lib/easy-form/easy-form.component';
 export * from './lib/directives/form-field.directive'
 export * from './lib/directives/array-item-template.directive'

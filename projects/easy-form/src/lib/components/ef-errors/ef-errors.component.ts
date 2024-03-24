@@ -1,9 +1,9 @@
 import {Component, ContentChild, Input, TemplateRef} from '@angular/core';
 import {FormControl} from "@angular/forms";
-import {FormField} from "../../interfaces/form-field";
 import {KeyValuePipe, NgTemplateOutlet} from "@angular/common";
 import {ObservePipe} from "../../pipes/observe";
 import {EasyForm} from "../../easy-form";
+import {EasyFormField} from "../../easy-form-field";
 
 @Component({
   selector: 'ef-errors',
@@ -21,6 +21,8 @@ export class EfErrorsComponent {
 
   @Input() form?: EasyForm;
   @Input() path?: string | (number | string)[];
+  @Input() control?: FormControl;
+  @Input() formField?: EasyFormField;
 
   get _control() {
     if (this.control) return this.control;
@@ -31,10 +33,7 @@ export class EfErrorsComponent {
   get _formField() {
     if (this.formField) return this.formField;
     if (!this.path || !this.form) throw new Error('Path and form inputs are required');
-    return this.form.getSchema(this.path);
+    return this.form.getSchema(this.path) as EasyFormField;
   }
-
-  @Input() control?: FormControl;
-  @Input() formField?: FormField;
 
 }

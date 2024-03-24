@@ -3,6 +3,20 @@ import {EasyForm, EasyFormComponent, FormFieldDirective} from "@yyasinaslan/easy
 import {ValidatorFn, Validators} from "@angular/forms";
 import {JsonPipe} from "@angular/common";
 
+interface User {
+  id: string;
+  createdAt: string;
+  updatedAt: string;
+
+  name: string;
+  email: string;
+  phone: number;
+
+  balance?: number;
+}
+
+type OmitBase<T, K extends keyof any = ''> = Omit<T, 'id' | 'createdAt' | 'updatedAt' | K>;
+
 @Component({
   selector: 'app-dynamic-path-demo',
   standalone: true,
@@ -38,7 +52,7 @@ export class DynamicPathDemoComponent {
     }
   };
 
-  form = EasyForm.create({
+  form = EasyForm.create<OmitBase<User, 'balance'>>({
     name: EasyForm.text('Name').customValidator(this.requiredCustom('name'), {
       required: 'Name is required'
     }),
@@ -48,6 +62,6 @@ export class DynamicPathDemoComponent {
         required: 'Email is required',
         email: 'Email is not valid'
       }),
-    phone: EasyForm.custom('customText', 'Phone').pattern(/\d+/, 'Phone is not valid').required('Phone is required'),
+    phone: EasyForm.custom<number>('customText', 'Phone').pattern(/\d+/, 'Phone is not valid').required('Phone is required'),
   })
 }

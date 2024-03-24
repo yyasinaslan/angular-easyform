@@ -4,16 +4,10 @@ import {Signal} from "@angular/core";
 import {Observable} from "rxjs";
 import {FormArray, FormControl, FormGroup} from "@angular/forms";
 import {BasicControlTypes} from "./interfaces/basic-control-types";
-import {
-  FormField,
-  FormFieldArray,
-  FormFieldArraySimple,
-  FormFieldControl,
-  FormFieldGroup
-} from "./interfaces/form-field";
 import {AdvancedControlTypes} from "./interfaces/advanced-control-types";
 import {EasyFormGenerator} from "./easy-form-generator";
 import {EasyFormControlComponent, LazyLoadingComponent} from "./tokens/easy-form-config";
+import {EasyFormField} from "./easy-form-field";
 
 export interface EasyFormOptions<T = Record<string, any>> {
   showErrors?: 'submitted' | 'touched' | 'dirty' | 'always' | 'never';
@@ -28,18 +22,18 @@ export interface EasyFormOptions<T = Record<string, any>> {
   components?: Record<string, EasyFormControlComponent | LazyLoadingComponent>
 }
 
-export class EasyForm<T = Record<string, any>> extends EasyFormGenerator {
+export class EasyForm<ValueType = any, SchemaType extends FormSchema<ValueType> = any> extends EasyFormGenerator {
 
   public formGroup: FormGroup;
 
-  public schema!: FormSchema<T>;
+  public schema!: SchemaType;
   // default options
   public options: EasyFormOptions = {
     showErrors: 'submitted',
     components: {}
   };
 
-  constructor(schema: FormSchema<T>, options?: EasyFormOptions<T>) {
+  constructor(schema: SchemaType, options?: EasyFormOptions<SchemaType>) {
     super();
     this.schema = schema;
     this.options = {...this.options, ...options};
@@ -54,7 +48,7 @@ export class EasyForm<T = Record<string, any>> extends EasyFormGenerator {
     return this.formGroup.valid;
   }
 
-  get value() {
+  get value(): ValueType {
     return this.formGroup.value;
   }
 
@@ -63,12 +57,12 @@ export class EasyForm<T = Record<string, any>> extends EasyFormGenerator {
    * @param schema
    * @param options
    */
-  public static create<T>(schema: FormSchema<T>, options?: EasyFormOptions<T>) {
-    return new EasyForm<T>(schema, options);
+  public static create<T = any>(schema: FormSchema<T>, options?: EasyFormOptions<T>) {
+    return new EasyForm<T, FormSchema<T>>(schema, options);
   }
 
   getSchema(path: string | Array<string | number>) {
-    const normalisedPath = typeof path == 'string' ? path : path.join('.');
+    const normalisedPath = typeof path == 'string' ? path.split('.') : path;
     return this._getSchemaWithPath(normalisedPath, this.schema);
   }
 
@@ -91,8 +85,8 @@ export class EasyForm<T = Record<string, any>> extends EasyFormGenerator {
     return c;
   }
 
-  getControl<T = FormControl>(path: string | Array<string | number>) {
-    return this.formGroup.get(path) as T;
+  getControl<ControlType = FormControl>(path: string | Array<string | number>) {
+    return this.formGroup.get(path) as ControlType;
   }
 
   getArrayControls(path: string | Array<string | number>) {
@@ -105,14 +99,18 @@ export class EasyForm<T = Record<string, any>> extends EasyFormGenerator {
     return this.options;
   }
 
-  getValue(path?: string | Array<string | number>) {
+  getFormValue(): ValueType {
+    return this.formGroup.value;
+  }
+
+  getValue<ValueType = any>(path?: string | Array<string | number>): ValueType {
     if (path) {
       return this.formGroup.get(path)?.value;
     }
     return this.formGroup.value;
   }
 
-  getRawValue(path?: string | Array<string | number>) {
+  getRawValue<ValueType = any>(path?: string | Array<string | number>): ValueType {
     if (path) {
       return this.formGroup.get(path)?.getRawValue();
     }
@@ -146,13 +144,14 @@ export class EasyForm<T = Record<string, any>> extends EasyFormGenerator {
     }
 
     if (schema.controlType === AdvancedControlTypes.Array) {
-      const g = this.createFormGroup((schema as FormFieldArray).fields, value);
+      const g = this.createFormGroup(schema.schema as Record<string, EasyFormField>, value);
       arr.push(g);
       return;
     }
 
     if (schema.controlType === AdvancedControlTypes.ArraySimple) {
-      const validations = (schema as FormFieldArraySimple).field.validations ?? {};
+      const arrayField = schema.schema as EasyFormField;
+      const validations = arrayField.validations ?? {};
       const control = new FormControl(value, this.createValidations(validations));
       arr.push(control);
     }
@@ -166,19 +165,19 @@ export class EasyForm<T = Record<string, any>> extends EasyFormGenerator {
     }
   }
 
-  private createFormGroup(schema: FormSchema, initialValue?: any, validations?: FormField['validations']): FormGroup {
+  private createFormGroup(schema: FormSchema, initialValue?: any, validations?: EasyFormField['validations']): FormGroup {
     const group = new FormGroup({});
 
     for (const key in schema) {
       const field = schema[key];
       if (field.controlType == 'group') {
-        const g = this.createFormGroup((field as FormFieldGroup).fields, field.initialValue, field.validations);
+        const g = this.createFormGroup(field.schema as Record<string, EasyFormField>, field.initialValue, field.validations);
         group.addControl(key, g);
       } else if (field.controlType == 'array') {
-        const a = this.createFormArray((field as FormFieldArray).fields, field.initialValue, field.validations);
+        const a = this.createFormArray(field.schema as Record<string, EasyFormField>, field.validations);
         group.addControl(key, a);
       } else if (field.controlType == 'arraySimple') {
-        const a = this.createSimpleFormArray((field as FormFieldArraySimple), field.initialValue, field.validations);
+        const a = this.createSimpleFormArray(field, field.initialValue, field.validations);
         group.addControl(key, a);
       } else {
         const control = new FormControl(field.initialValue, field.validations ? this.createValidations(field.validations) : []);
@@ -197,11 +196,11 @@ export class EasyForm<T = Record<string, any>> extends EasyFormGenerator {
     return group;
   }
 
-  private createFormArray(schema: FormSchema, initialValue?: any, validations?: FormField['validations']): FormArray {
+  private createFormArray(schema: FormSchema, initialValue?: any, validations?: EasyFormField['validations']): FormArray {
     const array = new FormArray<any>([]);
 
-    if (initialValue) {
-      (initialValue as Array<any>).forEach((item: any) => {
+    if (initialValue && Array.isArray(initialValue)) {
+      initialValue.forEach((item: any) => {
         const group = this.createFormGroup(schema);
         group.patchValue(item);
         array.push(group);
@@ -215,12 +214,13 @@ export class EasyForm<T = Record<string, any>> extends EasyFormGenerator {
     return array;
   }
 
-  private createSimpleFormArray(schema: FormFieldArraySimple, initialValue?: any, validations?: FormField['validations']): FormArray {
+  private createSimpleFormArray(schema: EasyFormField, initialValue?: any, validations?: EasyFormField['validations']): FormArray {
     const array = new FormArray<any>([]);
+    const field = schema.schema as EasyFormField;
 
-    if (initialValue) {
-      (initialValue as Array<any>).forEach((item: any, index) => {
-        const control = new FormControl(item, schema.field.validations ? this.createValidations(schema.field.validations) : []);
+    if (initialValue && Array.isArray(initialValue)) {
+      initialValue.forEach((item: any, index) => {
+        const control = new FormControl(item, field.validations ? this.createValidations(field.validations) : []);
         array.push(control);
       });
     }
@@ -243,30 +243,35 @@ export class EasyForm<T = Record<string, any>> extends EasyFormGenerator {
     return validators;
   }
 
-  private _getSchemaWithPath(path: string, schema: FormSchema | FormFieldGroup['fields'] | FormFieldArray['fields']): FormFieldControl | null {
-    if (!path.match(/\./) && schema[path] && schema[path].controlType) {
-      return schema[path] as FormFieldControl;
-    }
+  private _getSchemaWithPath(path: (string | number)[], schema: FormSchema | EasyFormField): FormSchema | EasyFormField | null {
+    const head = path[0];
+    const tail = path.slice(1)
 
-    const head = path.split('.')[0];
-    const tail = path.replace(/^\w+\./, '');
-
-    const hasIndex = !!tail.match(/^[0-9]+/);
+    const hasIndex = !!head.toString().match(/^[0-9]+/);
     if (hasIndex) {
-      // phones.0.countryCode
-      // phones.0
-      const s = schema[head];
-      if ((s as FormFieldArraySimple).field) {
-        return (s as FormFieldArraySimple).field;
-      }
-      if ((s as FormFieldArray).fields) {
-        return this._getSchemaWithPath(tail.replace(/^[0-9]+\./, ''), (s as FormFieldArray).fields);
+      if (schema instanceof EasyFormField) {
+        return schema ?? null;
+      } else {
+        if (tail.length == 0) {
+          return schema ?? null;
+        } else {
+          return this._getSchemaWithPath(tail, schema);
+        }
       }
     }
 
-    const childSchema = schema[head] as any;
-    if (childSchema && childSchema.fields) {
-      return this._getSchemaWithPath(tail, childSchema.fields);
+
+    if (schema instanceof EasyFormField) {
+      return schema.schema ?? null;
+    }
+
+    const childSchema = (schema as Record<string, EasyFormField>)[head.toString()];
+    if (childSchema) {
+      if (tail.length == 0) {
+        return childSchema;
+      } else {
+        return this._getSchemaWithPath(tail, childSchema.schema ?? {});
+      }
     }
 
     return null;

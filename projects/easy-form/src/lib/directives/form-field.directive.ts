@@ -22,6 +22,7 @@ import {isComponent} from "../helpers/component-helper";
 import {EasyFormControlComponent, LazyLoadingComponent} from "../tokens/easy-form-config";
 import {filter, Observable, Subscription} from "rxjs";
 import {takeUntilDestroyed} from "@angular/core/rxjs-interop";
+import {EasyFormField} from "../easy-form-field";
 
 @Directive({
   selector: 'ng-container[easyFormField]',
@@ -213,7 +214,7 @@ export class FormFieldDirective implements OnChanges {
     componentRef.instance.easyFormControl.set({
       id: path.join('_') + '_' + Math.random().toString(36).substring(2),
       control: this.control()!,
-      schema: schema
+      schema: schema as EasyFormField
     });
 
     componentRef.changeDetectorRef.detectChanges();

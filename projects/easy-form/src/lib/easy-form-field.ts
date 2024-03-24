@@ -1,4 +1,4 @@
-import {FormField, FormFieldBase} from "./interfaces/form-field";
+import {FormFieldBase} from "./interfaces/form-field";
 import {BasicControlTypes} from "./interfaces/basic-control-types";
 import {AdvancedControlTypes} from "./interfaces/advanced-control-types";
 import {Validation} from "./interfaces/validation";
@@ -6,7 +6,16 @@ import {ValidatorFn, Validators} from "@angular/forms";
 import {ObservableString} from "./interfaces/observable-string";
 import {SelectOptions} from "./interfaces/select-options";
 
-export class ValidationChain<FormType = any, RemoteType = FormType> implements FormFieldBase<FormType, RemoteType> {
+export class EasyFormField<FormType = any, RemoteType = FormType> implements FormFieldBase<FormType, RemoteType> {
+
+  // Optional field id
+  id?: string;
+
+  // Field label
+  label?: ObservableString;
+
+  // Hint
+  hint?: string;
 
   /**
    * The type of control to be rendered
@@ -21,12 +30,15 @@ export class ValidationChain<FormType = any, RemoteType = FormType> implements F
 
   options?: SelectOptions<FormType>;
 
-  transformer?: {
-    toForm?: (value: RemoteType) => FormType;
-    fromForm?: (value: FormType) => RemoteType;
-  }
+  // transformer?: {
+  //   toForm?: (value: RemoteType) => FormType;
+  //   fromForm?: (value: FormType) => RemoteType;
+  // }
 
-  constructor(options: FormField) {
+  // Child schema for array or group
+  schema?: EasyFormField | Record<string, EasyFormField>;
+
+  constructor(options: FormFieldBase<FormType, RemoteType>) {
     Object.assign(this, options);
   }
 
@@ -178,11 +190,11 @@ export class ValidationChain<FormType = any, RemoteType = FormType> implements F
    * @param toForm
    * @notImplemented
    */
-  toForm(toForm: (value: RemoteType) => FormType) {
-    if (!this.transformer) this.transformer = {};
-    this.transformer.toForm = toForm;
-    return this;
-  }
+  // toForm(toForm: (value: RemoteType) => FormType) {
+  //   if (!this.transformer) this.transformer = {};
+  //   this.transformer.toForm = toForm;
+  //   return this;
+  // }
 
   /**
    * Transform the value
@@ -190,9 +202,9 @@ export class ValidationChain<FormType = any, RemoteType = FormType> implements F
    * @param fromForm
    * @notImplemented
    */
-  fromForm(fromForm: (value: FormType) => RemoteType) {
-    if (!this.transformer) this.transformer = {};
-    this.transformer.fromForm = fromForm;
-    return this;
-  }
+  // fromForm(fromForm: (value: FormType) => RemoteType) {
+  //   if (!this.transformer) this.transformer = {};
+  //   this.transformer.fromForm = fromForm;
+  //   return this;
+  // }
 }
