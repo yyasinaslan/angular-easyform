@@ -63,6 +63,9 @@ export class EasyForm<ValueType = any, SchemaType extends FormSchema<ValueType> 
 
   getSchema(path: string | Array<string | number>) {
     const normalisedPath = typeof path == 'string' ? path.split('.') : path;
+    if (!path || path.length == 0) {
+      return null;
+    }
     return this._getSchemaWithPath(normalisedPath, this.schema);
   }
 

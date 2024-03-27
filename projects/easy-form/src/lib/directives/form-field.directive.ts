@@ -7,10 +7,11 @@ import {
   EventEmitter,
   inject,
   Injector,
+  input,
   Input,
   OnChanges,
+  OnInit,
   Output,
-  signal,
   SimpleChanges,
   untracked,
   ViewContainerRef
@@ -29,7 +30,7 @@ import {EasyFormField} from "../easy-form-field";
   standalone: true,
   exportAs: 'easyFormField'
 })
-export class FormFieldDirective implements OnChanges {
+export class FormFieldDirective implements OnChanges, OnInit {
   destroyRef = inject(DestroyRef)
   viewContainerRef = inject(ViewContainerRef)
   easyFormComponent = inject(EasyFormComponent)
@@ -51,59 +52,65 @@ export class FormFieldDirective implements OnChanges {
 
   private valueChangeSubscription?: Subscription;
 
-  constructor() {
-    effect(() => {
-      // track control changes
-      const control = this.control();
-      if (this.valueChangeSubscription) {
-        this.valueChangeSubscription.unsubscribe();
-      }
-      untracked(() => {
-        if (control) {
-          this.valueChangeSubscription = control.valueChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(value => {
-            this.change.emit(value);
-          });
-          this.render();
-        }
-      })
-    });
-  }
 
   get value() {
     return this.control()?.value;
   }
 
-  private _path = signal<Array<string | number>>([]);
+  path = input.required<string | Array<string | number>>();
+  _path = computed<Array<string | number>>(() => {
+    const path = this.path();
+    if (typeof path === 'string') {
+      return path.split('.');
+    }
+    return path;
+  })
 
   control = computed(() => {
     const path = this._path();
     if (!path || path.length === 0) {
       return;
     }
-    const control = this.easyFormComponent.form.formGroup.get(this._path());
+    if (!this.easyFormComponent.form) {
+      return undefined;
+    }
+    const control = this.easyFormComponent.form.getControl(path);
     if (!control) {
-      throw new Error(`Form definition not found for ${this._path()}`);
+      return undefined;
     }
     return control as FormControl;
   });
 
-  // This will be useful for dynamic path changes
-  @Input() set path(value: string | Array<string | number>) {
-    let path: Array<string | number>;
-    if (typeof value === 'string') {
-      path = value.split('.');
-    } else {
-      path = value;
-    }
-    this._path.set(path);
-
-    // setTimeout(() => {
-    //   this._path.set(path);
-    // }, 1000)
-  }
 
   private get form() {
     return this.easyFormComponent.form;
+  }
+
+  private isInitialized = false;
+
+  constructor() {
+    effect(() => {
+      // track control changes
+      const control = this.control();
+      untracked(() => {
+        if (this.valueChangeSubscription) {
+          this.valueChangeSubscription.unsubscribe();
+        }
+        if (control) {
+          this.valueChangeSubscription = control.valueChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(value => {
+            this.change.emit(value);
+          });
+          if (this.isInitialized)
+            this.render();
+        }
+      })
+    });
+  }
+
+
+  ngOnInit(): void {
+    this.isInitialized = true;
+    this.render();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -219,4 +226,5 @@ export class FormFieldDirective implements OnChanges {
 
     componentRef.changeDetectorRef.detectChanges();
   }
+
 }

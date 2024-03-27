@@ -1,16 +1,5 @@
-import {
-  AfterContentInit,
-  Component,
-  ContentChildren,
-  ElementRef,
-  EventEmitter,
-  inject,
-  Input,
-  Output,
-  QueryList
-} from '@angular/core';
+import {AfterContentInit, Component, ElementRef, EventEmitter, inject, Input, Output} from '@angular/core';
 import {EASY_FORM_CONFIG, EasyFormConfig} from "../tokens/easy-form-config";
-import {FormFieldDirective} from "../directives/form-field.directive";
 import {EasyForm} from "../easy-form";
 import {FormGroup, ReactiveFormsModule} from "@angular/forms";
 import {EfTextAreaComponent} from "../controls/ef-textarea/ef-textarea.component";
@@ -38,8 +27,6 @@ import {EfTextComponent} from "../controls/ef-text/ef-text.component";
   }
 })
 export class EasyFormComponent implements AfterContentInit {
-  @ContentChildren(FormFieldDirective, {descendants: true}) fields!: QueryList<FormFieldDirective>;
-
   elementRef = inject<ElementRef<HTMLDivElement>>(ElementRef);
   _formConfig = inject(EASY_FORM_CONFIG, {optional: true});
 
