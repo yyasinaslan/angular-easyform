@@ -1,19 +1,14 @@
 import {
   ComponentRef,
-  computed,
   DestroyRef,
   Directive,
-  effect,
   EventEmitter,
   inject,
   Injector,
-  input,
   Input,
   OnChanges,
-  OnInit,
   Output,
   SimpleChanges,
-  untracked,
   ViewContainerRef
 } from '@angular/core';
 import {FormControl} from "@angular/forms";
@@ -30,7 +25,7 @@ import {EasyFormField} from "../easy-form-field";
   standalone: true,
   exportAs: 'easyFormField'
 })
-export class FormFieldDirective implements OnChanges, OnInit {
+export class FormFieldDirective implements OnChanges {
   destroyRef = inject(DestroyRef)
   viewContainerRef = inject(ViewContainerRef)
   easyFormComponent = inject(EasyFormComponent)
@@ -47,75 +42,43 @@ export class FormFieldDirective implements OnChanges, OnInit {
   @Output("input") input = this.fieldEvent.pipe(filter(e => e.type == 'input')) as Observable<InputEvent>;
   @Output("keyup") keyup = this.fieldEvent.pipe(filter(e => e.type == 'keyup')) as Observable<KeyboardEvent>;
   @Output("keydown") keydown = this.fieldEvent.pipe(filter(e => e.type == 'keydown')) as Observable<KeyboardEvent>;
-  public instance?: EasyFormControl;
-  private componentRef?: ComponentRef<EasyFormControl>;
 
+  public instance?: EasyFormControl;
+
+  @Input({
+    required: true,
+    transform: (val: string | Array<string | number>): Array<string | number> => {
+      const path = val;
+      if (typeof path === 'string') {
+        return path.split('.');
+      }
+      return path;
+    }
+  }) path!: Array<string | number>;
+
+  control?: FormControl;
+
+  private componentRef?: ComponentRef<EasyFormControl>;
   private valueChangeSubscription?: Subscription;
 
-
-  get value() {
-    return this.control()?.value;
+  constructor() {
   }
 
-  path = input.required<string | Array<string | number>>();
-  _path = computed<Array<string | number>>(() => {
-    const path = this.path();
-    if (typeof path === 'string') {
-      return path.split('.');
-    }
-    return path;
-  })
-
-  control = computed(() => {
-    const path = this._path();
-    if (!path || path.length === 0) {
-      return;
-    }
-    if (!this.easyFormComponent.form) {
-      return undefined;
-    }
-    const control = this.easyFormComponent.form.getControl(path);
-    if (!control) {
-      return undefined;
-    }
-    return control as FormControl;
-  });
-
+  get value() {
+    return this.control?.value;
+  }
 
   private get form() {
     return this.easyFormComponent.form;
   }
 
-  private isInitialized = false;
-
-  constructor() {
-    effect(() => {
-      // track control changes
-      const control = this.control();
-      untracked(() => {
-        if (this.valueChangeSubscription) {
-          this.valueChangeSubscription.unsubscribe();
-        }
-        if (control) {
-          this.valueChangeSubscription = control.valueChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(value => {
-            this.change.emit(value);
-          });
-          if (this.isInitialized)
-            this.render();
-        }
-      })
-    });
-  }
-
-
-  ngOnInit(): void {
-    this.isInitialized = true;
-    this.render();
-  }
-
   ngOnChanges(changes: SimpleChanges): void {
+    if (changes['path']) {
+      this.pathChanged();
+    }
+
     if (changes['disabled']) {
-      const control = this.control();
+      const control = this.control;
       if (control) {
         if (this.disabled) {
           control.disable();
@@ -131,10 +94,43 @@ export class FormFieldDirective implements OnChanges, OnInit {
     }
   }
 
+  private pathChanged() {
+    const control = this.setControl();
+    if (control) {
+      if (this.valueChangeSubscription) {
+        this.valueChangeSubscription.unsubscribe();
+      }
+      this.control = control;
+      this.valueChangeSubscription = control.valueChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(value => {
+        this.change.emit(value);
+      });
+
+      this.render();
+    }
+  }
+
+  private setControl() {
+    const path = this.path;
+    if (!path || path.length === 0) {
+      return;
+    }
+
+    if (!this.easyFormComponent.form) {
+      return undefined;
+    }
+
+    const control = this.easyFormComponent.form.getControl(path);
+
+    if (!control) {
+      return undefined;
+    }
+    return control as FormControl;
+  }
+
   private async render() {
     await this._render();
 
-    const control = this.control();
+    const control = this.control;
     if (control) {
       setTimeout(() => {
         if (this.disabled) {
@@ -147,7 +143,7 @@ export class FormFieldDirective implements OnChanges, OnInit {
   }
 
   private async _render() {
-    const path = this._path();
+    const path = this.path;
     if (!path) {
       return;
     }
@@ -220,7 +216,7 @@ export class FormFieldDirective implements OnChanges, OnInit {
 
     componentRef.instance.easyFormControl.set({
       id: path.join('_') + '_' + Math.random().toString(36).substring(2),
-      control: this.control()!,
+      control: this.control!,
       schema: schema as EasyFormField
     });
 

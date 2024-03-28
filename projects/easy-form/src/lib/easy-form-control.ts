@@ -15,7 +15,6 @@ export interface EfControlData {
  * to work with EasyFormComponent
  */
 export class EasyFormControl {
-  // formFieldDirective = inject(FormFieldDirective, {optional: true});
 
   easyFormControl = signal<EfControlData>({
     id: null,
