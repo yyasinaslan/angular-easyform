@@ -43,7 +43,7 @@ export class EasyFormComponent implements AfterContentInit {
   /**
    * Submit event output
    */
-  @Output() submit = new EventEmitter<FormGroup>();
+  @Output() efSubmit = new EventEmitter<FormGroup>();
 
   constructor() {
     if (this._formConfig) {
@@ -72,7 +72,7 @@ export class EasyFormComponent implements AfterContentInit {
         }, 100)
       }
     }
-    this.submit.emit(this.form.formGroup)
+    this.efSubmit.emit(this.form.formGroup)
   }
 
   private defaultConfig() {
