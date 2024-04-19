@@ -1,0 +1,5 @@
+{
+  "name": "@yasin/angular-easyform",
+  "version": "0.1.0",
+  "exports": "./public-api.ts"
+}
