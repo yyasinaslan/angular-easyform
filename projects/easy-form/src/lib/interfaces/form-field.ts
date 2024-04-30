@@ -23,7 +23,7 @@ export type FormFieldBase<FormType = any, RemoteType = FormType> = {
   hint?: string;
 
   // Additional props
-  props?: Record<string, HTMLInputElement['attributes']>;
+  props?: Record<string, any>;
 
   // select options
   options?: SelectOptions<FormType>;
