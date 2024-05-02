@@ -56,7 +56,7 @@ export class DynamicPathDemoComponent {
     name: EasyForm.text('Name').customValidator(this.requiredCustom('name'), {
       required: 'Name is required'
     }),
-    email: EasyForm.email('Email')
+    email: EasyForm.text('Email',{props:{type:'email'}})
       // Custom validator can return multiple errors, so we can set individual message for each error
       .customValidator(this.requiredCustom('email'), {
         required: 'Email is required',

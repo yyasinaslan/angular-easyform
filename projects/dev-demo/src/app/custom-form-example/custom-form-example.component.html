@@ -1,0 +1,12 @@
+<easy-form [form]="form" [focusFirstError]="true" (efSubmit)="submitted($event)">
+
+  <div class="container mx-auto py-10 space-y-10 px-2">
+
+    <h1 class="text-xl">Number test custom control</h1>
+
+    <ng-container easyFormField path="numberTest"/>
+
+    <button type="submit">Submit</button>
+
+  </div>
+</easy-form>

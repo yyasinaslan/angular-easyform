@@ -21,7 +21,7 @@ interface EfDefaultValidations {
 
 type FormFieldWithValidation = FormFieldBase & EfDefaultValidations;
 
-type GeneratorBaseOptions = Omit<FormFieldBase, "label" | "validations">;
+export type GeneratorBaseOptions = Omit<FormFieldBase, "label" | "validations">;
 
 export abstract class EasyFormGenerator {
 
@@ -31,27 +31,6 @@ export abstract class EasyFormGenerator {
 
   public static textarea<FormType = string, RemoteType = FormType>(label?: ObservableString, configs?: GeneratorBaseOptions) {
     return new EasyFormField<FormType, RemoteType>({...configs, label, controlType: "textarea"});
-  }
-
-  public static email<FormType = string, RemoteType = FormType>(label?: ObservableString, configs?: GeneratorBaseOptions) {
-    const vc = new EasyFormField<FormType, RemoteType>({...configs, label, controlType: "text"});
-    if (!vc.props) vc.props = {};
-    vc.props['type'] = "email";
-    return vc;
-  }
-
-  public static password<FormType = string, RemoteType = FormType>(label?: ObservableString, configs?: GeneratorBaseOptions) {
-    const vc = new EasyFormField<FormType, RemoteType>({...configs, label, controlType: "text"});
-    if (!vc.props) vc.props = {};
-    vc.props['type'] = "password";
-    return vc;
-  }
-
-  public static number<FormType = number, RemoteType = FormType>(label?: ObservableString, configs?: GeneratorBaseOptions) {
-    const vc = new EasyFormField<FormType, RemoteType>({...configs, label, controlType: "text"});
-    if (!vc.props) vc.props = {};
-    vc.props['type'] = "number";
-    return vc;
   }
 
   public static select<FormType = any, RemoteType = FormType>(options: SelectOptions<FormType>, label?: ObservableString, configs?: GeneratorBaseOptions) {
@@ -71,13 +50,6 @@ export abstract class EasyFormGenerator {
   public static radio<FormType = any, RemoteType = FormType>(options: SelectOptions<FormType>, label: string, configs?: GeneratorBaseOptions) {
     const vc = new EasyFormField<FormType, RemoteType>({...configs, label, controlType: BasicControlTypes.Radio});
     vc.options = options;
-    return vc;
-  }
-
-  public static date<FormType = any, RemoteType = FormType>(label: string, configs?: GeneratorBaseOptions) {
-    const vc = new EasyFormField<FormType, RemoteType>({...configs, label, controlType: "text"});
-    if (!vc.props) vc.props = {};
-    vc.props['type'] = "date";
     return vc;
   }
 

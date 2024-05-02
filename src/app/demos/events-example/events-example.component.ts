@@ -39,7 +39,7 @@ export class EventsExampleComponent {
 
   form = EasyForm.create({
     name: EasyForm.text('Name').required('Name is required'),
-    email: EasyForm.email('Email').email('Email is not valid').required('Email is required'),
+    email: EasyForm.text('Email',{props:{type:'email'}}).email('Email is not valid').required('Email is required'),
     phone: EasyForm.custom('customText', 'Phone').pattern(/\d+/, 'Phone is not valid').required('Phone is required'),
   })
 }
