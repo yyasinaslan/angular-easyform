@@ -7,6 +7,7 @@ export * from './lib/easy-form/easy-form.component';
 export * from './lib/directives/form-field.directive'
 export * from './lib/directives/array-item-template.directive'
 export * from './lib/directives/array-wrapper-template.directive'
+export * from './lib/directives/bind-events.directive'
 export * from './lib/components/ef-form-array/ef-form-array.component'
 export * from './lib/components/ef-errors/ef-errors.component'
 export * from './lib/easy-form-control'
