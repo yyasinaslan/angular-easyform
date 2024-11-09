@@ -39,21 +39,21 @@ export abstract class EasyFormGenerator {
     return vc;
   }
 
-  public static checkbox<FormType = boolean, RemoteType = FormType>(label: string, configs?: GeneratorBaseOptions) {
+  public static checkbox<FormType = boolean, RemoteType = FormType>(label?: ObservableString, configs?: GeneratorBaseOptions) {
     return new EasyFormField<FormType, RemoteType>({...configs, label, controlType: BasicControlTypes.Checkbox});
   }
 
-  public static switch<FormType = any, RemoteType = FormType>(label: string, configs?: GeneratorBaseOptions) {
+  public static switch<FormType = any, RemoteType = FormType>(label?: ObservableString, configs?: GeneratorBaseOptions) {
     return new EasyFormField<FormType, RemoteType>({...configs, label, controlType: BasicControlTypes.Switch});
   }
 
-  public static radio<FormType = any, RemoteType = FormType>(options: SelectOptions<FormType>, label: string, configs?: GeneratorBaseOptions) {
+  public static radio<FormType = any, RemoteType = FormType>(options: SelectOptions<FormType>, label?: ObservableString, configs?: GeneratorBaseOptions) {
     const vc = new EasyFormField<FormType, RemoteType>({...configs, label, controlType: BasicControlTypes.Radio});
     vc.options = options;
     return vc;
   }
 
-  public static custom<FormType = any, RemoteType = FormType>(type: string, label?: string, configs?: GeneratorBaseOptions) {
+  public static custom<FormType = any, RemoteType = FormType>(type: string, label?: ObservableString, configs?: GeneratorBaseOptions) {
     return new EasyFormField<FormType, RemoteType>({...configs, label, controlType: type});
   }
 
