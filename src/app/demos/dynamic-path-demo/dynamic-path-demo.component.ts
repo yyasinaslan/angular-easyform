@@ -53,15 +53,15 @@ export class DynamicPathDemoComponent {
   };
 
   form = EasyForm.create<OmitBase<User, 'balance'>>({
-    name: EasyForm.text('Name').customValidator(this.requiredCustom('name'), {
+    name: EasyForm.text('','Name').customValidator(this.requiredCustom('name'), {
       required: 'Name is required'
     }),
-    email: EasyForm.text('Email',{props:{type:'email'}})
+    email: EasyForm.text('','Email')
       // Custom validator can return multiple errors, so we can set individual message for each error
       .customValidator(this.requiredCustom('email'), {
         required: 'Email is required',
         email: 'Email is not valid'
       }),
-    phone: EasyForm.custom<number>('customText', 'Phone').pattern(/\d+/, 'Phone is not valid').required('Phone is required'),
+    phone: EasyForm.custom<number>(0, 'customText', 'Phone').pattern(/\d+/, 'Phone is not valid').required('Phone is required'),
   })
 }

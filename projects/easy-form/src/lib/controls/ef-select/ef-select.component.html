@@ -1,5 +1,5 @@
-@if (hasControl()) {
-  @if (easyFormControl().schema?.label) {
+@if (hasInitialized()) {
+  @if (schema()!.label) {
     <label class="ef-form-label" [for]="easyFormControl().id">{{ easyFormControl().schema?.label | observe }}</label>
   }
   <select bindEvents [id]="easyFormControl().id" [formControl]="easyFormControl().control!"

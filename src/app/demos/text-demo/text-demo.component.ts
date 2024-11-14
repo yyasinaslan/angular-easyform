@@ -15,7 +15,7 @@ export class TextDemoComponent {
 
 
   form = EasyForm.create({
-    name: EasyForm.text('Name').required('Name is required')
+    name: EasyForm.text('','Name').required('Name is required')
       .minLength(3, 'Name must be at least 3 characters')
       .maxLength(10, 'Name must be at most 10 characters'),
   })

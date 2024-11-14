@@ -25,7 +25,7 @@ import {JsonPipe} from "@angular/common";
 })
 export class ArrayDemoComponent {
   form = EasyForm.create({
-    customerName: EasyForm.text('Customer Name').required('Customer Name is required'),
+    customerName: EasyForm.text('','Customer Name').required('Customer Name is required'),
     contacts: EasyForm.array(EasyForm.text().required('Contact is required'))
       .required('Contacts field is required')
       .minLength(1, 'Add at least one contact')

@@ -1,0 +1,26 @@
+{{ formSchema.formGroup.value | json }}
+<div class="grid grid-cols-2 gap-10">
+
+  <form [formGroup]="formSchema.formGroup" (ngSubmit)="logSubmit($event)">
+
+    <select class="bg-background text-foreground p-2 border rounded-xl h-52" formControlName="categories" multiple>
+      @for (opt of formSchema.getSchema('categories')?.options | observe; track opt) {
+        <option [ngValue]="opt.value">{{ opt.label | observe }}</option>
+      }
+    </select>
+
+  </form>
+
+
+  <easy-form [form]="formSchema" (efSubmit)="logSubmit($event)">
+    <div>Value: {{ formSchema.value | json }}</div>
+    <button type="button" (click)="multi.set(!multi())">Toggle multiple</button>
+    <ng-container easyFormField path="categories"
+                  [props]="{multiple: multi(), search: true, maxHeight: 600, minHeight: 200}"
+    />
+
+    <button type="submit">Submit</button>
+  </easy-form>
+
+
+</div>

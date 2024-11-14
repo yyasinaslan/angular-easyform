@@ -14,8 +14,8 @@ import {EasyForm, EasyFormComponent, FormFieldDirective} from "@yyasinaslan/easy
 })
 export class LoginComponent {
   form = EasyForm.create({
-    email: EasyForm.text('Email', {props: {type: 'email'}}).required('Email is required').email('Email is not valid'),
-    password: EasyForm.text('Password', {props: {type: 'password'}}).required('Password is required'),
+    email: EasyForm.text('','Email', {props: {type: 'email'}}).required('Email is required').email('Email is not valid'),
+    password: EasyForm.text('','Password', {props: {type: 'password'}}).required('Password is required'),
     rememberMe: EasyForm.checkbox('Remember me')
   });
 

@@ -28,10 +28,10 @@ export class GroupArrayDemoComponent {
   ]
 
   form = EasyForm.create({
-    customerName: EasyForm.text('Customer Name').required('Customer Name is required'),
+    customerName: EasyForm.text('','Customer Name').required('Customer Name is required'),
     contacts: EasyForm.array({
       type: EasyForm.select(this.contactTypeOptions, 'Type').default('phone').required('Type is required'),
-      contact: EasyForm.text('Contact').required('Contact is required')
+      contact: EasyForm.text('','Contact').required('Contact is required')
     })
       .required('Contacts field is required')
       .minLength(1, 'Add at least one contact')

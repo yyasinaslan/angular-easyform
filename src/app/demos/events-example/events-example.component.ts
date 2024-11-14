@@ -1,22 +1,11 @@
 import {Component} from '@angular/core';
-import {
-  ArrayItemTemplateDirective,
-  ArrayWrapperTemplateDirective,
-  EasyForm,
-  EasyFormComponent,
-  EfFormArrayComponent,
-  FormFieldDirective
-} from "@yyasinaslan/easyform";
-import {ValidatorFn, Validators} from "@angular/forms";
+import {EasyForm, EasyFormComponent, FormFieldDirective} from "@yyasinaslan/easyform";
 
 @Component({
   selector: 'app-events-example',
   standalone: true,
   imports: [
-    ArrayItemTemplateDirective,
-    ArrayWrapperTemplateDirective,
     EasyFormComponent,
-    EfFormArrayComponent,
     FormFieldDirective
   ],
   templateUrl: './events-example.component.html',
@@ -38,8 +27,8 @@ export class EventsExampleComponent {
 
 
   form = EasyForm.create({
-    name: EasyForm.text('Name').required('Name is required'),
-    email: EasyForm.text('Email',{props:{type:'email'}}).email('Email is not valid').required('Email is required'),
+    name: EasyForm.text('','Name').required('Name is required'),
+    email: EasyForm.text('','Email').email('Email is not valid').required('Email is required'),
     phone: EasyForm.custom('customText', 'Phone').pattern(/\d+/, 'Phone is not valid').required('Phone is required'),
   })
 }

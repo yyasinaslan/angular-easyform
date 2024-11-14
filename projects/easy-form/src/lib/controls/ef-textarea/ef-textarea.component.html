@@ -1,4 +1,4 @@
-@if (hasControl()) {
+@if (hasInitialized()) {
   @if (easyFormControl().schema!.label) {
     <label class="ef-form-label" [for]="easyFormControl().id">{{ easyFormControl().schema!.label | observe }}</label>
   }

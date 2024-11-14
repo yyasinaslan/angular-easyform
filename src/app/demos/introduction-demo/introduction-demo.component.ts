@@ -14,8 +14,8 @@ import {EasyForm, EasyFormComponent, FormFieldDirective} from "@yyasinaslan/easy
 })
 export class IntroductionDemoComponent {
   form = EasyForm.create({
-    name: EasyForm.text('Name').required('Name is required'),
-    phone: EasyForm.text('Phone',{props:{type:'number'}}).required('Phone is required'),
+    name: EasyForm.text('','Name').required('Name is required'),
+    phone: EasyForm.text('','Phone',{props:{type:'number'}}).required('Phone is required'),
   })
 
   handleSubmit(event: FormGroup) {

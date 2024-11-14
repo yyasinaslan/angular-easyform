@@ -15,11 +15,11 @@ import {NgClass} from "@angular/common";
 })
 export class GroupDemoComponent {
   form = EasyForm.create({
-    customerName: EasyForm.text('Customer Name').required('Customer Name is required'),
+    customerName: EasyForm.text('','Customer Name').required('Customer Name is required'),
     address: EasyForm.group({
-      street: EasyForm.text('Street').required('Street is required'),
-      city: EasyForm.text('City').required('City is required'),
-      country: EasyForm.text('Country').required('Country is required'),
+      street: EasyForm.text('','Street').required('Street is required'),
+      city: EasyForm.text('','City').required('City is required'),
+      country: EasyForm.text('','Country').required('Country is required'),
     })
   })
 }
