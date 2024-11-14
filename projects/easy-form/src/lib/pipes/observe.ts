@@ -1,5 +1,5 @@
 import {isObservable, Observable} from "rxjs";
-import {ChangeDetectorRef, isSignal, OnDestroy, Pipe, PipeTransform, Signal} from "@angular/core";
+import {ChangeDetectorRef, inject, OnDestroy, Pipe, PipeTransform} from "@angular/core";
 import {AsyncPipe} from "@angular/common";
 
 
@@ -12,19 +12,16 @@ import {AsyncPipe} from "@angular/common";
   standalone: true
 })
 export class ObservePipe<T> implements PipeTransform, OnDestroy {
+  private cdr = inject(ChangeDetectorRef);
 
   private asyncPipe: AsyncPipe;
 
-  constructor(private cdr: ChangeDetectorRef) {
+  constructor() {
     this.asyncPipe = new AsyncPipe(this.cdr);
   }
 
-  transform(value: T | Signal<T> | Observable<T> | undefined | null): T | null {
+  transform(value: T | Observable<T> | undefined | null): T | null {
     if (value === undefined) return null;
-
-    if (isSignal(value)) {
-      return value();
-    }
 
     if (isObservable(value)) {
       return this.asyncPipe.transform(value);
