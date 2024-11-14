@@ -9,7 +9,7 @@ import {EasyFormGenerator} from "./easy-form-generator";
 import {EasyFormControlComponent, LazyLoadingComponent} from "./tokens/easy-form-config";
 import {EasyFormField} from "./easy-form-field";
 
-export interface EasyFormOptions<T = Record<string, any>> {
+export interface EasyFormOptions {
   showErrors?: 'submitted' | 'touched' | 'dirty' | 'always' | 'never';
   // Form based validations
 
@@ -22,18 +22,23 @@ export interface EasyFormOptions<T = Record<string, any>> {
   components?: Record<string, EasyFormControlComponent | LazyLoadingComponent>
 }
 
-export class EasyForm<ValueType = any, SchemaType extends FormSchema<ValueType> = any> extends EasyFormGenerator {
+export type InferValueType<Schema extends FormSchema> = { [key in keyof Schema]: Schema[key]['initialValue'] };
 
+export class EasyForm<ValueType = any> extends EasyFormGenerator {
+
+  /**
+   * Reactivity of actual form is managed by angular reactive form
+   */
   public formGroup: FormGroup;
 
-  public schema!: SchemaType;
+  public schema!: FormSchema<ValueType>;
   // default options
   public options: EasyFormOptions = {
     showErrors: 'submitted',
     components: {}
   };
 
-  constructor(schema: SchemaType, options?: EasyFormOptions<SchemaType>) {
+  constructor(schema: FormSchema<ValueType>, options?: EasyFormOptions) {
     super();
     this.schema = schema;
     this.options = {...this.options, ...options};
@@ -52,15 +57,23 @@ export class EasyForm<ValueType = any, SchemaType extends FormSchema<ValueType> 
     return this.formGroup.value;
   }
 
+  get valueChanges(): Observable<ValueType> {
+    return this.formGroup.valueChanges;
+  }
+
   /**
    * Create a new instance of EasyForm
    * @param schema
    * @param options
    */
-  public static create<T = any>(schema: FormSchema<T>, options?: EasyFormOptions<T>) {
-    return new EasyForm<T, FormSchema<T>>(schema, options);
+  public static create<T = any>(schema: FormSchema<T>, options?: EasyFormOptions) {
+    return new EasyForm<T>(schema, options);
   }
 
+  /**
+   * Traverse through schema and get definition
+   * @param path
+   */
   getSchema(path: string | Array<string | number>) {
     const normalisedPath = typeof path == 'string' ? path.split('.') : path;
     if (!path || path.length == 0) {
@@ -69,10 +82,16 @@ export class EasyForm<ValueType = any, SchemaType extends FormSchema<ValueType> 
     return this._getSchemaWithPath(normalisedPath, this.schema);
   }
 
+  /**
+   * Disable all form
+   */
   disable() {
     this.formGroup.disable()
   }
 
+  /**
+   * Enable all form
+   */
   enable() {
     this.formGroup.enable()
   }
@@ -96,14 +115,6 @@ export class EasyForm<ValueType = any, SchemaType extends FormSchema<ValueType> 
     const arrayControl = this.getControl<FormArray>(path);
     if (!arrayControl) return [];
     return arrayControl.controls as FormControl[];
-  }
-
-  getOptions() {
-    return this.options;
-  }
-
-  getFormValue(): ValueType {
-    return this.formGroup.value;
   }
 
   getValue<ValueType = any>(path?: string | Array<string | number>): ValueType {
@@ -149,10 +160,7 @@ export class EasyForm<ValueType = any, SchemaType extends FormSchema<ValueType> 
     if (schema.controlType === AdvancedControlTypes.Array) {
       const g = this.createFormGroup(schema.schema as Record<string, EasyFormField>, value);
       arr.push(g);
-      return;
-    }
-
-    if (schema.controlType === AdvancedControlTypes.ArraySimple) {
+    } else if (schema.controlType === AdvancedControlTypes.ArraySimple) {
       const arrayField = schema.schema as EasyFormField;
       const validations = arrayField.validations ?? {};
       const control = new FormControl(value, this.createValidations(validations));

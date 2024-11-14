@@ -23,12 +23,13 @@ import {EasyFormField} from "../easy-form-field";
 @Directive({
   selector: 'ng-container[easyFormField]',
   standalone: true,
-  exportAs: 'easyFormField'
+  exportAs: 'easyFormField',
 })
 export class FormFieldDirective implements OnChanges {
   destroyRef = inject(DestroyRef)
   viewContainerRef = inject(ViewContainerRef)
   easyFormComponent = inject(EasyFormComponent)
+
   @Input() disabled = false;
   @Input() props?: Record<string, any>;
   // It emits control value changes
@@ -60,9 +61,6 @@ export class FormFieldDirective implements OnChanges {
 
   private componentRef?: ComponentRef<EasyFormControl>;
   private valueChangeSubscription?: Subscription;
-
-  constructor() {
-  }
 
   get value() {
     return this.control?.value;
@@ -204,12 +202,13 @@ export class FormFieldDirective implements OnChanges {
     this.componentRef = componentRef;
     this.instance = componentRef.instance;
 
+    // This usage is removed in favor of directives props input
+    // if (schema.props) {
+    //   // Initialize props
+    //   this.instance.props.set(schema.props);
+    // }
 
-    if (schema.props) {
-      // Initialize props
-      this.instance.props.set(schema.props);
-    }
-
+    // Set component specific properties
     if (this.props) {
       this.componentRef.instance.props.set(this.props);
     }

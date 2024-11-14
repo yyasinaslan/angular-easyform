@@ -14,7 +14,7 @@ export type FormFieldBase<FormType = any, RemoteType = FormType> = {
   label?: ObservableString;
 
   // Field initial value
-  initialValue?: RemoteType;
+  initialValue?: FormType;
 
   // Field validations
   validations?: Record<string, Validation>;
@@ -23,7 +23,7 @@ export type FormFieldBase<FormType = any, RemoteType = FormType> = {
   hint?: string;
 
   // Additional props
-  props?: Record<string, any>;
+  // props?: Record<string, any>;
 
   // select options
   options?: SelectOptions<FormType>;

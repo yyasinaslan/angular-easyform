@@ -25,55 +25,75 @@ export type GeneratorBaseOptions = Omit<FormFieldBase, "label" | "validations">;
 
 export abstract class EasyFormGenerator {
 
-  public static text<FormType = string, RemoteType = FormType>(label?: ObservableString, configs?: GeneratorBaseOptions) {
-    return new EasyFormField<FormType, RemoteType>({...configs, label, controlType: "text"});
+  public static text<ValueType = string>(value: ValueType, label?: ObservableString, configs?: GeneratorBaseOptions) {
+    return new EasyFormField<ValueType>({...configs, label, initialValue: value, controlType: "text"});
   }
 
-  public static textarea<FormType = string, RemoteType = FormType>(label?: ObservableString, configs?: GeneratorBaseOptions) {
-    return new EasyFormField<FormType, RemoteType>({...configs, label, controlType: "textarea"});
+  public static textarea<ValueType = string>(value: ValueType, label?: ObservableString, configs?: GeneratorBaseOptions) {
+    return new EasyFormField<ValueType>({...configs, label, initialValue: value, controlType: "textarea"});
   }
 
-  public static select<FormType = any, RemoteType = FormType>(options: SelectOptions<FormType>, label?: ObservableString, configs?: GeneratorBaseOptions) {
-    const vc = new EasyFormField<FormType, RemoteType>({...configs, label, controlType: BasicControlTypes.Select});
+  public static select<ValueType = any>(value: ValueType, options: SelectOptions<any>, label?: ObservableString, configs?: GeneratorBaseOptions) {
+    const vc = new EasyFormField<ValueType>({
+      ...configs,
+      label,
+      initialValue: value,
+      controlType: BasicControlTypes.Select
+    });
     vc.options = options;
     return vc;
   }
 
-  public static checkbox<FormType = boolean, RemoteType = FormType>(label?: ObservableString, configs?: GeneratorBaseOptions) {
-    return new EasyFormField<FormType, RemoteType>({...configs, label, controlType: BasicControlTypes.Checkbox});
+  public static checkbox<ValueType = boolean>(value: ValueType, label?: ObservableString, configs?: GeneratorBaseOptions) {
+    return new EasyFormField<ValueType>({
+      ...configs,
+      label,
+      initialValue: value,
+      controlType: BasicControlTypes.Checkbox
+    });
   }
 
-  public static switch<FormType = any, RemoteType = FormType>(label?: ObservableString, configs?: GeneratorBaseOptions) {
-    return new EasyFormField<FormType, RemoteType>({...configs, label, controlType: BasicControlTypes.Switch});
+  public static switch<ValueType = any>(value: ValueType, label?: ObservableString, configs?: GeneratorBaseOptions) {
+    return new EasyFormField<ValueType>({
+      ...configs,
+      label,
+      initialValue: value,
+      controlType: BasicControlTypes.Switch
+    });
   }
 
-  public static radio<FormType = any, RemoteType = FormType>(options: SelectOptions<FormType>, label?: ObservableString, configs?: GeneratorBaseOptions) {
-    const vc = new EasyFormField<FormType, RemoteType>({...configs, label, controlType: BasicControlTypes.Radio});
+  public static radio<ValueType = any>(value: ValueType, options: SelectOptions<any>, label?: ObservableString, configs?: GeneratorBaseOptions) {
+    const vc = new EasyFormField<ValueType>({
+      ...configs,
+      label,
+      initialValue: value,
+      controlType: BasicControlTypes.Radio
+    });
     vc.options = options;
     return vc;
   }
 
-  public static custom<FormType = any, RemoteType = FormType>(type: string, label?: ObservableString, configs?: GeneratorBaseOptions) {
-    return new EasyFormField<FormType, RemoteType>({...configs, label, controlType: type});
+  public static custom<ValueType = any>(value: ValueType, type: string, label?: ObservableString, configs?: GeneratorBaseOptions) {
+    return new EasyFormField<ValueType>({...configs, label, initialValue: value, controlType: type});
   }
 
-  public static group<FormType = any, RemoteType = FormType>(schema: FormSchema<FormType>, configs?: GeneratorBaseOptions) {
-    return new EasyFormField<FormType, RemoteType>({
+  public static group<TValue>(schema: FormSchema<TValue>, configs?: GeneratorBaseOptions): EasyFormField<TValue> {
+    return new EasyFormField<TValue>({
       ...configs,
       controlType: AdvancedControlTypes.Group,
       schema: schema
     });
   }
 
-  public static array<FormType = Array<any>, RemoteType = FormType>(schema: EasyFormField | Record<string, EasyFormField>, configs?: GeneratorBaseOptions) {
+  public static array<TItem, TArray extends TItem[]>(schema: EasyFormField<TItem> | FormSchema<TItem>, configs?: GeneratorBaseOptions) {
     if (schema instanceof EasyFormField) {
-      return new EasyFormField<FormType, RemoteType>({
+      return new EasyFormField<TArray>({
         ...configs,
         controlType: AdvancedControlTypes.ArraySimple,
         schema: schema
       });
     }
-    return new EasyFormField<FormType, RemoteType>({
+    return new EasyFormField<TArray>({
       ...configs,
       controlType: AdvancedControlTypes.Array,
       schema: schema

@@ -5,8 +5,10 @@ import {Validation} from "./interfaces/validation";
 import {ValidatorFn, Validators} from "@angular/forms";
 import {ObservableString} from "./interfaces/observable-string";
 import {SelectOptions} from "./interfaces/select-options";
+import {FormSchema} from "./interfaces/form-schema";
 
-export class EasyFormField<FormType = any, RemoteType = FormType> implements FormFieldBase<FormType, RemoteType> {
+
+export class EasyFormField<FormType = any> implements FormFieldBase<FormType> {
 
   // Optional field id
   id?: string;
@@ -26,9 +28,9 @@ export class EasyFormField<FormType = any, RemoteType = FormType> implements For
 
   props?: Record<string, any>;
 
-  initialValue?: RemoteType;
+  initialValue?: FormType;
 
-  options?: SelectOptions<FormType>;
+  options?: SelectOptions<any>;
 
   // transformer?: {
   //   toForm?: (value: RemoteType) => FormType;
@@ -36,9 +38,10 @@ export class EasyFormField<FormType = any, RemoteType = FormType> implements For
   // }
 
   // Child schema for array or group
-  schema?: EasyFormField | Record<string, EasyFormField>;
+  // schema?: EasyFormField<FormType> | Record<keyof FormType, EasyFormField>;
+  schema?: EasyFormField<FormType> | FormSchema<FormType>;
 
-  constructor(options: FormFieldBase<FormType, RemoteType>) {
+  constructor(options: FormFieldBase<FormType>) {
     Object.assign(this, options);
   }
 
@@ -179,7 +182,7 @@ export class EasyFormField<FormType = any, RemoteType = FormType> implements For
    * Set the initial value of the field
    * @param value
    */
-  default(value: RemoteType) {
+  default(value: FormType) {
     this.initialValue = value;
     return this;
   }

@@ -1,11 +1,13 @@
 import {FormControl} from "@angular/forms";
 import {computed, signal} from "@angular/core";
 import {EasyFormField} from "./easy-form-field";
+import {takeUntilDestroyed, toObservable} from "@angular/core/rxjs-interop";
+import {of, switchMap} from "rxjs";
 
 
 export interface EfControlData {
   id: string | null;
-  control: FormControl | null;
+  control: FormControl<any> | null;
   schema: EasyFormField | null;
   // formFieldDirective: FormFieldDirective | null;
 }
@@ -29,6 +31,10 @@ export class EasyFormControl {
 
   // formFieldDirective = computed(() => this.easyFormControl().formFieldDirective);
 
+  options = computed(() => {
+    return this.schema()?.options;
+  })
+
   props = signal<Record<string, any>>({});
 
   hasControl = computed(() => this.easyFormControl().control !== null);
@@ -37,6 +43,14 @@ export class EasyFormControl {
     const efData = this.easyFormControl();
     return efData.control !== null && efData.schema !== null;
   });
+
+  value = toObservable(this.control)
+    .pipe(takeUntilDestroyed(), switchMap(control => control ? control.valueChanges : of(null)))
+
+
+  setValue(value: any) {
+    this.control()?.setValue(value);
+  }
 
   /**
    * Emit events
