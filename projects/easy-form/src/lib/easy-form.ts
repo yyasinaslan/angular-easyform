@@ -177,10 +177,10 @@ export class EasyForm<ValueType = any, SchemaType extends FormSchema<ValueType> 
         const g = this.createFormGroup(field.schema as Record<string, EasyFormField>, field.initialValue, field.validations);
         group.addControl(key, g);
       } else if (field.controlType == 'array') {
-        const a = this.createFormArray(field.schema as Record<string, EasyFormField>, field.validations);
+        const a = this.createFormArray(field.schema as Record<string, EasyFormField>, field.initialValue, field.validations);
         group.addControl(key, a);
       } else if (field.controlType == 'arraySimple') {
-        const a = this.createSimpleFormArray(field, field.initialValue, field.validations);
+        const a = this.createSimpleFormArray(field as any, field.initialValue, field.validations);
         group.addControl(key, a);
       } else {
         const control = new FormControl(field.initialValue, field.validations ? this.createValidations(field.validations) : []);
