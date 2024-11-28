@@ -17,7 +17,7 @@ It is useful to display `FormGroup` and `FormArray` control errors.
 
 ```html
 
-<easy-form [form]="form">
+<easy-form [schema]="form">
   <!-- ... -->
   <ef-errors path="address"/>
   <!-- ... -->

@@ -21,9 +21,8 @@ import {EfTextComponent} from "../controls/ef-text/ef-text.component";
     ReactiveFormsModule
   ],
   templateUrl: './easy-form.component.html',
-  styleUrl: './easy-form.component.scss',
   host: {
-    '[class]': `'show-errors-' + form.options.showErrors`
+    '[class]': `'show-errors-' + schema.options.showErrors`
   }
 })
 export class EasyFormComponent implements AfterContentInit {
@@ -37,7 +36,11 @@ export class EasyFormComponent implements AfterContentInit {
    *
    * @type `EasyForm`
    */
-  @Input({required: true}) form!: EasyForm;
+  @Input({required: true}) schema!: EasyForm;
+
+  /**
+   * Focus first input with error
+   */
   @Input() focusFirstError = true;
 
   /**
@@ -60,7 +63,7 @@ export class EasyFormComponent implements AfterContentInit {
   }
 
   handleSubmit($event: any) {
-    if (this.form.invalid && this.focusFirstError && this.elementRef) {
+    if (this.schema.invalid && this.focusFirstError && this.elementRef) {
       const firstError = this.elementRef.nativeElement.querySelector('.ng-invalid:not(form), ef-errors:has(*)');
       if (firstError) {
         setTimeout(() => {
@@ -72,7 +75,7 @@ export class EasyFormComponent implements AfterContentInit {
         }, 100)
       }
     }
-    this.efSubmit.emit(this.form.formGroup)
+    this.efSubmit.emit(this.schema.formGroup)
   }
 
   private defaultConfig() {

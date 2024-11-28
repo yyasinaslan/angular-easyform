@@ -1,0 +1,10 @@
+
+:host {
+
+  &:focus-within{
+    .focused-slot {
+      @apply border-primary ring-2 ring-primary ring-offset-1;
+    }
+
+  }
+}

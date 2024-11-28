@@ -1,5 +1,5 @@
-@if (form) {
-  <form [formGroup]="form.formGroup" (ngSubmit)="handleSubmit($event)">
+@if (schema) {
+  <form [formGroup]="schema.formGroup" (ngSubmit)="handleSubmit($event)">
     <ng-content/>
   </form>
 }

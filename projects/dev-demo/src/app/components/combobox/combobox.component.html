@@ -1,36 +1,6 @@
 @if (hasInitialized()) {
-  <div class="space-y-10">
-    <div>
-      <h1 class="text-xl">Values</h1>
-      {{ value | async | json }}
-      {{ control()!.value | json }}
-    </div>
+  <div>
 
-    <div>
-      <h1 class="text-xl">Props</h1>
-      {{ props()! | json }}
-
-      <h1 class="text-xl">Schema Props</h1>
-      {{ schema()!.props | json }}
-
-      <h1 class="text-xl">Schema</h1>
-      {{ schema()! | json }}
-
-    </div>
-
-    <div>
-      <h1 class="text-xl">Options</h1>
-      <ul>
-        @for (opt of options() | observe; track opt) {
-          <li>{{ opt.label | observe }}</li>
-        }
-      </ul>
-      @if (options() | observe; as optionsData) {
-        <pre>{{ optionsData | json }}</pre>
-      } @else {
-        <span>Loading options...</span>
-      }
-    </div>
   </div>
   <ef-errors [control]="control()!" [formField]="schema()!"/>
 }

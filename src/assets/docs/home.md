@@ -46,7 +46,7 @@ In component template
 
 ```html
 <!-- login.component.html -->
-<easy-form [form]="form">
+<easy-form [schema]="form">
   <div class="container mx-auto max-w-2xl space-y-5 py-10 px-2">
     <div class="card space-y-6">
       <h1 class="text-lg">Login Page</h1>

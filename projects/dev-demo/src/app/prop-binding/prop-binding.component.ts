@@ -12,6 +12,7 @@ import {MyForm} from "../my-form";
 import {delay, map, of, timer} from "rxjs";
 import {ReactiveFormsModule} from "@angular/forms";
 import {JsonPipe} from "@angular/common";
+import {OtpInputComponent} from "../components/otp-input/otp-input.component";
 
 @Component({
   selector: 'app-prop-binding',
@@ -30,7 +31,8 @@ import {JsonPipe} from "@angular/common";
       provide: EASY_FORM_CONFIG,
       useValue: {
         controls: {
-          combobox: ComboboxComponent
+          combobox: ComboboxComponent,
+          otpInput: OtpInputComponent
         }
       } as EasyFormConfig
     }
@@ -44,8 +46,11 @@ export class PropBindingComponent {
     .pipe(map(n => 'option-label-' + n))
 
   formSchema = EasyForm.create({
+    // Combobox
     categories: MyForm.combobox([], this.createOptions(), 'Categories').required('Required'),
     name: MyForm.text('Name').required('Required'),
+    // OTP
+    pinCode: MyForm.otpInput('123456', 6, 'Pin Code').required('Required'),
     address: MyForm.group({
       name: MyForm.text('', 'Address Name'),
       address: MyForm.text('', 'Address'),
@@ -74,5 +79,6 @@ export class PropBindingComponent {
   logSubmit($event: any) {
     console.log($event)
   }
+
 }
 

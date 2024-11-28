@@ -32,6 +32,7 @@ export class EasyForm<ValueType = any> extends EasyFormGenerator {
   public formGroup: FormGroup;
 
   public schema!: FormSchema<ValueType>;
+
   // default options
   public options: EasyFormOptions = {
     showErrors: 'submitted',

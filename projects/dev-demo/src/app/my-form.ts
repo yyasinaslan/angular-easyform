@@ -16,4 +16,10 @@ export class MyForm extends EasyForm {
 
     return field
   }
+
+  public static otpInput(value:string, size: number, label?: ObservableString, configs?: GeneratorBaseOptions) {
+    const field = this.custom<string>(value, 'otpInput', label, configs);
+    field.props = {...field.props, size};
+    return field
+  }
 }

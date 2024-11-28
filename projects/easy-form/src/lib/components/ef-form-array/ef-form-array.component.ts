@@ -32,15 +32,15 @@ export class EfFormArrayComponent {
   easyFormComponent = inject(EasyFormComponent)
 
   get schema() {
-    return this.easyFormComponent.form.getSchema(this.path);
+    return this.easyFormComponent.schema.getSchema(this.path);
   }
 
   get control() {
-    return this.easyFormComponent.form.getControl(this.path);
+    return this.easyFormComponent.schema.getControl(this.path);
   }
 
   get arrayControls() {
-    const arr = this.easyFormComponent.form.formGroup.get(this.path) as FormArray;
+    const arr = this.easyFormComponent.schema.formGroup.get(this.path) as FormArray;
     return arr.controls ?? [];
   }
 }

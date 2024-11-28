@@ -12,9 +12,15 @@
   </form>
 
 
-  <easy-form [form]="formSchema" (efSubmit)="logSubmit($event)">
-    <div>Value: {{ formSchema.value | json }}</div>
-    <button type="button" (click)="multi.set(!multi())">Toggle multiple</button>
+  <easy-form [schema]="formSchema" (efSubmit)="logSubmit($event)">
+
+    <div class="mb-5">
+      <ng-container easyFormField path="pinCode" #pinCode="easyFormField"/>
+      {{ pinCode.value }}
+    </div>
+
+    <!--    <div>Value: {{ formSchema.value | json }}</div>-->
+    <!--    <button type="button" (click)="multi.set(!multi())">Toggle multiple</button>-->
     <ng-container easyFormField path="categories"
                   [props]="{multiple: multi(), search: true, maxHeight: 600, minHeight: 200}"
     />

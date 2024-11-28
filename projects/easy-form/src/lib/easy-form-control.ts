@@ -1,5 +1,5 @@
 import {FormControl} from "@angular/forms";
-import {computed, signal} from "@angular/core";
+import {computed, Directive, input, signal} from "@angular/core";
 import {EasyFormField} from "./easy-form-field";
 import {takeUntilDestroyed, toObservable} from "@angular/core/rxjs-interop";
 import {of, switchMap} from "rxjs";

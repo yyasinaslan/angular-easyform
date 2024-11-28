@@ -20,6 +20,25 @@ import {filter, Observable, Subscription} from "rxjs";
 import {takeUntilDestroyed} from "@angular/core/rxjs-interop";
 import {EasyFormField} from "../easy-form-field";
 
+/**
+ * This directive responsible for rendering form fields dynamically in place of ng-container
+ *
+ * @input path: Array<string | number> - Path of the form control
+ * @input disabled: boolean - Disable the form control
+ * @input props: Record<string, any> - Properties to pass to the form control
+ *
+ * @output change: any - Emits control value changes
+ *
+ * In order to use these events below you need to bind them to input element with bindEvents directive
+ * or emit them manually from the component
+ *
+ * @output fieldEvent: Event - Emit all events
+ * @output focus: FocusEvent - Emit focus events
+ * @output blur: FocusEvent - Emit blur events
+ * @output input: InputEvent - Emit input events
+ * @output keyup: KeyboardEvent - Emit keyup events
+ * @output keydown: KeyboardEvent - Emit keydown events
+ */
 @Directive({
   selector: 'ng-container[easyFormField]',
   standalone: true,
@@ -67,7 +86,7 @@ export class FormFieldDirective implements OnChanges {
   }
 
   private get form() {
-    return this.easyFormComponent.form;
+    return this.easyFormComponent.schema;
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -86,9 +105,10 @@ export class FormFieldDirective implements OnChanges {
       }
     }
 
+    // Apply props changes to component
     if (changes['props'] && this.componentRef) {
-      this.componentRef.instance.props.set(changes['props'].currentValue);
-      this.componentRef.changeDetectorRef.detectChanges();
+      const prevProps = this.componentRef.instance.props(); // Dont lose previous props
+      this.componentRef.instance.props.set({...prevProps, ...changes['props'].currentValue});
     }
   }
 
@@ -113,11 +133,11 @@ export class FormFieldDirective implements OnChanges {
       return;
     }
 
-    if (!this.easyFormComponent.form) {
+    if (!this.easyFormComponent.schema) {
       return undefined;
     }
 
-    const control = this.easyFormComponent.form.getControl(path);
+    const control = this.easyFormComponent.schema.getControl(path);
 
     if (!control) {
       return undefined;
@@ -193,24 +213,26 @@ export class FormFieldDirective implements OnChanges {
       ]
     })
     this.viewContainerRef.clear();
+
     if (this.componentRef) {
       this.componentRef.destroy();
     }
+
     const componentRef = this.viewContainerRef.createComponent<EasyFormControl>(component as EasyFormControlComponent, {
       injector: injector
     });
     this.componentRef = componentRef;
     this.instance = componentRef.instance;
 
-    // This usage is removed in favor of directives props input
-    // if (schema.props) {
-    //   // Initialize props
-    //   this.instance.props.set(schema.props);
-    // }
+    // Set initial props
+    if (schema.props) {
+      this.componentRef.instance.props.set(schema.props);
+    }
 
     // Set component specific properties
     if (this.props) {
-      this.componentRef.instance.props.set(this.props);
+      const prevProps = this.componentRef.instance.props();
+      this.componentRef.instance.props.set({...prevProps, ...this.props});
     }
 
     componentRef.instance.easyFormControl.set({

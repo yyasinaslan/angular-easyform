@@ -1,7 +1,7 @@
 <div class="container py-10 space-y-5">
   <h1 class="text-3xl">Array input with table appearance</h1>
   <div class="card">
-    <easy-form [form]="form">
+    <easy-form [schema]="form">
       <div class="block space-y-5">
         <button type="button" (click)="addNewAddress()">Add Item</button>
         <ef-form-array path="addresses" class="block">

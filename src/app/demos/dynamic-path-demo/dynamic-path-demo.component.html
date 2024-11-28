@@ -2,7 +2,7 @@
   <h1 class="text-3xl">Dynamic Path</h1>
   <div class="card">
 
-    <easy-form [form]="form">
+    <easy-form [schema]="form">
       <div class="block space-y-5">
         <button type="button" (click)="toggleField()">Toggle Field</button>
         <ng-container easyFormField [path]="dynamicPath" #field="easyFormField"/>

@@ -1,0 +1,20 @@
+@if (hasInitialized()) {
+
+
+  <div class="inline-flex gap-2 items-center relative">
+    @for (slot of slots(); track slot) {
+      <div class="size-10 border rounded bg-input flex items-center justify-center" [class.focused-slot]="selectIndex() - 1 === $index">{{ slot }}</div>
+    }
+    <input type="text" [maxlength]="props()['size']" autocomplete="one-time-code" (selectionchange)="updateSelectIndex($event)" class="opacity-5 absolute inset-0" [formControl]="control()!"
+           (keydown)="calcSlots($event)">
+  </div>
+
+  <div>SelectIndex={{ selectIndex() }}</div>
+
+  <!--  <div class="flex gap-2" #otpContainer>-->
+    <!--    @for (slot of slots(); track slot) {-->
+    <!--      <input type="text" class="size-10 text-center" (keydown)="otpKey($event, $index)">-->
+    <!--    }-->
+    <!--  </div>-->
+  <ef-errors [control]="control()!" [formField]="schema()!"/>
+}
